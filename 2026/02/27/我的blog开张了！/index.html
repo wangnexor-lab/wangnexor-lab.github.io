@@ -735,6 +735,25 @@
 .custom-toc-item.level-5 { padding-left: 45px; }
 .custom-toc-item.level-6 { padding-left: 60px; }
 
+/* Click Effect */
+.click-effect {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  animation: click-effect-anim 0.8s ease-out forwards;
+}
+
+@keyframes click-effect-anim {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5) rotate(180deg);
+    opacity: 0;
+  }
+}
 </style>
 
 <!-- Dark Mode Toggle -->
@@ -898,6 +917,72 @@
 
     window.addEventListener('scroll', scrollSpy);
     scrollSpy(); // Initial check
+  })();
+
+  // Click Effect Logic
+  (function() {
+    var shapes = ['circle', 'square', 'triangle', 'star'];
+    var colors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#4B0082', '#9400D3']; // Rainbow colors for better visibility
+
+    document.addEventListener('click', function(e) {
+      var shape = shapes[Math.floor(Math.random() * shapes.length)];
+      var color = colors[Math.floor(Math.random() * colors.length)];
+      var size = Math.floor(Math.random() * 20) + 20; // 20-40px
+
+      var el = document.createElement('div');
+      el.className = 'click-effect';
+      el.style.left = e.clientX + 'px';
+      el.style.top = e.clientY + 'px';
+      el.style.width = size + 'px';
+      el.style.height = size + 'px';
+      
+      // Create SVG for hollow shapes
+      var ns = "http://www.w3.org/2000/svg";
+      var svg = document.createElementNS(ns, "svg");
+      svg.setAttribute("width", "100%");
+      svg.setAttribute("height", "100%");
+      svg.setAttribute("viewBox", "0 0 100 100");
+      svg.style.overflow = "visible";
+
+      var shapeEl;
+
+      if (shape === 'circle') {
+        shapeEl = document.createElementNS(ns, "circle");
+        shapeEl.setAttribute("cx", "50");
+        shapeEl.setAttribute("cy", "50");
+        shapeEl.setAttribute("r", "40");
+      } else if (shape === 'square') {
+        shapeEl = document.createElementNS(ns, "rect");
+        shapeEl.setAttribute("x", "10");
+        shapeEl.setAttribute("y", "10");
+        shapeEl.setAttribute("width", "80");
+        shapeEl.setAttribute("height", "80");
+      } else if (shape === 'triangle') {
+        shapeEl = document.createElementNS(ns, "polygon");
+        shapeEl.setAttribute("points", "50,10 10,90 90,90");
+      } else if (shape === 'star') {
+        shapeEl = document.createElementNS(ns, "polygon");
+        // Star points
+        shapeEl.setAttribute("points", "50,5 61,35 98,35 68,57 79,91 50,70 21,91 32,57 2,35 39,35");
+      }
+
+      if (shapeEl) {
+        shapeEl.setAttribute("fill", "none");
+        shapeEl.setAttribute("stroke", color);
+        shapeEl.setAttribute("stroke-width", "8");
+        shapeEl.setAttribute("stroke-linejoin", "round");
+        shapeEl.setAttribute("stroke-linecap", "round");
+        svg.appendChild(shapeEl);
+      }
+
+      el.appendChild(svg);
+      document.body.appendChild(el);
+
+      // Cleanup
+      setTimeout(function() {
+        el.remove();
+      }, 800);
+    });
   })();
 </script>
 
