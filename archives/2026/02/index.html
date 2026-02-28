@@ -40,6 +40,23 @@
     lang   : 'en'
   };
 </script>
+<script>
+  (function() {
+    var savedTheme = localStorage.getItem('theme');
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      document.documentElement.classList.add('dark-mode');
+    } else {
+      document.documentElement.classList.remove('dark-mode');
+    }
+  })();
+</script>
+<style>
+  html, body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+</style>
 
   <title>Archive | N3x0r's Blog</title>
   
@@ -335,6 +352,43 @@
   
 
   
+<div class="dark-mode-toggle" title="Toggle Dark Mode">
+  <i class="fa fa-adjust"></i>
+</div>
+
+<script>
+  (function() {
+    var toggle = document.querySelector('.dark-mode-toggle');
+    var icon = toggle.querySelector('i');
+
+    function updateIcon(isDark) {
+      if (isDark) {
+        icon.className = 'fa fa-sun';
+        toggle.title = "Switch to Light Mode";
+      } else {
+        icon.className = 'fa fa-moon';
+        toggle.title = "Switch to Dark Mode";
+      }
+    }
+
+    // Initial icon state
+    var isDark = document.documentElement.classList.contains('dark-mode');
+    updateIcon(isDark);
+
+    toggle.addEventListener('click', function() {
+      var isDark = document.documentElement.classList.contains('dark-mode');
+      if (isDark) {
+        document.documentElement.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light');
+        updateIcon(false);
+      } else {
+        document.documentElement.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+        updateIcon(true);
+      }
+    });
+  })();
+</script>
 
 </body>
 </html>
