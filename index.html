@@ -614,6 +614,85 @@
   transform-origin: 50% 50%;
   stroke: var(--link-hover-color);
 }
+
+/* Custom TOC */
+.custom-toc-container {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 250px;
+  padding: 10px;
+  background: var(--card-bg-color);
+  border-left: 2px solid var(--link-hover-color);
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 9998;
+  max-height: 70vh;
+  overflow-y: auto;
+  transition: opacity 0.3s;
+  opacity: 0;
+  visibility: hidden;
+  font-size: 14px;
+}
+
+/* Only show on large screens */
+@media (min-width: 1200px) {
+  .custom-toc-container.show {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.custom-toc-header {
+  font-weight: bold;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--text-color);
+  color: var(--link-hover-color);
+}
+
+.custom-toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.custom-toc-item {
+  margin-bottom: 5px;
+  line-height: 1.5;
+}
+
+.custom-toc-item a {
+  text-decoration: none;
+  color: var(--text-color);
+  display: block;
+  padding: 2px 5px;
+  border-radius: 3px;
+  transition: all 0.2s;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.custom-toc-item a:hover,
+.custom-toc-item a.active {
+  color: var(--link-hover-color);
+  background: rgba(0,0,0,0.05);
+}
+
+.dark-mode .custom-toc-item a:hover,
+.dark-mode .custom-toc-item a.active {
+  background: rgba(255,255,255,0.1);
+}
+
+/* Indentation for nested items */
+.custom-toc-item.level-2 { padding-left: 0; }
+.custom-toc-item.level-3 { padding-left: 15px; }
+.custom-toc-item.level-4 { padding-left: 30px; }
+.custom-toc-item.level-5 { padding-left: 45px; }
+.custom-toc-item.level-6 { padding-left: 60px; }
+
 </style>
 
 <!-- Dark Mode Toggle -->
@@ -627,6 +706,12 @@
     <circle class="progress-ring__circle" stroke-width="2" fill="transparent" r="18" cx="20" cy="20"/>
   </svg>
   <i class="fas fa-arrow-up"></i>
+</div>
+
+<!-- Custom TOC Container -->
+<div class="custom-toc-container">
+  <div class="custom-toc-header">目录</div>
+  <ul class="custom-toc-list"></ul>
 </div>
 
 <script>
@@ -699,6 +784,78 @@
         behavior: 'smooth'
       });
     });
+  })();
+
+  // Custom TOC Logic
+  (function() {
+    var tocContainer = document.querySelector('.custom-toc-container');
+    var tocList = document.querySelector('.custom-toc-list');
+    var postBody = document.querySelector('.post-body'); // NexT's content container
+
+    if (!postBody) return; // Not a post page
+
+    var headings = postBody.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    if (headings.length === 0) return;
+
+    tocContainer.classList.add('show');
+
+    headings.forEach(function(heading, index) {
+      var id = heading.id || 'heading-' + index;
+      heading.id = id;
+
+      var level = parseInt(heading.tagName.charAt(1));
+      var li = document.createElement('li');
+      li.className = 'custom-toc-item level-' + level;
+
+      var a = document.createElement('a');
+      a.href = '#' + id;
+      a.textContent = heading.textContent;
+      
+      // Click to scroll smoothly
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector('#' + id).scrollIntoView({
+          behavior: 'smooth'
+        });
+        // Update URL hash without jumping
+        history.pushState(null, null, '#' + id);
+      });
+
+      li.appendChild(a);
+      tocList.appendChild(li);
+    });
+
+    // ScrollSpy
+    var tocLinks = tocList.querySelectorAll('a');
+    var scrollSpy = function() {
+      var fromTop = window.scrollY + 100; // Offset
+
+      var currentHeading = null;
+      headings.forEach(function(heading) {
+        if (heading.offsetTop <= fromTop) {
+          currentHeading = heading;
+        }
+      });
+
+      if (currentHeading) {
+        var id = currentHeading.id;
+        tocLinks.forEach(function(link) {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + id) {
+            link.classList.add('active');
+            // Auto scroll TOC container
+            var linkRect = link.getBoundingClientRect();
+            var containerRect = tocContainer.getBoundingClientRect();
+            if (linkRect.top < containerRect.top || linkRect.bottom > containerRect.bottom) {
+               link.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+          }
+        });
+      }
+    };
+
+    window.addEventListener('scroll', scrollSpy);
+    scrollSpy(); // Initial check
   })();
 </script>
 
