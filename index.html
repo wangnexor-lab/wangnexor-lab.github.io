@@ -371,8 +371,39 @@
   
 
   
+<style>
+.dark-mode-toggle {
+  position: fixed;
+  bottom: 80px; /* Adjusted to avoid overlap with back-to-top */
+  right: 20px;
+  z-index: 9999;
+  /* Fallback colors */
+  background: #eee;
+  border: 1px solid #333;
+  color: #333;
+  /* CSS Variables */
+  background: var(--body-bg-color);
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
+  
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 18px;
+}
+
+.dark-mode-toggle:hover {
+  transform: scale(1.1);
+}
+</style>
+
 <div class="dark-mode-toggle" title="Toggle Dark Mode">
-  <i class="fa fa-adjust"></i>
+  <i class="fas fa-adjust"></i>
 </div>
 
 <script>
@@ -382,10 +413,10 @@
 
     function updateIcon(isDark) {
       if (isDark) {
-        icon.className = 'fa fa-sun';
+        icon.className = 'fas fa-sun';
         toggle.title = "Switch to Light Mode";
       } else {
-        icon.className = 'fa fa-moon';
+        icon.className = 'fas fa-moon';
         toggle.title = "Switch to Dark Mode";
       }
     }

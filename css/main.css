@@ -1168,7 +1168,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #d77f09;
+  background: #88beff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2314,28 +2314,6 @@ embed {
 }
 .dark-mode img:hover {
   opacity: 0.9;
-}
-/* Dark Mode Toggle Button */
-.dark-mode-toggle {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9999;
-  background: var(--body-bg-color);
-  border: 1px solid var(--text-color);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s;
-  font-size: 18px;
-  color: var(--text-color);
-}
-.dark-mode-toggle:hover {
-  transform: scale(1.1);
 }
 /* Back to Top Button */
 .dark-mode .back-to-top {
