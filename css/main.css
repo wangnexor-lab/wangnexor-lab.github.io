@@ -1213,7 +1213,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #a68ccc;
+  background: #ffff40;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2286,7 +2286,98 @@ embed {
 .dark-mode .back-to-top:hover {
   color: var(--link-hover-color);
 }
-/* Code Blocks */
-.dark-mode .highlight {
-  filter: invert(1) hue-rotate(180deg);
+/* Code Blocks - Custom Highlighting */
+:root {
+  --highlight-background: #f7f7f7;
+  --highlight-current-line: #efefef;
+  --highlight-selection: #d6d6d6;
+  --highlight-foreground: #4d4d4c;
+  --highlight-comment: #8e908c;
+  --highlight-red: #c82829;
+  --highlight-orange: #f5871f;
+  --highlight-yellow: #eab700;
+  --highlight-green: #718c00;
+  --highlight-aqua: #3e999f;
+  --highlight-blue: #4271ae;
+  --highlight-purple: #8959a8;
+  --highlight-gutter-bg: #eff2f3;
+  --highlight-gutter-fg: #869194;
+}
+.dark-mode {
+  --highlight-background: #282c34;
+  --highlight-current-line: #3e4451;
+  --highlight-selection: #3e4451;
+  --highlight-foreground: #abb2bf;
+  --highlight-comment: #5c6370;
+  --highlight-red: #e06c75;
+  --highlight-orange: #d19a66;
+  --highlight-yellow: #e5c07b;
+  --highlight-green: #98c379;
+  --highlight-aqua: #56b6c2;
+  --highlight-blue: #61afef;
+  --highlight-purple: #c678dd;
+  --highlight-gutter-bg: #21252b;
+  --highlight-gutter-fg: #636d83;
+}
+.highlight {
+  background: var(--highlight-background) !important;
+  color: var(--highlight-foreground) !important;
+  border-radius: 5px;
+}
+.highlight .code pre {
+  background: var(--highlight-background) !important;
+  color: var(--highlight-foreground) !important;
+}
+.highlight .gutter pre {
+  background: var(--highlight-gutter-bg) !important;
+  color: var(--highlight-gutter-fg) !important;
+}
+.highlight .comment,
+.highlight .quote {
+  color: var(--highlight-comment) !important;
+  font-style: italic;
+}
+.highlight .variable,
+.highlight .template-variable,
+.highlight .attribute,
+.highlight .tag,
+.highlight .name,
+.highlight .regexp,
+.highlight .link,
+.highlight .selector-id,
+.highlight .selector-class {
+  color: var(--highlight-red) !important;
+}
+.highlight .number,
+.highlight .meta,
+.highlight .builtin,
+.highlight .builtin-name,
+.highlight .literal,
+.highlight .type,
+.highlight .params {
+  color: var(--highlight-orange) !important;
+}
+.highlight .string,
+.highlight .symbol,
+.highlight .bullet {
+  color: var(--highlight-green) !important;
+}
+.highlight .title,
+.highlight .section {
+  color: var(--highlight-yellow) !important;
+}
+.highlight .keyword,
+.highlight .selector-tag {
+  color: var(--highlight-purple) !important;
+}
+.highlight .emphasis {
+  font-style: italic;
+}
+.highlight .strong {
+  font-weight: bold;
+}
+/* Copy Button Fix */
+.highlight .copy-btn {
+  color: var(--highlight-foreground) !important;
+  background: var(--highlight-gutter-bg) !important;
 }
