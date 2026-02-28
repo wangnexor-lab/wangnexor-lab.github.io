@@ -1168,7 +1168,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #d934e8;
+  background: #67d1c7;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2288,4 +2288,64 @@ embed {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.dark-mode {
+  --body-bg-color: #282828;
+  --content-bg-color: #333;
+  --card-bg-color: #555;
+  --text-color: #ccc;
+  --blockquote-color: #bbb;
+  --link-color: #ccc;
+  --link-hover-color: #eee;
+  --brand-color: #ddd;
+  --brand-hover-color: #ddd;
+  --table-row-odd-bg-color: #282828;
+  --table-row-hover-bg-color: #363636;
+  --menu-item-bg-color: #555;
+  --btn-default-bg: #222;
+  --btn-default-color: #ccc;
+  --btn-default-border-color: #555;
+  --btn-default-hover-bg: #666;
+  --btn-default-hover-color: #ccc;
+  --btn-default-hover-border-color: #666;
+}
+.dark-mode img {
+  opacity: 0.75;
+}
+.dark-mode img:hover {
+  opacity: 0.9;
+}
+/* Dark Mode Toggle Button */
+.dark-mode-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  background: var(--body-bg-color);
+  border: 1px solid var(--text-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 18px;
+  color: var(--text-color);
+}
+.dark-mode-toggle:hover {
+  transform: scale(1.1);
+}
+/* Back to Top Button */
+.dark-mode .back-to-top {
+  background: var(--text-color);
+  color: var(--body-bg-color);
+}
+.dark-mode .back-to-top:hover {
+  color: var(--link-hover-color);
+}
+/* Code Blocks */
+.dark-mode .highlight {
+  filter: invert(1) hue-rotate(180deg);
 }
