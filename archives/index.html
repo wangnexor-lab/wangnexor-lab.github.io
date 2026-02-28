@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":false,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta property="og:type" content="website">
@@ -145,10 +145,6 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
 
 
     <main class="main">
@@ -353,20 +349,15 @@
 
   
 <style>
+/* Dark Mode Toggle */
 .dark-mode-toggle {
   position: fixed;
-  bottom: 80px; /* Adjusted to avoid overlap with back-to-top */
+  bottom: 80px; 
   right: 20px;
   z-index: 9999;
-  /* Fallback colors */
-  background: #eee;
-  border: 1px solid #333;
-  color: #333;
-  /* CSS Variables */
   background: var(--body-bg-color);
   border: 1px solid var(--text-color);
   color: var(--text-color);
-  
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -380,14 +371,75 @@
 
 .dark-mode-toggle:hover {
   transform: scale(1.1);
+  background: var(--text-color);
+  color: var(--body-bg-color);
+}
+
+/* Custom Back to Top */
+.custom-back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  background: var(--body-bg-color);
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+  font-size: 18px;
+}
+
+.custom-back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.custom-back-to-top:hover {
+  transform: translateY(-3px);
+  background: var(--text-color);
+  color: var(--body-bg-color);
+}
+
+.progress-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.progress-ring__circle {
+  transition: stroke-dashoffset 0.1s;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  stroke: var(--link-hover-color);
 }
 </style>
 
+<!-- Dark Mode Toggle -->
 <div class="dark-mode-toggle" title="Toggle Dark Mode">
   <i class="fas fa-adjust"></i>
 </div>
 
+<!-- Custom Back to Top -->
+<div class="custom-back-to-top" title="Back to Top">
+  <svg class="progress-ring" width="40" height="40">
+    <circle class="progress-ring__circle" stroke-width="2" fill="transparent" r="18" cx="20" cy="20"/>
+  </svg>
+  <i class="fas fa-arrow-up"></i>
+</div>
+
 <script>
+  // Dark Mode Logic
   (function() {
     var toggle = document.querySelector('.dark-mode-toggle');
     var icon = toggle.querySelector('i');
@@ -402,7 +454,6 @@
       }
     }
 
-    // Initial icon state
     var isDark = document.documentElement.classList.contains('dark-mode');
     updateIcon(isDark);
 
@@ -417,6 +468,45 @@
         localStorage.setItem('theme', 'dark');
         updateIcon(true);
       }
+    });
+  })();
+
+  // Back to Top Logic
+  (function() {
+    var backToTop = document.querySelector('.custom-back-to-top');
+    var circle = document.querySelector('.progress-ring__circle');
+    var radius = circle.r.baseVal.value;
+    var circumference = radius * 2 * Math.PI;
+
+    circle.style.strokeDasharray = `${circumference} ${circumference}`;
+    circle.style.strokeDashoffset = circumference;
+
+    function setProgress(percent) {
+      const offset = circumference - percent / 100 * circumference;
+      circle.style.strokeDashoffset = offset;
+    }
+
+    window.addEventListener('scroll', function() {
+      var scrollTop = window.scrollY;
+      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      var scrollPercent = (scrollTop / docHeight) * 100;
+
+      // Show/Hide button
+      if (scrollTop > 100) {
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+
+      // Update progress ring
+      setProgress(scrollPercent);
+    });
+
+    backToTop.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     });
   })();
 </script>
