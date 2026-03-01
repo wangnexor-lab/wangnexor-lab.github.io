@@ -479,10 +479,28 @@
   z-index: 9998;
   max-height: 70vh;
   overflow-y: auto;
-  transition: opacity 0.3s;
+  transition: all 0.3s;
   opacity: 0;
   visibility: hidden;
   font-size: 14px;
+}
+
+.custom-toc-container.collapsed {
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 1px solid var(--text-color);
+}
+
+.custom-toc-container.collapsed .custom-toc-header,
+.custom-toc-container.collapsed .custom-toc-list {
+  display: none;
 }
 
 /* Only show on large screens */
@@ -499,29 +517,98 @@
   padding-bottom: 5px;
   border-bottom: 1px solid var(--text-color);
   color: var(--link-hover-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
 }
 
-.custom-toc-list {
+.custom-toc-toggle-icon {
+  font-size: 12px;
+  transition: transform 0.3s;
+}
+
+.custom-toc-minimized-icon {
+  display: none;
+  font-size: 18px;
+  color: var(--text-color);
+}
+
+.custom-toc-container.collapsed .custom-toc-minimized-icon {
+  display: block;
+}
+
+.custom-toc-container.collapsed:hover {
+  background: var(--text-color);
+}
+
+.custom-toc-container.collapsed:hover .custom-toc-minimized-icon {
+  color: var(--body-bg-color);
+}
+
+/* Nested TOC Styles (Smoother Grid Animation) */
+.custom-toc-list ul {
   list-style: none;
-  padding: 0;
+  padding-left: 16px;
   margin: 0;
 }
 
+.toc-child-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.custom-toc-item.expanded > .toc-child-wrapper {
+  grid-template-rows: 1fr;
+}
+
+.toc-child-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
 .custom-toc-item {
-  margin-bottom: 5px;
-  line-height: 1.5;
+  position: relative;
+  margin-bottom: 2px;
+}
+
+.toc-item-content {
+  display: flex;
+  align-items: center;
+  padding: 2px 0;
+}
+
+.toc-arrow {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 10px;
+  color: var(--text-color);
+  margin-right: 4px;
+  flex-shrink: 0;
+  visibility: hidden;
+}
+
+.custom-toc-item.expanded > .toc-item-content > .toc-arrow {
+  transform: rotate(90deg);
 }
 
 .custom-toc-item a {
   text-decoration: none;
   color: var(--text-color);
   display: block;
-  padding: 2px 5px;
   border-radius: 3px;
   transition: all 0.2s;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  flex: 1;
 }
 
 .custom-toc-item a:hover,
@@ -535,12 +622,32 @@
   background: rgba(255,255,255,0.1);
 }
 
-/* Indentation for nested items */
-.custom-toc-item.level-2 { padding-left: 0; }
-.custom-toc-item.level-3 { padding-left: 15px; }
-.custom-toc-item.level-4 { padding-left: 30px; }
-.custom-toc-item.level-5 { padding-left: 45px; }
-.custom-toc-item.level-6 { padding-left: 60px; }
+/* Header Controls */
+.custom-toc-header-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.custom-toc-expand-all {
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--text-color);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}
+
+.custom-toc-expand-all:hover {
+  color: var(--link-hover-color);
+  transform: scale(1.1);
+}
 
 /* Click Effect */
 .click-effect {
@@ -578,8 +685,15 @@
 
 <!-- Custom TOC Container -->
 <div class="custom-toc-container">
-  <div class="custom-toc-header">目录</div>
+  <div class="custom-toc-header">
+    <span>目录</span>
+    <div class="custom-toc-header-controls">
+      <span class="custom-toc-expand-all" title="Expand All"><i class="fas fa-expand-arrows-alt"></i></span>
+      <i class="fas fa-minus custom-toc-toggle-icon"></i>
+    </div>
+  </div>
   <ul class="custom-toc-list"></ul>
+  <i class="fas fa-list-ul custom-toc-minimized-icon"></i>
 </div>
 
 <script>
@@ -659,21 +773,100 @@
     var tocContainer = document.querySelector('.custom-toc-container');
     var tocList = document.querySelector('.custom-toc-list');
     var postBody = document.querySelector('.post-body'); // NexT's content container
+    var tocHeader = document.querySelector('.custom-toc-header');
+    var minimizedIcon = document.querySelector('.custom-toc-minimized-icon');
 
     if (!postBody) return; // Not a post page
 
     var headings = postBody.querySelectorAll('h1, h2, h3, h4, h5, h6');
     if (headings.length === 0) return;
 
+    // Restore state
+    var isCollapsed = localStorage.getItem('toc-collapsed') === 'true';
+    if (isCollapsed) {
+      tocContainer.classList.add('collapsed');
+      tocContainer.title = "Expand TOC";
+    } else {
+      tocContainer.title = "Collapse TOC";
+    }
+
     tocContainer.classList.add('show');
+
+    // Toggle Logic (Main TOC)
+    function toggleTOC(e) {
+      if (e.target.closest('.custom-toc-expand-all')) return; // Ignore if expand all clicked
+
+      e.stopPropagation();
+      tocContainer.classList.toggle('collapsed');
+      var collapsed = tocContainer.classList.contains('collapsed');
+      localStorage.setItem('toc-collapsed', collapsed);
+      
+      if (collapsed) {
+        tocContainer.title = "Expand TOC";
+      } else {
+        tocContainer.title = "Collapse TOC";
+      }
+    }
+
+    tocHeader.addEventListener('click', toggleTOC);
+    minimizedIcon.addEventListener('click', toggleTOC);
+    // Also allow clicking the container when collapsed to expand
+    tocContainer.addEventListener('click', function(e) {
+      if (tocContainer.classList.contains('collapsed')) {
+        toggleTOC(e);
+      }
+    });
+
+    // Expand/Collapse All Logic
+    var expandAllBtn = document.querySelector('.custom-toc-expand-all');
+    var isAllExpanded = false;
+
+    expandAllBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      isAllExpanded = !isAllExpanded;
+      var items = tocList.querySelectorAll('.custom-toc-item');
+      
+      items.forEach(function(item) {
+        if (item.querySelector('.toc-child-wrapper')) {
+          if (isAllExpanded) {
+            item.classList.add('expanded');
+          } else {
+            item.classList.remove('expanded');
+          }
+        }
+      });
+      
+      if (isAllExpanded) {
+        expandAllBtn.innerHTML = '<i class="fas fa-compress-arrows-alt"></i>';
+        expandAllBtn.title = "Collapse All";
+      } else {
+        expandAllBtn.innerHTML = '<i class="fas fa-expand-arrows-alt"></i>';
+        expandAllBtn.title = "Expand All";
+      }
+    });
+
+    // Nested TOC Generation
+    var stack = [{ul: tocList, level: 0}]; // Root accepts anything
 
     headings.forEach(function(heading, index) {
       var id = heading.id || 'heading-' + index;
       heading.id = id;
 
       var level = parseInt(heading.tagName.charAt(1));
+      
       var li = document.createElement('li');
       li.className = 'custom-toc-item level-' + level;
+
+      var div = document.createElement('div');
+      div.className = 'toc-item-content';
+
+      var arrow = document.createElement('i');
+      arrow.className = 'fas fa-chevron-right toc-arrow';
+      
+      arrow.addEventListener('click', function(e) {
+        e.stopPropagation();
+        li.classList.toggle('expanded');
+      });
 
       var a = document.createElement('a');
       a.href = '#' + id;
@@ -685,12 +878,54 @@
         document.querySelector('#' + id).scrollIntoView({
           behavior: 'smooth'
         });
-        // Update URL hash without jumping
         history.pushState(null, null, '#' + id);
       });
 
-      li.appendChild(a);
-      tocList.appendChild(li);
+      div.appendChild(arrow);
+      div.appendChild(a);
+      li.appendChild(div);
+
+      // Stack Logic
+      if (level > stack[stack.length - 1].level) {
+        // Go deeper
+        var parentUl = stack[stack.length - 1].ul;
+        var lastLi = parentUl.lastElementChild;
+        if (lastLi) {
+          // Create Grid Wrapper
+          var wrapper = document.createElement('div');
+          wrapper.className = 'toc-child-wrapper';
+          
+          var inner = document.createElement('div');
+          inner.className = 'toc-child-inner';
+          
+          var newUl = document.createElement('ul');
+          inner.appendChild(newUl);
+          wrapper.appendChild(inner);
+          
+          lastLi.appendChild(wrapper);
+          
+          stack.push({ul: newUl, level: level});
+          
+          // Show arrow on parent
+          var parentArrow = lastLi.querySelector('.toc-arrow');
+          if (parentArrow) parentArrow.style.visibility = 'visible';
+          
+          // Expand only top-level items by default, collapse others
+          if (stack[stack.length - 1].level <= 1) { // Changed to <= 1 to expand H1 by default (showing H2)
+             lastLi.classList.add('expanded');
+          }
+        } else {
+          // Should only happen if structure is weird (e.g. H2 before H1)
+          // Just append to current
+        }
+      } else {
+        // Go up or stay same
+        while (stack.length > 1 && stack[stack.length - 1].level >= level) {
+          stack.pop();
+        }
+      }
+      
+      stack[stack.length - 1].ul.appendChild(li);
     });
 
     // ScrollSpy
@@ -711,6 +946,14 @@
           link.classList.remove('active');
           if (link.getAttribute('href') === '#' + id) {
             link.classList.add('active');
+            
+            // Expand parents
+            var parentItem = link.closest('.custom-toc-item');
+            while (parentItem) {
+              parentItem.classList.add('expanded');
+              parentItem = parentItem.parentElement.closest('.custom-toc-item');
+            }
+
             // Auto scroll TOC container
             var linkRect = link.getBoundingClientRect();
             var containerRect = tocContainer.getBoundingClientRect();
