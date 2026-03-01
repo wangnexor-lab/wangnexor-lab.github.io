@@ -20,15 +20,19 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":false,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="N3x0r&#39;s Blog">
-<meta property="og:url" content="http://example.com/archives/2026/02/index.html">
+  <meta name="description" content="SCORE         0                       BEST         0                 New Game">
+<meta property="og:type" content="website">
+<meta property="og:title" content="2048 游戏">
+<meta property="og:url" content="http://example.com/games/2048/index.html">
 <meta property="og:site_name" content="N3x0r&#39;s Blog">
+<meta property="og:description" content="SCORE         0                       BEST         0                 New Game">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-03-01T06:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-01T06:31:28.782Z">
 <meta property="article:author" content="N3x0r">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/archives/2026/02/">
+<link rel="canonical" href="http://example.com/games/2048/">
 
 
 <script id="page-configurations">
@@ -58,7 +62,8 @@
   }
 </style>
 
-  <title>Archive | N3x0r's Blog</title>
+  <title>2048 游戏 | N3x0r's Blog
+</title>
   
 
 
@@ -156,73 +161,616 @@
       <div class="main-inner">
         <div class="content-wrap">
           
+  
+  
 
-          <div class="content archive">
+          <div class="content page posts-expand">
             
 
+    
+    
+    
+    <div class="post-block" lang="en">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">2048 游戏
+</h1>
+
+<div class="post-meta">
   
-  
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">Um..! 2 posts in total. Keep on posting.</span>
-      </div>
+  <ul class="breadcrumb">
+          
+            <li><a href="/games/">GAMES</a></li>
+          <li>2048</li>
+        
+  </ul>
+
+</div>
+
+</header>
 
       
-    <div class="collection-year">
-      <span class="collection-header">2026</span>
+      
+      
+      <div class="post-body">
+          <div id="game-container">
+  <div class="game-header">
+    <div class="score-container">
+      <div class="score-box">
+        <span class="score-label">SCORE</span>
+        <span id="score">0</span>
+      </div>
+      <div class="best-container">
+        <span class="score-label">BEST</span>
+        <span id="best-score">0</span>
+      </div>
     </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2026-02-27T19:05:51+08:00"
-              content="2026-02-27">
-          02-27
-        </time>
+    <button id="new-game-btn">New Game</button>
+  </div>
+  
+  <div class="game-board">
+    <div class="grid-container">
+      <div class="grid-row">
+        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
       </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2026/02/27/%E6%88%91%E7%9A%84blog%E5%BC%80%E5%BC%A0%E4%BA%86%EF%BC%81/" itemprop="url">
-            <span itemprop="name">第一篇blog</span>
-          </a>
+      <div class="grid-row">
+        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
       </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2026-02-27T19:05:51+08:00"
-              content="2026-02-27">
-          02-27
-        </time>
+      <div class="grid-row">
+        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
       </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2026/02/27/%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%B5%8B%E8%AF%95blog/" itemprop="url">
-            <span itemprop="name">第二篇blog</span>
-          </a>
+      <div class="grid-row">
+        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
       </div>
-
-    </header>
-  </article>
-
-
+    </div>
+    <div class="tile-container"></div>
+    <div class="game-message">
+      <p></p>
+      <div class="lower">
+        <a class="keep-playing-button">Keep going</a>
+        <a class="retry-button">Try again</a>
+      </div>
     </div>
   </div>
   
-  
-  
+  <div class="game-explanation">
+    <p><strong>How to play:</strong> Use your <strong>arrow keys</strong> to move the tiles. When two tiles with the same number touch, they <strong>merge into one!</strong></p>
+  </div>
+</div>
 
-  
+<style>
+  /* Game Styles */
+  #game-container {
+    max-width: 500px;
+    margin: 0 auto;
+    font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+    user-select: none;
+  }
 
+  .game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .score-container {
+    display: flex;
+    gap: 10px;
+  }
+
+  .score-box, .best-container {
+    background: #bbada0;
+    padding: 5px 15px;
+    border-radius: 3px;
+    color: white;
+    text-align: center;
+    min-width: 60px;
+  }
+
+  .score-label {
+    display: block;
+    font-size: 13px;
+    color: #eee4da;
+    text-transform: uppercase;
+  }
+
+  #score, #best-score {
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  #new-game-btn {
+    background: #8f7a66;
+    border-radius: 3px;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+  }
+  
+  #new-game-btn:hover {
+    background: #9f8b77;
+  }
+
+  .game-board {
+    position: relative;
+    padding: 15px;
+    background: #bbada0;
+    border-radius: 6px;
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%; /* Aspect ratio 1:1 */
+    box-sizing: border-box;
+    margin-bottom: 20px;
+  }
+
+  .grid-container {
+    position: absolute;
+    z-index: 1;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+  }
+
+  .grid-row {
+    margin-bottom: 15px;
+    height: calc((100% - 45px) / 4);
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .grid-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .grid-cell {
+    width: calc((100% - 45px) / 4);
+    height: 100%;
+    background: rgba(238, 228, 218, 0.35);
+    border-radius: 3px;
+  }
+
+  .tile-container {
+    position: absolute;
+    z-index: 2;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+  }
+
+  .tile {
+    position: absolute;
+    width: calc((100% - 45px) / 4);
+    height: calc((100% - 45px) / 4); /* Same as row height */
+    background: #eee4da;
+    border-radius: 3px;
+    text-align: center;
+    font-weight: bold;
+    z-index: 10;
+    font-size: 35px; /* Adjust based on size */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 100ms ease-in-out, left 100ms ease-in-out, top 100ms ease-in-out;
+    color: #776e65;
+  }
+  
+  /* Tile Colors */
+  .tile-2 { background: #eee4da; }
+  .tile-4 { background: #ede0c8; }
+  .tile-8 { background: #f2b179; color: #f9f6f2; }
+  .tile-16 { background: #f59563; color: #f9f6f2; }
+  .tile-32 { background: #f67c5f; color: #f9f6f2; }
+  .tile-64 { background: #f65e3b; color: #f9f6f2; }
+  .tile-128 { background: #edcf72; color: #f9f6f2; font-size: 30px; }
+  .tile-256 { background: #edcc61; color: #f9f6f2; font-size: 30px; }
+  .tile-512 { background: #edc850; color: #f9f6f2; font-size: 30px; }
+  .tile-1024 { background: #edc53f; color: #f9f6f2; font-size: 25px; }
+  .tile-2048 { background: #edc22e; color: #f9f6f2; font-size: 25px; }
+  
+  .tile-new {
+    animation: appear 200ms ease 100ms;
+    animation-fill-mode: backwards;
+  }
+  
+  .tile-merged {
+    z-index: 20;
+    animation: pop 200ms ease 100ms;
+    animation-fill-mode: backwards;
+  }
+
+  @keyframes appear {
+    0% { opacity: 0; transform: scale(0); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+  
+  .game-message {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(238, 228, 218, 0.73);
+    z-index: 100;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .game-message p {
+    font-size: 60px;
+    font-weight: bold;
+    height: 60px;
+    line-height: 60px;
+    margin-bottom: 20px;
+    color: #776e65;
+  }
+  
+  .game-message.game-won {
+    background: rgba(237, 194, 46, 0.5);
+    color: #f9f6f2;
+  }
+  
+  .game-message.game-won p {
+    color: #f9f6f2;
+  }
+  
+  .game-message.game-over p {
+    color: #776e65;
+  }
+  
+  .game-message .lower {
+    display: block;
+    margin-top: 20px;
+  }
+  
+  .game-message a {
+    display: inline-block;
+    background: #8f7a66;
+    border-radius: 3px;
+    padding: 0 20px;
+    text-decoration: none;
+    color: #f9f6f2;
+    height: 40px;
+    line-height: 40px;
+    cursor: pointer;
+    margin-left: 9px;
+  }
+  
+  /* Mobile Responsiveness */
+  @media screen and (max-width: 520px) {
+    .tile {
+      font-size: 20px;
+    }
+    .tile-128, .tile-256, .tile-512 { font-size: 18px; }
+    .tile-1024, .tile-2048 { font-size: 15px; }
+    
+    .game-message p {
+      font-size: 30px;
+      height: 30px;
+      line-height: 30px;
+    }
+  }
+</style>
+
+<script>
+(function() {
+  var gameContainer = document.getElementById('game-container');
+  var tileContainer = document.querySelector('.tile-container');
+  var scoreDisplay = document.getElementById('score');
+  var bestDisplay = document.getElementById('best-score');
+  var messageContainer = document.querySelector('.game-message');
+  var messageText = messageContainer.querySelector('p');
+  var retryButton = document.querySelector('.retry-button');
+  var keepPlayingButton = document.querySelector('.keep-playing-button');
+  var newGameBtn = document.getElementById('new-game-btn');
+
+  var size = 4;
+  var grid = [];
+  var score = 0;
+  var bestScore = localStorage.getItem('bestScore') || 0;
+  var won = false;
+  var keepPlaying = false;
+  var touchStartClientX, touchStartClientY;
+
+  bestDisplay.textContent = bestScore;
+
+  function init() {
+    grid = Array(size).fill().map(() => Array(size).fill(null));
+    score = 0;
+    won = false;
+    keepPlaying = false;
+    updateScore(0);
+    tileContainer.innerHTML = '';
+    messageContainer.style.display = 'none';
+    
+    addRandomTile();
+    addRandomTile();
+    drawGrid();
+  }
+
+  function addRandomTile() {
+    var emptyCells = [];
+    for (var r = 0; r < size; r++) {
+      for (var c = 0; c < size; c++) {
+        if (!grid[r][c]) emptyCells.push({r: r, c: c});
+      }
+    }
+    if (emptyCells.length > 0) {
+      var cell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+      var value = Math.random() < 0.9 ? 2 : 4;
+      grid[cell.r][cell.c] = { value: value, id: Date.now() + Math.random() };
+      // Mark as new for animation
+      grid[cell.r][cell.c].new = true;
+      return true;
+    }
+    return false;
+  }
+
+  function drawGrid() {
+    var existingTiles = Array.from(tileContainer.querySelectorAll('.tile'));
+    var newIds = new Set();
+    
+    for (var r = 0; r < size; r++) {
+      for (var c = 0; c < size; c++) {
+        if (grid[r][c]) {
+          newIds.add(String(grid[r][c].id));
+          syncTileToDom(r, c, grid[r][c]);
+        }
+      }
+    }
+    
+    // Remove tiles that are no longer in grid
+    existingTiles.forEach(function(el) {
+      if (!newIds.has(el.getAttribute('data-id'))) {
+        tileContainer.removeChild(el);
+      }
+    });
+  }
+
+  function syncTileToDom(r, c, tile) {
+    var element = tileContainer.querySelector('.tile[data-id="' + tile.id + '"]');
+    var isNew = !element;
+    
+    if (isNew) {
+      element = document.createElement('div');
+      element.setAttribute('data-id', tile.id);
+      tileContainer.appendChild(element);
+    }
+
+    var baseClass = 'tile tile-' + tile.value;
+    if (tile.merged) {
+       baseClass += ' tile-merged';
+       tile.merged = false; 
+    } else if (tile.new) {
+       baseClass += ' tile-new';
+       tile.new = false;
+    }
+    
+    if (element.className !== baseClass) {
+        element.className = baseClass;
+    }
+    
+    element.textContent = tile.value;
+    
+    element.style.left = 'calc(' + c + ' * ((100% - 45px) / 4 + 15px))';
+    element.style.top = 'calc(' + r + ' * ((100% - 45px) / 4 + 15px))';
+  }
+
+  function updateScore(add) {
+    score += add;
+    scoreDisplay.textContent = score;
+    if (score > bestScore) {
+      bestScore = score;
+      bestDisplay.textContent = bestScore;
+      localStorage.setItem('bestScore', bestScore);
+    }
+  }
+
+  function move(direction) {
+    // 0: up, 1: right, 2: down, 3: left
+    var rotated = false;
+    var moved = false;
+    
+    // Rotate grid to simplify logic (always move left)
+    // 0 (Up) -> rotate left (to make Up point Left) -> process -> rotate right
+    // Actually:
+    // Up: rotate 3 times (270 deg) -> Left
+    // Right: rotate 2 times (180 deg) -> Left
+    // Down: rotate 1 time (90 deg) -> Left
+    // Left: 0 times
+    
+    var rotations = 0;
+    if (direction === 0) rotations = 1; // Up -> Rotate Left 1 time
+    if (direction === 1) rotations = 2; // Right -> Rotate Left 2 times
+    if (direction === 2) rotations = 3; // Down -> Rotate Left 3 times
+    
+    for (var i = 0; i < rotations; i++) grid = rotateLeft(grid);
+    
+    // Process move left
+    for (var r = 0; r < size; r++) {
+      var row = grid[r];
+      var newRow = row.filter(val => val); // remove nulls
+      
+      // Merge
+      for (var c = 0; c < newRow.length - 1; c++) {
+        if (newRow[c].value === newRow[c+1].value) {
+          newRow[c].value *= 2;
+          newRow[c].merged = true;
+          updateScore(newRow[c].value);
+          if (newRow[c].value === 2048 && !won && !keepPlaying) {
+            gameWon();
+          }
+          newRow[c+1] = null;
+          c++; // skip next
+        }
+      }
+      newRow = newRow.filter(val => val); // remove nulls again
+      
+      // Pad with nulls
+      while (newRow.length < size) newRow.push(null);
+      
+      if (JSON.stringify(row) !== JSON.stringify(newRow)) moved = true;
+      grid[r] = newRow;
+    }
+    
+    // Rotate back
+    var backRotations = (4 - rotations) % 4;
+    for (var i = 0; i < backRotations; i++) grid = rotateLeft(grid);
+    
+    if (moved) {
+      addRandomTile();
+      drawGrid();
+      if (isGameOver()) {
+        gameOver();
+      }
+    }
+  }
+
+  function rotateLeft(matrix) {
+    var rows = matrix.length;
+    var cols = matrix[0].length;
+    var res = Array(cols).fill().map(() => Array(rows).fill(null));
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols; c++) {
+        res[cols - 1 - c][r] = matrix[r][c];
+      }
+    }
+    return res;
+  }
+
+  function isGameOver() {
+    for (var r = 0; r < size; r++) {
+      for (var c = 0; c < size; c++) {
+        if (!grid[r][c]) return false;
+        if (c < size - 1 && grid[r][c].value === grid[r][c+1].value) return false;
+        if (r < size - 1 && grid[r][c].value === grid[r+1][c].value) return false;
+      }
+    }
+    return true;
+  }
+
+  function gameWon() {
+    won = true;
+    messageText.textContent = 'You Win!';
+    messageContainer.className = 'game-message game-won';
+    messageContainer.style.display = 'flex';
+  }
+
+  function gameOver() {
+    messageText.textContent = 'Game Over!';
+    messageContainer.className = 'game-message game-over';
+    messageContainer.style.display = 'flex';
+  }
+
+  // Event Listeners
+  document.addEventListener('keydown', function(event) {
+    if (messageContainer.style.display === 'flex' && !won) return;
+    
+    var map = {
+      38: 0, // Up
+      39: 1, // Right
+      40: 2, // Down
+      37: 3, // Left
+      75: 0, // Vim k
+      76: 1, // Vim l
+      74: 2, // Vim j
+      72: 3, // Vim h
+      87: 0, // W
+      68: 1, // D
+      83: 2, // S
+      65: 3  // A
+    };
+    
+    var modifiers = event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
+    var direction = map[event.which];
+
+    if (!modifiers && direction !== undefined) {
+      event.preventDefault();
+      move(direction);
+    }
+  });
+
+  retryButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    init();
+  });
+
+  keepPlayingButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    keepPlaying = true;
+    messageContainer.style.display = 'none';
+  });
+
+  newGameBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    init();
+  });
+
+  // Touch support
+  gameContainer.addEventListener('touchstart', function(event) {
+    if (event.touches.length > 1) return;
+    touchStartClientX = event.touches[0].clientX;
+    touchStartClientY = event.touches[0].clientY;
+    // event.preventDefault(); // Don't prevent default here to allow scrolling if not swiping
+  }, {passive: false});
+
+  gameContainer.addEventListener('touchmove', function(event) {
+    event.preventDefault();
+  }, {passive: false});
+
+  gameContainer.addEventListener('touchend', function(event) {
+    if (event.touches.length > 0) return;
+    var touchEndClientX = event.changedTouches[0].clientX;
+    var touchEndClientY = event.changedTouches[0].clientY;
+
+    var dx = touchEndClientX - touchStartClientX;
+    var dy = touchEndClientY - touchStartClientY;
+    var absDx = Math.abs(dx);
+    var absDy = Math.abs(dy);
+
+    if (Math.max(absDx, absDy) > 10) {
+      // (right : left) : (down : up)
+      var direction = absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0);
+      move(direction);
+    }
+  });
+
+  init();
+})();
+</script>
+
+      </div>
+      
+      
+      
+    </div>
+    
+  <ul class="breadcrumb">
+          
+            <li><a href="/games/">GAMES</a></li>
+          <li>2048</li>
+        
+  </ul>
+
+    
+    
+    
 
 
           </div>
