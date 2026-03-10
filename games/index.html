@@ -834,8 +834,10 @@
       }
     });
 
-    // Nested TOC Generation
-    var stack = [{ul: tocList, level: 0}]; // Root accepts anything
+    // Nested TOC Generation (robust stack-based)
+    // Each stack item: { ul: HTMLUListElement, level: headingLevelContainedInUL }
+    var stack = [{ ul: tocList, level: 0 }];
+    var currentLevel = 0;
 
     headings.forEach(function(heading, index) {
       var id = heading.id || 'heading-' + index;
@@ -874,48 +876,42 @@
       div.appendChild(a);
       li.appendChild(div);
 
-      // Stack Logic
-      if (level > stack[stack.length - 1].level) {
-        // Go deeper
+      // Adjust stack for current heading level
+      // Pop while current UL level is deeper or equal to the incoming heading level
+      while (stack.length > 1 && stack[stack.length - 1].level >= level) {
+        stack.pop();
+      }
+
+      // If we need to go deeper, create a child UL under the last LI of current UL
+      // Never nest H1 (level === 1); all H1 must be siblings at root.
+      if (level > stack[stack.length - 1].level && level !== 1) {
         var parentUl = stack[stack.length - 1].ul;
-        var lastLi = parentUl.lastElementChild;
-        if (lastLi) {
-          // Create Grid Wrapper
+        var lastLiForNest = parentUl.lastElementChild;
+        if (lastLiForNest) {
           var wrapper = document.createElement('div');
           wrapper.className = 'toc-child-wrapper';
-          
           var inner = document.createElement('div');
           inner.className = 'toc-child-inner';
-          
-          var newUl = document.createElement('ul');
-          inner.appendChild(newUl);
+          var childUl = document.createElement('ul');
+          inner.appendChild(childUl);
           wrapper.appendChild(inner);
-          
-          lastLi.appendChild(wrapper);
-          
-          stack.push({ul: newUl, level: level});
-          
+          lastLiForNest.appendChild(wrapper);
+
           // Show arrow on parent
-          var parentArrow = lastLi.querySelector('.toc-arrow');
-          if (parentArrow) parentArrow.style.visibility = 'visible';
-          
-          // Expand only top-level items by default, collapse others
-          if (stack[stack.length - 1].level <= 1) { // Changed to <= 1 to expand H1 by default (showing H2)
-             lastLi.classList.add('expanded');
-          }
-        } else {
-          // Should only happen if structure is weird (e.g. H2 before H1)
-          // Just append to current
-        }
-      } else {
-        // Go up while current nesting level is deeper than needed
-        // Keep same level items under the same parent (do NOT pop on equal)
-        while (stack.length > 1 && stack[stack.length - 1].level > level) {
-          stack.pop();
-        }
+          var pArrow = lastLiForNest.querySelector('.toc-arrow');
+          if (pArrow) pArrow.style.visibility = 'visible';
+          // Expand top-level parents by default (show H2 under H1)
+          var parentLevelMatch2 = lastLiForNest.className.match(/level-(\d)/);
+          var parentLvl = parentLevelMatch2 ? parseInt(parentLevelMatch2[1]) : 0;
+          if (parentLvl <= 1) lastLiForNest.classList.add('expanded');
+
+          stack.push({ ul: childUl, level: level });
+        } // if no last li, we keep current UL and do not descend
       }
       
+      // Append current item to the current UL (after potential descent/pop)
       stack[stack.length - 1].ul.appendChild(li);
+      currentLevel = level;
     });
 
     // ScrollSpy
