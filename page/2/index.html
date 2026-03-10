@@ -22,20 +22,20 @@
 
   <meta property="og:type" content="website">
 <meta property="og:title" content="N3x0r&#39;s Blog">
-<meta property="og:url" content="http://example.com/archives/2026/index.html">
+<meta property="og:url" content="http://example.com/page/2/index.html">
 <meta property="og:site_name" content="N3x0r&#39;s Blog">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="N3x0r">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/archives/2026/">
+<link rel="canonical" href="http://example.com/page/2/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : false,
+    isHome : true,
     isPost : false,
     lang   : 'en'
   };
@@ -58,7 +58,7 @@
   }
 </style>
 
-  <title>Archive | N3x0r's Blog</title>
+  <title>N3x0r's Blog</title>
   
 
 
@@ -162,71 +162,99 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/27/Linux%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C/">
 
-  
-  
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">Um..! 2 posts in total. Keep on posting.</span>
-      </div>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="N3x0r">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="N3x0r's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2026/02/27/Linux%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">Linux基础指令操作</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2026-02-27 19:05:51" itemprop="dateCreated datePublished" datetime="2026-02-27T19:05:51+08:00">2026-02-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-03-10 13:22:31" itemprop="dateModified" datetime="2026-03-10T13:22:31+08:00">2026-03-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2026</span>
+          <h1 id="Linux-操作系统介绍"><a href="#Linux-操作系统介绍" class="headerlink" title="Linux 操作系统介绍"></a>Linux 操作系统介绍</h1><p>Linux是一款开源的操作系统，它的内核由Linus Torvalds于1991年创建。Linux系统的设计目标是提供一个稳定、安全、高效的操作系统，同时也提供了一个开放的平台，使开发人员可以自由地开发和修改操作系统的代码。Linux系统常常被用于各种服务器端应用，如Web服务器、数据库服务器等。在我们日后pwn的过程中，会用到很多Linux系统的指令操作，如文件操作、进程管理、网络配置等。因此，掌握Linux系统的指令操作是非常必要的。（ps：MacOS系统与Linux相似，因为都是Unix内核）</p>
+<h1 id="Linux-操作系统的特点"><a href="#Linux-操作系统的特点" class="headerlink" title="Linux 操作系统的特点"></a>Linux 操作系统的特点</h1><ul>
+<li>一切皆文件：在Linux系统中，所有的设备、文件、目录、进程等都被视为文件。这使得Linux系统的文件操作非常灵活和方便。</li>
+<li>权限严格：在Linux系统中，每个文件和目录都有自己的权限设置。这些权限可以控制谁可以读取、写入或执行文件。</li>
+<li>命令行就是本体：图形界面都是装饰，命令行才是Linux系统的核心。</li>
+</ul>
+<h1 id="Linux-常用版本（学习pwn必备）"><a href="#Linux-常用版本（学习pwn必备）" class="headerlink" title="Linux 常用版本（学习pwn必备）"></a>Linux 常用版本（学习pwn必备）</h1><ul>
+<li>Ubuntu：新手友好，但不适用于网安学习。</li>
+<li>Kali Linux：专为渗透测试和网络安全而设计，包含了许多常用的渗透测试工具。</li>
+<li>CentOS&#x2F;Rocky：企业级Linux发行版，稳定性和安全性较高。</li>
+<li>Parrot Security OS：基于Debian的操作系统，专注于网络安全和渗透测试。</li>
+<li>Debian：很多服务器用，应该有所了解。</li>
+<li>Arch：Linux终极形态，一切都可以自定义，适合有一定Linux基础的人，让系统变成你喜欢的样子，鼠标将变成摆设，键盘将变成你的一切。</li>
+</ul>
+<h1 id="Linux-文件系统"><a href="#Linux-文件系统" class="headerlink" title="Linux 文件系统"></a>Linux 文件系统</h1>
+      
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2026-02-27T19:05:51+08:00"
-              content="2026-02-27">
-          02-27
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2026/02/27/Hello%20World/" itemprop="url">
-            <span itemprop="name">Hello World!</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2026-02-27T19:05:51+08:00"
-              content="2026-02-27">
-          02-27
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2026/02/27/Linux%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C/" itemprop="url">
-            <span itemprop="name">Linux基础指令操作</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+      <footer class="post-footer">
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2026/02/27/Hello%20World/" rel="next" title="Hello World!">
+      Hello World! <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
-  </div>
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
   
   
 
+
   
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
 
 
 
