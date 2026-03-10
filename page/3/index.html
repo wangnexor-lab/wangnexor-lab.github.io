@@ -22,13 +22,13 @@
 
   <meta property="og:type" content="website">
 <meta property="og:title" content="N3x0r&#39;s Blog">
-<meta property="og:url" content="http://example.com/page/2/index.html">
+<meta property="og:url" content="http://example.com/page/3/index.html">
 <meta property="og:site_name" content="N3x0r&#39;s Blog">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="N3x0r">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/page/2/">
+<link rel="canonical" href="http://example.com/page/3/">
 
 
 <script id="page-configurations">
@@ -168,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/27/Hello%20World/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/27/Linux%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -182,7 +182,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2026/02/27/Hello%20World/" class="post-title-link" itemprop="url">Hello World!</a>
+            <a href="/2026/02/27/Linux%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">Linux基础指令操作</a>
         </h2>
 
         <div class="post-meta">
@@ -199,7 +199,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-03-10 13:21:33" itemprop="dateModified" datetime="2026-03-10T13:21:33+08:00">2026-03-10</time>
+                <time title="Modified: 2026-03-10 23:13:59" itemprop="dateModified" datetime="2026-03-10T23:13:59+08:00">2026-03-10</time>
               </span>
 
           
@@ -213,28 +213,143 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="大家好！我是N3x0r！一个立志成为PWN大手子的大一学生。"><a href="#大家好！我是N3x0r！一个立志成为PWN大手子的大一学生。" class="headerlink" title="大家好！我是N3x0r！一个立志成为PWN大手子的大一学生。"></a>大家好！我是N3x0r！一个立志成为PWN大手子的大一学生。</h1><p>作为一个0基础学习PWN（二进制漏洞挖掘与利用）技术的学生，我深切的体会到了PWN入门的困难，我希望能通过我的blog，让更多新的PWNer能够更快更好更轻松的入门。本篇只做简单的介绍，后续会有更多的分享。</p>
-<h1 id="什么是PWN？"><a href="#什么是PWN？" class="headerlink" title="什么是PWN？"></a>什么是PWN？</h1><p>PWN（二进制漏洞挖掘与利用）是指利用二进制程序中的漏洞，通过注入恶意代码，实现对目标系统的控制。PWN技术在安全领域中具有重要的意义，因为它可以被用于攻击和防御系统。而在CTF竞赛中，PWN题目通常需要选手对内存进行破坏（栈溢出，堆利用等等）拿到shell，最终获得flag。</p>
-<h1 id="PWN到底难在哪？"><a href="#PWN到底难在哪？" class="headerlink" title="PWN到底难在哪？"></a>PWN到底难在哪？</h1><h2 id="1-知识基础"><a href="#1-知识基础" class="headerlink" title="1. 知识基础"></a>1. 知识基础</h2><p>PWN技术需要掌握一定的知识基础，包括但不限于：</p>
-<ul>
-<li>二进制基础</li>
-<li>内存管理</li>
-<li>逆向工程基础</li>
-<li>汇编语言基础</li>
-<li>操作系统原理</li>
-<li>C语言基础</li>
+          <h1 id="Linux-操作系统介绍"><a href="#Linux-操作系统介绍" class="headerlink" title="Linux 操作系统介绍"></a>Linux 操作系统介绍</h1><p>Linux是一款开源的操作系统，它的内核由Linus Torvalds于1991年创建。Linux系统的设计目标是提供一个稳定、安全、高效的操作系统，同时也提供了一个开放的平台，使开发人员可以自由地开发和修改操作系统的代码。Linux系统常常被用于各种服务器端应用，如Web服务器、数据库服务器等。在我们日后pwn的过程中，会用到很多Linux系统的指令操作，如文件操作、进程管理、网络配置等。因此，掌握Linux系统的指令操作是非常必要的。（ps：MacOS系统与Linux指令高度相似，因为MacOS是Unix内核,而Linux是类Unix系统）</p>
+<h1 id="Linux-操作系统的特点"><a href="#Linux-操作系统的特点" class="headerlink" title="Linux 操作系统的特点"></a>Linux 操作系统的特点</h1><ul>
+<li>一切皆文件：在Linux系统中，所有的设备、文件、目录、进程等都被视为文件。这使得Linux系统的文件操作非常灵活和方便。</li>
+<li>权限严格：在Linux系统中，每个文件和目录都有自己的权限设置。这些权限可以控制谁可以读取、写入或执行文件。</li>
+<li>命令行就是本体：图形界面都是装饰，命令行才是Linux系统的核心。</li>
 </ul>
-<p>往往当你学习这些很多前置基础之后，你才开始慢慢有做题挖洞的能力。</p>
-<h2 id="2-进步往往不可视"><a href="#2-进步往往不可视" class="headerlink" title="2. 进步往往不可视"></a>2. 进步往往不可视</h2><p>你可能注意到了，自己队伍中的Web手，Misc手很快就可以开始做题，但是pwn手往往需要经过很长时间才拥有做题的能力，有时学了很多却看不到自己的进步。</p>
-<h1 id="如何学好PWN？"><a href="#如何学好PWN？" class="headerlink" title="如何学好PWN？"></a>如何学好PWN？</h1><h2 id="1-最重要的一点：你需要对计算机底层逻辑的真正热爱和理解"><a href="#1-最重要的一点：你需要对计算机底层逻辑的真正热爱和理解" class="headerlink" title="1. 最重要的一点：你需要对计算机底层逻辑的真正热爱和理解"></a>1. 最重要的一点：你需要对计算机底层逻辑的真正热爱和理解</h2><p>学习pwn，内容多而枯燥，但是一旦你对计算机底层逻辑有了真正的热爱和理解，你就会发现pwn技术其实并不那么难学。也只有真正热爱pwn，才能成为一个真正优秀的pwn手。</p>
-<h2 id="2-利用好学习资源"><a href="#2-利用好学习资源" class="headerlink" title="2. 利用好学习资源"></a>2. 利用好学习资源</h2><p>pwn的入门学习一个很大的难点就是入门资源的获取，往往一个不错的高校里会有很多热情的学长学姐，他们会分享自己的学习经验，帮助新手入门。也有很多在线的学习平台和靶场，这些平台都有很多优秀的pwner分享自己的学习经验和不错的题目。<br>下面分享几个比较好的学习资源：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://pwn.college/">pwn.college</a></li>
-<li><a target="_blank" rel="noopener" href="https://ctf-wiki.org/">CTF Wiki</a></li>
-<li><a target="_blank" rel="noopener" href="https://archer-baiyi.github.io/2025/05/12/CTF/Pwn/Pwn%E5%85%A5%E9%97%A8/">白衣卿相的个人博客</a></li>
+<h1 id="Linux-常用版本（学习pwn必备）"><a href="#Linux-常用版本（学习pwn必备）" class="headerlink" title="Linux 常用版本（学习pwn必备）"></a>Linux 常用版本（学习pwn必备）</h1><ul>
+<li>Ubuntu：新手友好，但不适用于网安学习。</li>
+<li>Kali Linux：专为渗透测试和网络安全而设计，包含了许多常用的渗透测试工具。</li>
+<li>CentOS&#x2F;Rocky：企业级Linux发行版，稳定性和安全性较高。</li>
+<li>Parrot Security OS：基于Debian的操作系统，专注于网络安全和渗透测试。</li>
+<li>Debian：很多服务器用，应该有所了解。</li>
+<li>Arch：Linux终极形态，一切都可以自定义，适合有一定Linux基础的人，让系统变成你喜欢的样子，鼠标将变成摆设，键盘将变成你的一切。</li>
 </ul>
-<p>后面我会结合自己的学习路线，一步步更新从 0 到 1 的 PWN 入门笔记。</p>
-<h1 id="欢迎一起交流，一起从萌新成长为-PWN-大手子！"><a href="#欢迎一起交流，一起从萌新成长为-PWN-大手子！" class="headerlink" title="欢迎一起交流，一起从萌新成长为 PWN 大手子！"></a>欢迎一起交流，一起从萌新成长为 PWN 大手子！</h1>
+<h1 id="Linux-文件系统"><a href="#Linux-文件系统" class="headerlink" title="Linux 文件系统"></a>Linux 文件系统</h1><ul>
+<li>目录结构：Linux系统的目录结构是一个树状结构，根目录(root)为“&#x2F;”。其他目录都是根目录的子目录,如“&#x2F;bin”、“&#x2F;etc”、“&#x2F;home”等。</li>
+<li>文件权限：每个文件和目录都有自己的权限设置。这些权限可以控制谁可以读取、写入或执行文件。</li>
+<li>文件操作：在Linux系统中，文件操作非常灵活和方便。可以使用命令行或图形界面来进行文件操作。</li>
+</ul>
+<h1 id="Linux-基础指令操作"><a href="#Linux-基础指令操作" class="headerlink" title="Linux 基础指令操作"></a>Linux 基础指令操作</h1><p>注意：在Linux系统中，指令操作都是区分大小写的。<br>另外：在做指令相关学习时，实践是相当重要的，学习时应当多敲代码，不断巩固自己的指令操作。</p>
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p>Linux系统的指令操作都是基于命令行的。在命令行中，每个指令都有自己的参数和选项。指令的一般格式为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">指令 [选项] [参数]</span><br></pre></td></tr></table></figure>
+
+<p>其中，指令是要执行的操作，选项是用来修改指令行为的参数，参数是指令操作的对象。<br>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /home</span><br></pre></td></tr></table></figure>
+<p>其中，<code>ls</code>(即list的缩写)是指令，<code>-l</code>(即long的缩写)是选项，<code>/home</code>是参数。这个指令的作用是列出<code>/home</code>目录下的所有文件和目录，并以长格式显示。<br>当你想要使用刚刚使用过的指令时，你可以直接在命令行中输入指令的名称，而不需要重新输入所有的参数和选项。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l</span><br></pre></td></tr></table></figure>
+<p>这将列出当前目录下的所有文件和目录，并以长格式显示。<br>完全相同时也可以按住方向⬆️⬇️键来重复上几条指令。<br>现在你已经了解了Linux命令行的基础概念，接下来我们将学习一些常用的指令操作。</p>
+<h2 id="绝对路径和相对路径"><a href="#绝对路径和相对路径" class="headerlink" title="绝对路径和相对路径"></a>绝对路径和相对路径</h2><p>在Linux系统中，每个文件和目录都有自己的路径。路径可以分为绝对路径和相对路径。</p>
+<ul>
+<li>绝对路径：从根目录开始的完整路径，如“&#x2F;home&#x2F;user”。</li>
+<li>相对路径：相对于当前工作目录的路径，如“..&#x2F;user”。这里的“..&#x2F;”表示上一级目录，而“.&#x2F;”则可以表示当前目录，例如：“.&#x2F;user”表示当前目录下的user目录。</li>
+<li>特殊路径：<ul>
+<li>“~”：表示当前用户的主目录，如“&#x2F;home&#x2F;user”。</li>
+</ul>
+</li>
+</ul>
+<h2 id="常用指令操作"><a href="#常用指令操作" class="headerlink" title="常用指令操作"></a>常用指令操作</h2><p>当你不了解某个指令的使用方式时，可以使用“man”指令来查看该指令的手册页。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">man ls</span><br></pre></td></tr></table></figure>
+<p>这将显示<code>ls</code>指令的手册页，其中包含了该指令的详细说明和使用示例。甚至：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">man man</span><br></pre></td></tr></table></figure>
+<p>这将显示<code>man</code>指令的手册页，其中包含了该指令的详细说明和使用示例。<br>而“echo”指令则可以用来在命令行中输出文本。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;hello world&quot;</span><br></pre></td></tr></table></figure>
+<p>这将在命令行中输出“hello world”。<br>“help”指令则可以用来查看指令的帮助信息。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">help ls</span><br></pre></td></tr></table></figure>
+<p>这将显示<code>ls</code>指令的帮助信息，其中包含了该指令的详细说明和使用示例。</p>
+<h3 id="运行文件"><a href="#运行文件" class="headerlink" title="运行文件"></a>运行文件</h3><p>在Linux系统中，我们可以使用<code>./</code>来运行当前目录下的可执行文件。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./hello</span><br></pre></td></tr></table></figure>
+<p>其中，<code>hello</code>是一个可执行文件，它将在当前目录下运行。<br>这实际上是使用了文件的相对路径，你也可以使用绝对路径来运行文件，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/user/hello</span><br></pre></td></tr></table></figure>
+<h3 id="有关目录和文件"><a href="#有关目录和文件" class="headerlink" title="有关目录和文件"></a>有关目录和文件</h3><h4 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h4><p>在Linux系统中，我们可以使用<code>cd</code>指令来切换目录。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /home/user</span><br></pre></td></tr></table></figure>
+<p>其中，<code>/home/user</code>是要切换到的目录。<br>这实际上是使用了绝对路径，你也可以使用相对路径来切换目录，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ../user</span><br></pre></td></tr></table></figure>
+<p>其中，<code>../user</code>表示上一级目录下的user目录。</p>
+<h4 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h4><p>在Linux系统中，我们可以使用<code>ls</code>指令来列出当前目录下的所有文件和目录。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls</span><br></pre></td></tr></table></figure>
+<p>这将列出当前目录下的所有文件和目录。<br>我们也可以使用<code>ls -l</code>来以长格式显示文件和目录的详细信息，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l</span><br></pre></td></tr></table></figure>
+<p>这将列出当前目录下的所有文件和目录，并以长格式显示。<br>而<code>ls -a</code>则可以列出所有文件和目录，包括隐藏文件(以“.”开头的文件)。</p>
+<h4 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h4><p>在Linux系统中，我们可以使用<code>pwd</code>指令来显示当前工作目录的路径。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pwd</span><br></pre></td></tr></table></figure>
+<p>这将显示当前工作目录的路径。</p>
+<h4 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h4><p>在Linux系统中，我们可以使用<code>mkdir</code>指令来创建目录。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /home/user/hello</span><br></pre></td></tr></table></figure>
+<p>这将在<code>/home/user</code>目录下创建一个名为hello的目录。</p>
+<h4 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir"></a>rmdir</h4><p>在Linux系统中，我们可以使用<code>rmdir</code>指令来删除目录。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rmdir /home/user/hello</span><br></pre></td></tr></table></figure>
+<p>这将删除<code>/home/user</code>目录下的hello目录。</p>
+<h4 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h4><p>在Linux系统中，我们可以使用<code>rm</code>指令来删除文件。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm /home/user/hello</span><br></pre></td></tr></table></figure>
+<p>这将删除<code>/home/user</code>目录下的hello文件。<br>注意：使用<code>rm</code>指令删除文件时，是永久删除，不能恢复。因此，在使用该指令时要非常小心。</p>
+<h4 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h4><p>在Linux系统中，我们可以使用<code>cp</code>指令来复制文件或目录。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /home/user/hello /home/user/hello2</span><br></pre></td></tr></table></figure>
+<p>这将复制<code>/home/user</code>目录下的hello文件到hello2文件。<br>我们也可以使用<code>cp -r</code>来递归复制目录，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -r /home/user/hello /home/user/hello2</span><br></pre></td></tr></table></figure>
+<p>这将递归复制<code>/home/user</code>目录下的hello目录到hello2目录。</p>
+<h4 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h4><p>在Linux系统中，我们可以使用<code>mv</code>指令来移动文件或目录。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /home/user/hello /home/user/hello2</span><br></pre></td></tr></table></figure>
+<p>这将移动<code>/home/user</code>目录下的hello文件到hello2文件。<br>我们也可以使用<code>mv -r</code>来递归移动目录，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv -r /home/user/hello /home/user/hello2</span><br></pre></td></tr></table></figure>
+<p>这将递归移动<code>/home/user</code>目录下的hello目录到hello2目录。</p>
+<h4 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h4><p>在Linux系统中，我们可以使用<code>cat</code>指令来查看文件的内容。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /home/user/hello</span><br></pre></td></tr></table></figure>
+<p>这将显示<code>/home/user</code>目录下的hello文件的内容。<br>CTF比赛中，你常常会使用<code>cat</code>指令来查看flag字符串的内容，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /flag</span><br></pre></td></tr></table></figure>
+<h4 id="more"><a href="#more" class="headerlink" title="more"></a>more</h4><p>在Linux系统中，我们可以使用<code>more</code>指令来分页查看文件的内容。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">more /home/user/hello</span><br></pre></td></tr></table></figure>
+<p>这将分页显示<code>/home/user</code>目录下的hello文件的内容。</p>
+<h4 id="head"><a href="#head" class="headerlink" title="head"></a>head</h4><p>在Linux系统中，我们可以使用<code>head</code>指令来查看文件的前几行内容。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">head /home/user/hello</span><br></pre></td></tr></table></figure>
+<p>这将显示<code>/home/user</code>目录下的hello文件的前几行内容。<br>默认情况下，<code>head</code>指令显示文件的前10行。我们也可以使用<code>head -n</code>来指定显示的行数，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">head -n 5 /home/user/hello</span><br></pre></td></tr></table></figure>
+<p>这将显示<code>/home/user</code>目录下的hello文件的前5行内容。</p>
+<h4 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h4><p>在Linux系统中，我们可以使用<code>tail</code>指令来查看文件的后几行内容。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail /home/user/hello</span><br></pre></td></tr></table></figure>
+<p>这将显示<code>/home/user</code>目录下的hello文件的后几行内容。<br>默认情况下，<code>tail</code>指令显示文件的后10行。我们也可以使用<code>tail -n</code>来指定显示的行数，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -n 5 /home/user/hello</span><br></pre></td></tr></table></figure>
+<h4 id="wc"><a href="#wc" class="headerlink" title="wc"></a>wc</h4><p>在Linux系统中，我们可以使用<code>wc</code>指令来统计文件的行数、单词数和字符数。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wc /home/user/hello</span><br></pre></td></tr></table></figure>
+<p>这将统计<code>/home/user</code>目录下的hello文件的行数、单词数和字符数。</p>
+<h4 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h4><p>在Linux系统中，我们可以使用<code>grep</code>指令来搜索文件中包含指定字符串的行。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &quot;hello&quot; /home/user/hello</span><br></pre></td></tr></table></figure>
+<p>这将搜索<code>/home/user</code>目录下的hello文件中包含“hello”字符串的行。<br>而<code>grep -v</code>则可以搜索不包含指定字符串的行，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -v &quot;hello&quot; /home/user/hello</span><br></pre></td></tr></table></figure>
+<p>这将搜索<code>/home/user</code>目录下的hello文件中不包含“hello”字符串的行。</p>
+<h4 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h4><p>在Linux系统中，我们可以使用<code>diff</code>指令来比较两个文件的差异。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">diff /home/user/hello /home/user/hello2</span><br></pre></td></tr></table></figure>
+<p>这将比较<code>/home/user</code>目录下的hello文件和hello2文件的差异。</p>
+<h4 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h4><p>在Linux系统中，我们可以使用<code>touch</code>指令来创建一个空文件或更新文件的访问时间和修改时间。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch /home/user/hello</span><br></pre></td></tr></table></figure>
+<p>这将创建一个空文件hello，或者更新hello文件的访问时间和修改时间。</p>
+<h4 id="file"><a href="#file" class="headerlink" title="file"></a>file</h4><p>在Linux系统中，我们可以使用<code>file</code>指令来查看文件的类型。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file /home/user/hello</span><br></pre></td></tr></table></figure>
+<p>这将查看<code>/home/user</code>目录下的hello文件的类型。</p>
+<h4 id="ln"><a href="#ln" class="headerlink" title="ln"></a>ln</h4><p>在Linux系统中，我们可以使用<code>ln</code>指令来创建链接文件。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /home/user/hello /home/user/hello2</span><br></pre></td></tr></table></figure>
+<p>这将创建一个符号链接hello2，指向<code>/home/user</code>目录下的hello文件。<br>而<code>ln -h</code>则可以创建硬链接，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -h /home/user/hello /home/user/hello2</span><br></pre></td></tr></table></figure>
+<p>这将创建一个硬链接hello2，指向<code>/home/user</code>目录下的hello文件。</p>
+<h3 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h3><h4 id="星号通配符"><a href="#星号通配符" class="headerlink" title="星号通配符"></a>星号通配符</h4><p>我们要学习的第一个通配符是 *。当 shell 在任何参数中遇到 * 字符时，会将其视为 “通配符”，并尝试用所有与该模式匹配的文件来替换该参数。演示给你看比解释更容易：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">macbook@wangnexordeMacBook-Pro% touch file_a</span><br><span class="line">macbook@wangnexordeMacBook-Pro% touch file_b</span><br><span class="line">macbook@wangnexordeMacBook-Pro% touch file_c</span><br><span class="line">macbook@wangnexordeMacBook-Pro% ls</span><br><span class="line">file_a	file_b	file_c</span><br><span class="line">macbook@wangnexordeMacBook-Pro% echo Look: file_*</span><br><span class="line">Look: file_a file_b file_c</span><br></pre></td></tr></table></figure>
+<h4 id="问号通配符"><a href="#问号通配符" class="headerlink" title="问号通配符"></a>问号通配符</h4><p>我们要学习的第二个通配符是 ?。当 shell 在任何参数中遇到 ? 字符时，会将其视为 “通配符”，并尝试用所有与该模式匹配的文件来替换该参数。演示给你看比解释更容易：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">macbook@wangnexordeMacBook-Pro% touch file_a</span><br><span class="line">macbook@wangnexordeMacBook-Pro% touch file_b</span><br><span class="line">macbook@wangnexordeMacBook-Pro% touch file_c</span><br><span class="line">macbook@wangnexordeMacBook-Pro% ls</span><br><span class="line">file_a	file_b	file_c</span><br><span class="line">macbook@wangnexordeMacBook-Pro% echo Look: file_?</span><br><span class="line">Look: file_a file_b file_c</span><br></pre></td></tr></table></figure>
+<h4 id="方括号通配符"><a href="#方括号通配符" class="headerlink" title="方括号通配符"></a>方括号通配符</h4><p>接下来，我们将介绍[]。本质上，方括号是一种受限形式的?，因为与匹配任意字符不同，[]是某些潜在字符子集的通配符，这些字符在括号内指定。例如，[pwn]会匹配字符p、w或n。比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">macbook@wangnexordeMacBook-Pro% touch file_pwn</span><br><span class="line">macbook@wangnexordeMacBook-Pro% touch file_123</span><br><span class="line">macbook@wangnexordeMacBook-Pro% ls</span><br><span class="line">file_123	file_pwn</span><br><span class="line">macbook@wangnexordeMacBook-Pro% echo Look: file_[pwn]</span><br><span class="line">Look: file_pwn</span><br></pre></td></tr></table></figure>
+<p>通配符匹配是基于路径进行的，因此你可以使用通配符参数来展开整个路径。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">macbook@wangnexordeMacBook-Pro% echo /home/user/file_*</span><br><span class="line">/home/user/file_a /home/user/file_b /home/user/file_c</span><br></pre></td></tr></table></figure>
+<p>到目前为止，你一次只指定了一个通配符，但你可以做得更多！Bash支持在一个单词中展开多个通配符。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">macbook@wangnexordeMacBook-Pro% echo /home/user/file_[a-c]</span><br><span class="line">/home/user/file_a /home/user/file_b /home/user/file_c</span><br></pre></td></tr></table></figure>
+<p>有时候，你希望过滤掉通配符中的某些文件！[]可以帮你实现这一点。如果方括号中的第一个字符是!，或者（在较新版本的bash中）是^，那么通配符就会反转，该方括号实例会匹配未列出的字符。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">macbook@wangnexordeMacBook-Pro% echo /home/user/file_[!a-c]</span><br><span class="line">/home/user/file_123 /home/user/file_pwn</span><br></pre></td></tr></table></figure>
+<h4 id="tab"><a href="#tab" class="headerlink" title="tab"></a>tab</h4><p>尽管用星号（*）来缩短命令行输入可能很方便，但这可能会导致错误。你的通配符可能会扩展到非预期的文件，而且你可能要等到rm命令已经运行时才会发现！没有人能避免这种类型的错误。当你试图指定一个特定目标时，一个更安全的替代方法是制表符补全。如果你在shell中按一下制表键，它会尝试弄清楚你要输入的内容并自动补全。</p>
+<h3 id="管道符类"><a href="#管道符类" class="headerlink" title="管道符类"></a>管道符类</h3><h4 id="管道符（-）"><a href="#管道符（-）" class="headerlink" title="管道符（|）"></a>管道符（|）</h4><p>管道符（|）用于将一个命令的输出作为另一个命令的输入。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">macbook@wangnexordeMacBook-Pro% ls | grep &quot;hello&quot;</span><br></pre></td></tr></table></figure>
+<p>这将列出当前目录下所有包含“hello”字符串的文件。</p>
+
       
     </div>
 
@@ -244,13 +359,10 @@
       <footer class="post-footer">
         
     <div class="post-nav">
+      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2026/02/27/Linux%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C/" rel="prev" title="Linux基础指令操作">
-      <i class="fa fa-chevron-left"></i> Linux基础指令操作
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2026/03/10/%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" rel="next" title="">
-       <i class="fa fa-chevron-right"></i>
+    <a href="/2026/02/27/Hello%20World/" rel="next" title="Hello World!">
+      Hello World! <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
         <div class="post-eof"></div>
@@ -263,7 +375,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
   </nav>
 
 
