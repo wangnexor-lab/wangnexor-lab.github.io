@@ -168,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/27/Linux%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/27/Hello%20World/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -182,7 +182,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2026/02/27/Linux%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">Linux基础指令操作</a>
+            <a href="/2026/02/27/Hello%20World/" class="post-title-link" itemprop="url">Hello World!</a>
         </h2>
 
         <div class="post-meta">
@@ -199,7 +199,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-03-10 13:22:31" itemprop="dateModified" datetime="2026-03-10T13:22:31+08:00">2026-03-10</time>
+                <time title="Modified: 2026-03-10 13:21:33" itemprop="dateModified" datetime="2026-03-10T13:21:33+08:00">2026-03-10</time>
               </span>
 
           
@@ -213,21 +213,28 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Linux-操作系统介绍"><a href="#Linux-操作系统介绍" class="headerlink" title="Linux 操作系统介绍"></a>Linux 操作系统介绍</h1><p>Linux是一款开源的操作系统，它的内核由Linus Torvalds于1991年创建。Linux系统的设计目标是提供一个稳定、安全、高效的操作系统，同时也提供了一个开放的平台，使开发人员可以自由地开发和修改操作系统的代码。Linux系统常常被用于各种服务器端应用，如Web服务器、数据库服务器等。在我们日后pwn的过程中，会用到很多Linux系统的指令操作，如文件操作、进程管理、网络配置等。因此，掌握Linux系统的指令操作是非常必要的。（ps：MacOS系统与Linux相似，因为都是Unix内核）</p>
-<h1 id="Linux-操作系统的特点"><a href="#Linux-操作系统的特点" class="headerlink" title="Linux 操作系统的特点"></a>Linux 操作系统的特点</h1><ul>
-<li>一切皆文件：在Linux系统中，所有的设备、文件、目录、进程等都被视为文件。这使得Linux系统的文件操作非常灵活和方便。</li>
-<li>权限严格：在Linux系统中，每个文件和目录都有自己的权限设置。这些权限可以控制谁可以读取、写入或执行文件。</li>
-<li>命令行就是本体：图形界面都是装饰，命令行才是Linux系统的核心。</li>
+          <h1 id="大家好！我是N3x0r！一个立志成为PWN大手子的大一学生。"><a href="#大家好！我是N3x0r！一个立志成为PWN大手子的大一学生。" class="headerlink" title="大家好！我是N3x0r！一个立志成为PWN大手子的大一学生。"></a>大家好！我是N3x0r！一个立志成为PWN大手子的大一学生。</h1><p>作为一个0基础学习PWN（二进制漏洞挖掘与利用）技术的学生，我深切的体会到了PWN入门的困难，我希望能通过我的blog，让更多新的PWNer能够更快更好更轻松的入门。本篇只做简单的介绍，后续会有更多的分享。</p>
+<h1 id="什么是PWN？"><a href="#什么是PWN？" class="headerlink" title="什么是PWN？"></a>什么是PWN？</h1><p>PWN（二进制漏洞挖掘与利用）是指利用二进制程序中的漏洞，通过注入恶意代码，实现对目标系统的控制。PWN技术在安全领域中具有重要的意义，因为它可以被用于攻击和防御系统。而在CTF竞赛中，PWN题目通常需要选手对内存进行破坏（栈溢出，堆利用等等）拿到shell，最终获得flag。</p>
+<h1 id="PWN到底难在哪？"><a href="#PWN到底难在哪？" class="headerlink" title="PWN到底难在哪？"></a>PWN到底难在哪？</h1><h2 id="1-知识基础"><a href="#1-知识基础" class="headerlink" title="1. 知识基础"></a>1. 知识基础</h2><p>PWN技术需要掌握一定的知识基础，包括但不限于：</p>
+<ul>
+<li>二进制基础</li>
+<li>内存管理</li>
+<li>逆向工程基础</li>
+<li>汇编语言基础</li>
+<li>操作系统原理</li>
+<li>C语言基础</li>
 </ul>
-<h1 id="Linux-常用版本（学习pwn必备）"><a href="#Linux-常用版本（学习pwn必备）" class="headerlink" title="Linux 常用版本（学习pwn必备）"></a>Linux 常用版本（学习pwn必备）</h1><ul>
-<li>Ubuntu：新手友好，但不适用于网安学习。</li>
-<li>Kali Linux：专为渗透测试和网络安全而设计，包含了许多常用的渗透测试工具。</li>
-<li>CentOS&#x2F;Rocky：企业级Linux发行版，稳定性和安全性较高。</li>
-<li>Parrot Security OS：基于Debian的操作系统，专注于网络安全和渗透测试。</li>
-<li>Debian：很多服务器用，应该有所了解。</li>
-<li>Arch：Linux终极形态，一切都可以自定义，适合有一定Linux基础的人，让系统变成你喜欢的样子，鼠标将变成摆设，键盘将变成你的一切。</li>
+<p>往往当你学习这些很多前置基础之后，你才开始慢慢有做题挖洞的能力。</p>
+<h2 id="2-进步往往不可视"><a href="#2-进步往往不可视" class="headerlink" title="2. 进步往往不可视"></a>2. 进步往往不可视</h2><p>你可能注意到了，自己队伍中的Web手，Misc手很快就可以开始做题，但是pwn手往往需要经过很长时间才拥有做题的能力，有时学了很多却看不到自己的进步。</p>
+<h1 id="如何学好PWN？"><a href="#如何学好PWN？" class="headerlink" title="如何学好PWN？"></a>如何学好PWN？</h1><h2 id="1-最重要的一点：你需要对计算机底层逻辑的真正热爱和理解"><a href="#1-最重要的一点：你需要对计算机底层逻辑的真正热爱和理解" class="headerlink" title="1. 最重要的一点：你需要对计算机底层逻辑的真正热爱和理解"></a>1. 最重要的一点：你需要对计算机底层逻辑的真正热爱和理解</h2><p>学习pwn，内容多而枯燥，但是一旦你对计算机底层逻辑有了真正的热爱和理解，你就会发现pwn技术其实并不那么难学。也只有真正热爱pwn，才能成为一个真正优秀的pwn手。</p>
+<h2 id="2-利用好学习资源"><a href="#2-利用好学习资源" class="headerlink" title="2. 利用好学习资源"></a>2. 利用好学习资源</h2><p>pwn的入门学习一个很大的难点就是入门资源的获取，往往一个不错的高校里会有很多热情的学长学姐，他们会分享自己的学习经验，帮助新手入门。也有很多在线的学习平台和靶场，这些平台都有很多优秀的pwner分享自己的学习经验和不错的题目。<br>下面分享几个比较好的学习资源：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://pwn.college/">pwn.college</a></li>
+<li><a target="_blank" rel="noopener" href="https://ctf-wiki.org/">CTF Wiki</a></li>
+<li><a target="_blank" rel="noopener" href="https://archer-baiyi.github.io/2025/05/12/CTF/Pwn/Pwn%E5%85%A5%E9%97%A8/">白衣卿相的个人博客</a></li>
 </ul>
-<h1 id="Linux-文件系统"><a href="#Linux-文件系统" class="headerlink" title="Linux 文件系统"></a>Linux 文件系统</h1>
+<p>后面我会结合自己的学习路线，一步步更新从 0 到 1 的 PWN 入门笔记。</p>
+<h1 id="欢迎一起交流，一起从萌新成长为-PWN-大手子！"><a href="#欢迎一起交流，一起从萌新成长为-PWN-大手子！" class="headerlink" title="欢迎一起交流，一起从萌新成长为 PWN 大手子！"></a>欢迎一起交流，一起从萌新成长为 PWN 大手子！</h1>
       
     </div>
 
@@ -238,8 +245,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2026/02/27/Hello%20World/" rel="prev" title="Hello World!">
-      <i class="fa fa-chevron-left"></i> Hello World!
+    <a href="/2026/02/27/Linux%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C/" rel="prev" title="Linux基础指令操作">
+      <i class="fa fa-chevron-left"></i> Linux基础指令操作
     </a></div>
       <div class="post-nav-item"></div>
     </div>

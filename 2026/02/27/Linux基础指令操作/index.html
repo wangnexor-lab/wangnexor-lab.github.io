@@ -28,7 +28,7 @@
 <meta property="og:description" content="Linux 操作系统介绍Linux是一款开源的操作系统，它的内核由Linus Torvalds于1991年创建。Linux系统的设计目标是提供一个稳定、安全、高效的操作系统，同时也提供了一个开放的平台，使开发人员可以自由地开发和修改操作系统的代码。Linux系统常常被用于各种服务器端应用，如Web服务器、数据库服务器等。在我们日后pwn的过程中，会用到很多Linux系统的指令操作，如文件操作、进程">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-02-27T11:05:51.732Z">
-<meta property="article:modified_time" content="2026-03-10T05:22:31.470Z">
+<meta property="article:modified_time" content="2026-03-10T10:10:53.413Z">
 <meta property="article:author" content="N3x0r">
 <meta name="twitter:card" content="summary">
 
@@ -203,7 +203,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-03-10 13:22:31" itemprop="dateModified" datetime="2026-03-10T13:22:31+08:00">2026-03-10</time>
+                <time title="Modified: 2026-03-10 18:10:53" itemprop="dateModified" datetime="2026-03-10T18:10:53+08:00">2026-03-10</time>
               </span>
 
           
@@ -238,7 +238,31 @@
 <li>Debian：很多服务器用，应该有所了解。</li>
 <li>Arch：Linux终极形态，一切都可以自定义，适合有一定Linux基础的人，让系统变成你喜欢的样子，鼠标将变成摆设，键盘将变成你的一切。</li>
 </ul>
-<h1 id="Linux-文件系统"><a href="#Linux-文件系统" class="headerlink" title="Linux 文件系统"></a>Linux 文件系统</h1>
+<h1 id="Linux-文件系统"><a href="#Linux-文件系统" class="headerlink" title="Linux 文件系统"></a>Linux 文件系统</h1><ul>
+<li>目录结构：Linux系统的目录结构是一个树状结构，根目录(root)为“&#x2F;”。其他目录都是根目录的子目录,如“&#x2F;bin”、“&#x2F;etc”、“&#x2F;home”等。</li>
+<li>文件权限：每个文件和目录都有自己的权限设置。这些权限可以控制谁可以读取、写入或执行文件。</li>
+<li>文件操作：在Linux系统中，文件操作非常灵活和方便。可以使用命令行或图形界面来进行文件操作。</li>
+</ul>
+<h1 id="Linux-基础指令操作"><a href="#Linux-基础指令操作" class="headerlink" title="Linux 基础指令操作"></a>Linux 基础指令操作</h1><h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p>Linux系统的指令操作都是基于命令行的。在命令行中，每个指令都有自己的参数和选项。指令的一般格式为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">指令 [选项] [参数]</span><br></pre></td></tr></table></figure>
+
+<p>其中，指令是要执行的操作，选项是用来修改指令行为的参数，参数是指令操作的对象。<br>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /home</span><br></pre></td></tr></table></figure>
+<p>其中，<code>ls</code>(即list的缩写)是指令，<code>-l</code>(即long的缩写)是选项，<code>/home</code>是参数。这个指令的作用是列出<code>/home</code>目录下的所有文件和目录，并以长格式显示。<br>现在你已经了解了Linux命令行的基础概念，接下来我们将学习一些常用的指令操作。</p>
+<h2 id="绝对路径和相对路径"><a href="#绝对路径和相对路径" class="headerlink" title="绝对路径和相对路径"></a>绝对路径和相对路径</h2><p>在Linux系统中，每个文件和目录都有自己的路径。路径可以分为绝对路径和相对路径。</p>
+<ul>
+<li>绝对路径：从根目录开始的完整路径，如“&#x2F;home&#x2F;user”。</li>
+<li>相对路径：相对于当前工作目录的路径，如“..&#x2F;user”。这里的“..&#x2F;”表示上一级目录，而“.&#x2F;”则可以表示当前目录，例如：“.&#x2F;user”表示当前目录下的user目录。</li>
+<li>特殊路径：<ul>
+<li>“~”：表示当前用户的主目录，如“&#x2F;home&#x2F;user”。</li>
+</ul>
+</li>
+</ul>
+<h2 id="常用指令操作"><a href="#常用指令操作" class="headerlink" title="常用指令操作"></a>常用指令操作</h2><h3 id="运行文件"><a href="#运行文件" class="headerlink" title="运行文件"></a>运行文件</h3><p>在Linux系统中，我们可以使用<code>./</code>来运行当前目录下的可执行文件。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./hello</span><br></pre></td></tr></table></figure>
+<p>其中，<code>hello</code>是一个可执行文件，它将在当前目录下运行。<br>这实际上是使用了文件的相对路径，你也可以使用绝对路径来运行文件，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/user/hello</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -252,11 +276,11 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2026/02/27/Hello%20World/" rel="prev" title="Hello World!">
-      <i class="fa fa-chevron-left"></i> Hello World!
-    </a></div>
       <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2026/02/27/Hello%20World/" rel="next" title="Hello World!">
+      Hello World! <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -315,7 +339,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">Linux 操作系统介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">Linux 操作系统的特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-%E5%B8%B8%E7%94%A8%E7%89%88%E6%9C%AC%EF%BC%88%E5%AD%A6%E4%B9%A0pwn%E5%BF%85%E5%A4%87%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">Linux 常用版本（学习pwn必备）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">4.</span> <span class="nav-text">Linux 文件系统</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">Linux 操作系统介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">Linux 操作系统的特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-%E5%B8%B8%E7%94%A8%E7%89%88%E6%9C%AC%EF%BC%88%E5%AD%A6%E4%B9%A0pwn%E5%BF%85%E5%A4%87%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">Linux 常用版本（学习pwn必备）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">4.</span> <span class="nav-text">Linux 文件系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C"><span class="nav-number">5.</span> <span class="nav-text">Linux 基础指令操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">5.1.</span> <span class="nav-text">基础概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84%E5%92%8C%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="nav-number">5.2.</span> <span class="nav-text">绝对路径和相对路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C"><span class="nav-number">5.3.</span> <span class="nav-text">常用指令操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%96%87%E4%BB%B6"><span class="nav-number">5.3.1.</span> <span class="nav-text">运行文件</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
