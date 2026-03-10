@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":false,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- -------- ---- ---- ---- ---- ---- ---- ---- ---- -------- ---- ---- ---- ---- ---- ---- ---- ---- -------">
+  <meta name="description" content="Linux 操作系统介绍Linux是一款开源的操作系统，它的内核由Linus Torvalds于1991年创建。Linux系统的设计目标是提供一个稳定、安全、高效的操作系统，同时也提供了一个开放的平台，使开发人员可以自由地开发和修改操作系统的代码。Linux系统常常被用于各种服务器端应用，如Web服务器、数据库服务器等。在我们日后pwn的过程中，会用到很多Linux系统的指令操作，如文件操作、进程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第二篇blog">
-<meta property="og:url" content="http://example.com/2026/02/27/%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%B5%8B%E8%AF%95blog/index.html">
+<meta property="og:title" content="Linux基础指令操作">
+<meta property="og:url" content="http://example.com/2026/02/27/Linux%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="N3x0r&#39;s Blog">
-<meta property="og:description" content="---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- -------- ---- ---- ---- ---- ---- ---- ---- ---- -------- ---- ---- ---- ---- ---- ---- ---- ---- -------">
+<meta property="og:description" content="Linux 操作系统介绍Linux是一款开源的操作系统，它的内核由Linus Torvalds于1991年创建。Linux系统的设计目标是提供一个稳定、安全、高效的操作系统，同时也提供了一个开放的平台，使开发人员可以自由地开发和修改操作系统的代码。Linux系统常常被用于各种服务器端应用，如Web服务器、数据库服务器等。在我们日后pwn的过程中，会用到很多Linux系统的指令操作，如文件操作、进程">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-02-27T11:05:51.732Z">
-<meta property="article:modified_time" content="2026-02-28T10:17:55.161Z">
+<meta property="article:modified_time" content="2026-03-10T05:05:40.893Z">
 <meta property="article:author" content="N3x0r">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2026/02/27/%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%B5%8B%E8%AF%95blog/">
+<link rel="canonical" href="http://example.com/2026/02/27/Linux%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C/">
 
 
 <script id="page-configurations">
@@ -62,7 +62,7 @@
   }
 </style>
 
-  <title>第二篇blog | N3x0r's Blog</title>
+  <title>Linux基础指令操作 | N3x0r's Blog</title>
   
 
 
@@ -173,7 +173,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/27/%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%B5%8B%E8%AF%95blog/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/27/Linux%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -186,7 +186,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          第二篇blog
+          Linux基础指令操作
         </h1>
 
         <div class="post-meta">
@@ -203,7 +203,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-02-28 18:17:55" itemprop="dateModified" datetime="2026-02-28T18:17:55+08:00">2026-02-28</time>
+                <time title="Modified: 2026-03-10 13:05:40" itemprop="dateModified" datetime="2026-03-10T13:05:40+08:00">2026-03-10</time>
               </span>
 
           
@@ -224,172 +224,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <pre><code>----
-----
-----
-----
-----
-----
-----
-----
-----
-----
-----
-----
-----
-----
-----
-----
-----
-----
-----
---------
-----
-----
-----
-----
-----
-----
-----
-----
---------
-----
-----
-----
-----
-----
-----
-----
-----
---------
-----
-----
-----
-----
-----
-----
-----
-----
---------
-----
-----
-----
-----
-----
-----
-----
-----
---------
-----
-----
-----
-----
-----
-----
-----
-----
---------
-----
-----
-----
-----
-----
-----
-----
-----
---------
-----
-----
-----
-----
-----
-----
-----
-----
---------
-----
-----
-----
-----
-----
-----
-----
-----
---------
-----
-----
-----
-----
-----
-----
-----
-----
---------
-----
-----
-----
-----
-----
-----
-----
-----
---------
-----
-----
-----
-----
-----
-----
-----
-----
---------
-----
-----
-----
-----
-----
-----
-----
-----
---------
-----
-----
-----
-----
-----
-----
-----
-----
---------
-----
-----
-----
-----
-----
-----
-----
-----
---------
-----
-----
-----
-----
-----
-----
-----
-----
---------
-----
-----
-----
-----
-----
-----
-----
-----
-----
-</code></pre>
-
+        <h1 id="Linux-操作系统介绍"><a href="#Linux-操作系统介绍" class="headerlink" title="Linux 操作系统介绍"></a>Linux 操作系统介绍</h1><p>Linux是一款开源的操作系统，它的内核由Linus Torvalds于1991年创建。Linux系统的设计目标是提供一个稳定、安全、高效的操作系统，同时也提供了一个开放的平台，使开发人员可以自由地开发和修改操作系统的代码。Linux系统常常被用于各种服务器端应用，如Web服务器、数据库服务器等。在我们日后pwn的过程中，会用到很多Linux系统的指令操作，如文件操作、进程管理、网络配置等。因此，掌握Linux系统的指令操作是非常必要的。</p>
+<h1 id="Linux-操作系统的特点"><a href="#Linux-操作系统的特点" class="headerlink" title="Linux 操作系统的特点"></a>Linux 操作系统的特点</h1><ul>
+<li>一切皆文件：在Linux系统中，所有的设备、文件、目录、进程等都被视为文件。这使得Linux系统的文件操作非常灵活和方便。</li>
+<li>权限严格：在Linux系统中，每个文件和目录都有自己的权限设置。这些权限可以控制谁可以读取、写入或执行文件。</li>
+<li>命令行就是本体：图形界面都是装饰，命令行才是Linux系统的核心。</li>
+</ul>
+<h1 id="Linux-常用版本（学习pwn必备）"><a href="#Linux-常用版本（学习pwn必备）" class="headerlink" title="Linux 常用版本（学习pwn必备）"></a>Linux 常用版本（学习pwn必备）</h1><ul>
+<li>Ubuntu：新手友好，但不适用于网安学习。</li>
+<li>Kali Linux：专为渗透测试和网络安全而设计，包含了许多常用的渗透测试工具。</li>
+<li>CentOS&#x2F;Rocky：企业级Linux发行版，稳定性和安全性较高。</li>
+<li>Parrot Security OS：基于Debian的操作系统，专注于网络安全和渗透测试。</li>
+<li>Debian：很多服务器用，应该有所了解。</li>
+<li>Arch：Linux终极形态，一切都可以自定义，适合有一定Linux基础的人，让系统变成你喜欢的样子，鼠标将变成摆设，键盘将变成你的一切。</li>
+</ul>
+<h1 id="Linux-文件系统"><a href="#Linux-文件系统" class="headerlink" title="Linux 文件系统"></a>Linux 文件系统</h1>
     </div>
 
     
