@@ -194,7 +194,7 @@
       <div class="post-body">
           <h2 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h2><p>我是N3x0r，一个立志成为PWN大手子的WHU大一学生。我将在我的主页中做一些学习过程中的分享，如有错误请联系指出。</p>
 <h3 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h3><ul>
-<li>Email: <a href="mailto:&#x77;&#97;&#x6e;&#x67;&#x6e;&#101;&#x78;&#111;&#x72;&#64;&#103;&#109;&#97;&#105;&#x6c;&#46;&#x63;&#x6f;&#109;">wangnexor@gmail.com</a></li>
+<li>Email: <a href="mailto:&#x77;&#97;&#110;&#x67;&#110;&#x65;&#120;&#x6f;&#114;&#x40;&#x67;&#109;&#97;&#x69;&#x6c;&#46;&#x63;&#111;&#109;">wangnexor@gmail.com</a></li>
 <li>GitHub: <a target="_blank" rel="noopener" href="https://github.com/wangnexor-lab">N3x0r</a></li>
 <li>QQ: 1295980011</li>
 </ul>
@@ -911,8 +911,9 @@
           // Just append to current
         }
       } else {
-        // Go up or stay same
-        while (stack.length > 1 && stack[stack.length - 1].level >= level) {
+        // Go up while current nesting level is deeper than needed
+        // Keep same level items under the same parent (do NOT pop on equal)
+        while (stack.length > 1 && stack[stack.length - 1].level > level) {
           stack.pop();
         }
       }
