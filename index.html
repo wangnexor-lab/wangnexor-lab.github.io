@@ -168,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2026/03/10/%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/27/Hello%20World/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -182,7 +182,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2026/03/10/%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">x86_64 汇编基础</a>
+            <a href="/2026/02/27/Hello%20World/" class="post-title-link" itemprop="url">Hello World!</a>
         </h2>
 
         <div class="post-meta">
@@ -192,14 +192,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2026-03-10 20:44:40" itemprop="dateCreated datePublished" datetime="2026-03-10T20:44:40+08:00">2026-03-10</time>
+              <time title="Created: 2026-02-27 19:05:51" itemprop="dateCreated datePublished" datetime="2026-02-27T19:05:51+08:00">2026-02-27</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-03-13 08:52:01" itemprop="dateModified" datetime="2026-03-13T08:52:01+08:00">2026-03-13</time>
+                <time title="Modified: 2026-03-10 13:21:33" itemprop="dateModified" datetime="2026-03-10T13:21:33+08:00">2026-03-10</time>
               </span>
 
           
@@ -213,36 +213,28 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="程序的设计与最终实现"><a href="#程序的设计与最终实现" class="headerlink" title="程序的设计与最终实现"></a>程序的设计与最终实现</h1><p>要解决pwn的问题，首先要明白程序是如何最终被加载到内存中的。<br>程序的实现可以分为以下几个步骤：</p>
+          <h1 id="大家好！我是N3x0r！一个立志成为PWN大手子的大一学生。"><a href="#大家好！我是N3x0r！一个立志成为PWN大手子的大一学生。" class="headerlink" title="大家好！我是N3x0r！一个立志成为PWN大手子的大一学生。"></a>大家好！我是N3x0r！一个立志成为PWN大手子的大一学生。</h1><p>作为一个0基础学习PWN（二进制漏洞挖掘与利用）技术的学生，我深切的体会到了PWN入门的困难，我希望能通过我的blog，让更多新的PWNer能够更快更好更轻松的入门。本篇只做简单的介绍，后续会有更多的分享。</p>
+<h1 id="什么是PWN？"><a href="#什么是PWN？" class="headerlink" title="什么是PWN？"></a>什么是PWN？</h1><p>PWN（二进制漏洞挖掘与利用）是指利用二进制程序中的漏洞，通过注入恶意代码，实现对目标系统的控制。PWN技术在安全领域中具有重要的意义，因为它可以被用于攻击和防御系统。而在CTF竞赛中，PWN题目通常需要选手对内存进行破坏（栈溢出，堆利用等等）拿到shell，最终获得flag。</p>
+<h1 id="PWN到底难在哪？"><a href="#PWN到底难在哪？" class="headerlink" title="PWN到底难在哪？"></a>PWN到底难在哪？</h1><h2 id="1-知识基础"><a href="#1-知识基础" class="headerlink" title="1. 知识基础"></a>1. 知识基础</h2><p>PWN技术需要掌握一定的知识基础，包括但不限于：</p>
 <ul>
-<li>设计程序：此时你构想程序的功能，并将其设计为一定的逻辑结构。</li>
-<li>代码，算法实现：根据设计的逻辑，你开始使用高级编程语言编写程序（如C、C++、Python等）。但此时的代码只是一个逻辑上的实现，还没有被转换为机器码，是无法直接在计算机上执行的。代码并不是程序！</li>
-<li>编译：使用编译器将高级语言的代码转换为汇编语言。汇编语言非常底层，直接对应着计算机的指令集，但是非常难以读懂。但要想理解程序的执行过程，必须要先理解汇编语言。pwn手应该具有汇编语言的阅读能力。</li>
-<li>汇编：汇编器将汇编语言转换为机器码（二进制指令）。</li>
-<li>链接：如果程序依赖于其他库或模块，链接器将这些组件组合在一起，形成一个完整的可执行文件。</li>
-<li>加载：最终，操作系统将可执行文件加载到内存中，并为其分配内存空间。</li>
-<li>执行：CPU开始执行加载到内存中的指令，完成程序的功能。<br>pwn手需要弄清程序的内存操作，包括栈、堆、全局变量等。只有理解了程序的内存布局，才能正确地利用漏洞进行攻击，学习汇编语言是必要的。这里我们使用最常见的x86_64架构作为主要学习内容，事实上，其他架构（如ARM）也有类似的汇编语言，但是语法和指令集不同，我们这里只关注x86_64架构。<br>网上很多教程知识密度很高，让人看着犯困，因此我的教程将会尽量简单，避免复杂的概念。</li>
+<li>二进制基础</li>
+<li>内存管理</li>
+<li>逆向工程基础</li>
+<li>汇编语言基础</li>
+<li>操作系统原理</li>
+<li>C语言基础</li>
 </ul>
-<h1 id="内存概念"><a href="#内存概念" class="headerlink" title="内存概念"></a>内存概念</h1><p>现在，我们还要给你介绍一个重要的概念：内存。<br>你（想必）作为人类，拥有短期记忆和长期记忆。在进行特定计算时，你的大脑会把之前学到的信息加载到短期记忆中，然后对这些信息进行处理，最后将新的结果信息存入长期记忆。在社会层面，我们还发明了其他更长期的存储形式：口述历史、日记、书籍。如果你的长期记忆中没有足够的空间来存储某些信息，或者这些信息不值得存入长期记忆，你随时可以去书籍上查阅，让大脑将其存入长期记忆，之后需要的时候再提取到短期记忆中。<br>这种从“容量小但易获取”（你的短期记忆，需要时随时可用，但只能存储5到9条信息）到“容量大但速度慢”（从庞大的长期记忆中回忆东西）再到“容量极大但速度极慢”（查阅书籍）的多级信息访问层级，实际上是现代计算机存储层次结构的基础(冯诺伊曼结构)。在上一个模块中，我们已经了解了其中“容量小但易获取”的部分：那就是寄存器，它们容量有限但速度极快。</p>
-<p>比所有寄存器加起来还要大，但访问速度却慢得多得多的是计算机内存，这也是我们将在本模块中深入探讨的内容，让你得以一窥存储层次结构的另一个层级。</p>
-<h1 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h1><h2 id="rax"><a href="#rax" class="headerlink" title="rax"></a>rax</h2><p>CPU的思维方式非常简单。它对数据进行移动、修改，基于数据做出决策，并根据数据采取行动。大多数情况下，这些数据存储在寄存器中。简单来说，寄存器就是数据的容器。CPU可以将数据放入寄存器，在寄存器之间移动数据等等。从硬件层面来看，这些寄存器由非常昂贵的芯片构成，被压缩在极小的空间内，其访问频率非常高，以至于光速等物理量都会影响它们的性能（三体中谈到黑域打击影响计算机性能就是这个原因）。因此，CPU所能拥有的寄存器数量极为有限。不同的CPU架构拥有的寄存器数量不同，这些寄存器的名称也各异，但通常来说，有10到20个“通用”寄存器可供程序代码随意使用，还有多达几十个其他寄存器用于特殊用途。</p>
-<p>在x86的现代版本x86_64中，程序可以访问16个通用寄存器。我们将了解第一个寄存器：rax。</p>
-<p>rax是x86 CPU中一个单独的寄存器，是其极其复杂设计中的一小部分，但我们将从这里开始学习。和其他寄存器一样，rax是用于存储少量数据的容器。你可以使用mov指令将数据移入rax。指令由一个操作符（这里是mov）和操作数组成，操作数代表附加数据（在这里，操作数会指定rax作为目标位置，以及我们想要存储在那里的值）。<br>例如，如果你想将值1337存储到rax中，对应的x86汇编代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov rax, 1337</span><br></pre></td></tr></table></figure>
-<h2 id="syscall"><a href="#syscall" class="headerlink" title="syscall"></a>syscall</h2><p>然而只写上述代码，程序可能很快就会崩溃。这是因为我们只是将一个值存储到了寄存器中，而没有告诉CPU我们要做什么。为了使程序有实际的行为，我们需要使用系统调用（syscall）。系统调用是一种特殊的函数调用，用于请求操作系统执行某些操作。在x86_64架构中，系统调用的参数存储在寄存器中，而返回值通常存储在rax寄存器中。<br>本部分中，你将学习如何让程序正常地退出，而不触发崩溃。启动程序以及正常地停止程序，这些操作都是由计算机的操作系统来处理的。操作系统负责管理程序的存在，以及程序之间、程序与硬件、程序与网络环境等之间的交互。你的程序通过汇编指令（比如你之前写过的mov指令）与中央处理器（CPU）交互。同样，你的程序（当然也是通过CPU）通过系统调用（syscall）指令与操作系统进行交互。就像你可能会打电话给当地餐馆点餐一样，程序通过系统调用来请求操作系统代表自己执行某些操作。大致来说，你的程序所做的任何不涉及对数据进行计算的操作，都是通过系统调用来完成的。程序可以调用的系统调用有很多种。例如，Linux系统大约有330种不同的系统调用，不过这个数字会随着时间变化，因为会有新的系统调用被添加，也会有旧的被弃用。每个系统调用都由一个系统调用号来标识，从0开始依次递增。程序要调用某个特定的系统调用时，需要将该系统调用号移入rax寄存器，然后执行syscall指令。例如，如果我们想调用42号系统调用（你之后会学到这个系统调用的相关知识！），我们需要编写两条指令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov rax, 42</span><br><span class="line">syscall</span><br></pre></td></tr></table></figure>
-<p>现在，我将教你最简单的exit系统调用。exit系统调用用于终止当前正在运行的程序。它的系统调用号是60。要调用exit系统调用，我们需要将60移入rax寄存器，然后执行syscall指令。例如，以下代码将使程序正常退出：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov rax, 60</span><br><span class="line">syscall</span><br></pre></td></tr></table></figure>
-<h2 id="rdi"><a href="#rdi" class="headerlink" title="rdi"></a>rdi</h2><p>exit系统调用只接受一个参数：退出代码。这个参数通过寄存器rdi传递。因此，要使程序以42作为退出代码退出，我们需要将42移入rdi寄存器，然后调用exit系统调用。以下代码将实现这一功能：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov rax, 60</span><br><span class="line">mov rdi, 42</span><br><span class="line">syscall</span><br></pre></td></tr></table></figure>
-<p>或者交换顺序也行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov rdi, 42</span><br><span class="line">mov rax, 60</span><br><span class="line">syscall</span><br></pre></td></tr></table></figure>
-<h2 id="编译和链接的Linux指令"><a href="#编译和链接的Linux指令" class="headerlink" title="编译和链接的Linux指令"></a>编译和链接的Linux指令</h2><p>这些只需要记住就好：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">as -o program.o program.s</span><br><span class="line">ld -o program program.o</span><br></pre></td></tr></table></figure>
-<h2 id="在寄存器之间传递数据"><a href="#在寄存器之间传递数据" class="headerlink" title="在寄存器之间传递数据"></a>在寄存器之间传递数据</h2><p>实际上，我们不止可以把特定数据写入寄存器，我们还可以把寄存器中的数据移动到其他寄存器中。例如，以下代码将把rdi寄存器中的值移动到rax寄存器中：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov rax, rdi</span><br></pre></td></tr></table></figure>
-<p>我们也将学习一个新的寄存器：rsi。rsi寄存器用于存储第二个系统调用参数(你先别管这句话什么意思，以后自然会知道)。rsi也可以存储一些数据。</p>
-
+<p>往往当你学习这些很多前置基础之后，你才开始慢慢有做题挖洞的能力。</p>
+<h2 id="2-进步往往不可视"><a href="#2-进步往往不可视" class="headerlink" title="2. 进步往往不可视"></a>2. 进步往往不可视</h2><p>你可能注意到了，自己队伍中的Web手，Misc手很快就可以开始做题，但是pwn手往往需要经过很长时间才拥有做题的能力，有时学了很多却看不到自己的进步。</p>
+<h1 id="如何学好PWN？"><a href="#如何学好PWN？" class="headerlink" title="如何学好PWN？"></a>如何学好PWN？</h1><h2 id="1-最重要的一点：你需要对计算机底层逻辑的真正热爱和理解"><a href="#1-最重要的一点：你需要对计算机底层逻辑的真正热爱和理解" class="headerlink" title="1. 最重要的一点：你需要对计算机底层逻辑的真正热爱和理解"></a>1. 最重要的一点：你需要对计算机底层逻辑的真正热爱和理解</h2><p>学习pwn，内容多而枯燥，但是一旦你对计算机底层逻辑有了真正的热爱和理解，你就会发现pwn技术其实并不那么难学。也只有真正热爱pwn，才能成为一个真正优秀的pwn手。</p>
+<h2 id="2-利用好学习资源"><a href="#2-利用好学习资源" class="headerlink" title="2. 利用好学习资源"></a>2. 利用好学习资源</h2><p>pwn的入门学习一个很大的难点就是入门资源的获取，往往一个不错的高校里会有很多热情的学长学姐，他们会分享自己的学习经验，帮助新手入门。也有很多在线的学习平台和靶场，这些平台都有很多优秀的pwner分享自己的学习经验和不错的题目。<br>下面分享几个比较好的学习资源：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://pwn.college/">pwn.college</a></li>
+<li><a target="_blank" rel="noopener" href="https://ctf-wiki.org/">CTF Wiki</a></li>
+<li><a target="_blank" rel="noopener" href="https://archer-baiyi.github.io/2025/05/12/CTF/Pwn/Pwn%E5%85%A5%E9%97%A8/">白衣卿相的个人博客</a></li>
+</ul>
+<p>后面我会结合自己的学习路线，一步步更新从 0 到 1 的 PWN 入门笔记。</p>
+<h1 id="欢迎一起交流，一起从萌新成长为-PWN-大手子！"><a href="#欢迎一起交流，一起从萌新成长为-PWN-大手子！" class="headerlink" title="欢迎一起交流，一起从萌新成长为 PWN 大手子！"></a>欢迎一起交流，一起从萌新成长为 PWN 大手子！</h1>
       
     </div>
 
@@ -253,10 +245,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2026/02/27/Hello%20World/" rel="prev" title="Hello World!">
-      <i class="fa fa-chevron-left"></i> Hello World!
+    <a href="/2026/02/27/Linux%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C/" rel="prev" title="Linux基础指令操作">
+      <i class="fa fa-chevron-left"></i> Linux基础指令操作
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2026/03/10/%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" rel="next" title="x86_64 汇编基础">
+      x86_64 汇编基础 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
         <div class="post-eof"></div>
       </footer>
