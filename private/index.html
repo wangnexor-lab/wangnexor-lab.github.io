@@ -56,11 +56,14 @@
     .pm-hint { padding: 12px 14px; border-radius: 10px; border: 1px dashed rgba(0,0,0,0.25); background: rgba(0,0,0,0.02); }
     .pm-tree { list-style:none; margin:0; padding: 10px; max-height: 72vh; overflow:auto; }
     .pm-node { margin: 2px 0; }
-    .pm-file { display:flex; align-items:center; gap:8px; width:100%; border:0; background: transparent; color: var(--text-color); padding: 8px 8px; border-radius: 8px; cursor:pointer; text-align:left; }
+    .pm-file { display:flex; gap:10px; width:100%; border:0; background: transparent; color: var(--text-color); padding: 10px 10px; border-radius: 8px; cursor:pointer; text-align:left; }
     .pm-file:hover { background: rgba(0,0,0,0.05); }
     .dark-mode .pm-file:hover { background: rgba(255,255,255,0.08); }
     .pm-file.active { background: rgba(0,0,0,0.06); color: var(--link-hover-color); }
     .dark-mode .pm-file.active { background: rgba(255,255,255,0.10); }
+    .pm-file-meta { display:flex; flex-direction:column; gap:2px; min-width:0; }
+    .pm-file-title { font-size: 16px; font-weight: 700; line-height: 1.25; overflow:hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pm-file-date { font-size: 12px; opacity: 0.75; line-height: 1.2; }
     .pm-breadcrumb { font-size: 13px; opacity: 0.85; margin: 0 0 10px 0; }
     @media (max-width: 980px) {
       .pm-shell { flex-direction: column; }
@@ -73,7 +76,7 @@
       storageKey: "hexo_auth_session",
       loginPath: "/login/",
       root: "/",
-      manifest: "eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiJjSk5FK2lGUzBYZStDanFFIiwidGFnIjoidW1KdXNZMlVVVzQwbWJoMEF1Z1BRUT09IiwiY3QiOiJWYS9zcEVDUkdwMGNSY0NVTkhOWXk1dStMSnhUbWh4STRyMk5hUHN0WkYvLzIxd2ZlNjBHb0FXK3k5dXA1WlpXaHM2WmJPYkVyV1NkUmo5UGtDKzF0bmVKbGJmQXB6M2JSc2xXdjN2MFJnQTNOR3hmTHJBT2FKT3VtT0lIQmRBTVFDbERBdURBbG9QL3pZZitnR2srT0h3K0laeGl2V1FVWHc4TlYyTWh5WG4rT1pjcS9yQisveVRvaFFGWGZjQVpvelNYazNqc1Rvc2VXZz09Iiwia2luZCI6InByaXZhdGVfbW9kdWxlX2xpc3QifQ"
+      manifest: "eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiJkeHNFdmNRRXFMd0wyRXJmIiwidGFnIjoianR0VEdhTktnd2tMNDF4UHZGdU9hUT09IiwiY3QiOiJRaUpUVDJieXR4dklteXlQSEc0dGZ4SEZTMTg1NGs1U3pzZmcwUHkrQm8wV0w3L1VyZU1GTjJDcTQ3TnNsY0VVNytocFUrYk0zS3VOTGxiNzlGRHcxL1BHYTFBNWttUE91YTdob2dxOVZDYXBKa1RQNU9zQWNaNkk0cnA0cXBmT0ljK0JRTXhyT3A3c3creVQ1VmZOcnZVdjVUVTRyQndaUGdEamZ0T1pwY3l6N1o1eWs4cUVyM3RsT0wyWllNUUhsU0hyM2YzemdCSzNtLzU0TVNpSGF2bER5clRGNWNtUlUxcytPc0FxS2ZMR2ZNUFhocWU2b2hzUU1zS0dMRmN4NE5EV1dQeXFicmFubnRQQ0NNTGtRdlhqSTVQejBkSFNKenA5WHA4WHZQa252bHJSUUpJVUQ0YUc5bG9DSEtEZjdDRTJML3o1d1ZkbFpuOWhYamJpUXFpQndzOGFqZkdDbDNkcEY3NnVkVzhJK1Fod0pCcHp1ZVA4cHdnRHA3SzV6bmtLaUs0PSIsImtpbmQiOiJwcml2YXRlX21vZHVsZV9saXN0In0"
     };
   </script>
 </head>
@@ -166,6 +169,22 @@
         bcEl.textContent = '';
       }
 
+      function formatDate(iso) {
+        try {
+          if (!iso) return '';
+          var d = new Date(iso);
+          if (isNaN(d.getTime())) return String(iso);
+          var y = String(d.getFullYear());
+          var m = String(d.getMonth() + 1).padStart(2, '0');
+          var day = String(d.getDate()).padStart(2, '0');
+          var hh = String(d.getHours()).padStart(2, '0');
+          var mm = String(d.getMinutes()).padStart(2, '0');
+          return y + '-' + m + '-' + day + ' ' + hh + ':' + mm;
+        } catch (e) {
+          return String(iso || '');
+        }
+      }
+
       function renderList(files) {
         treeEl.innerHTML = '';
         (files || []).forEach(function(file) {
@@ -176,7 +195,12 @@
           fbtn.type = 'button';
           fbtn.className = 'pm-file';
           fbtn.setAttribute('data-file-id', String(file.id || ''));
-          fbtn.innerHTML = '<span class="pm-ico"><i class="far fa-file-alt"></i></span><span>' + String(file.title || '未命名') + '</span>';
+          fbtn.innerHTML =
+            '<span class="pm-ico"><i class="far fa-file-alt"></i></span>' +
+            '<span class="pm-file-meta">' +
+              '<span class="pm-file-title">' + String(file.title || '未命名') + '</span>' +
+              '<span class="pm-file-date">' + formatDate(file.date || '') + '</span>' +
+            '</span>';
           fbtn.addEventListener('click', function() { openFile(file); });
           li.appendChild(fbtn);
           treeEl.appendChild(li);
