@@ -61,10 +61,43 @@
     .dark-mode .pm-file:hover { background: rgba(255,255,255,0.08); }
     .pm-file.active { background: rgba(0,0,0,0.06); color: var(--link-hover-color); }
     .dark-mode .pm-file.active { background: rgba(255,255,255,0.10); }
+    .pm-cover {
+      width: 56px;
+      height: 56px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex: 0 0 56px;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: rgba(0,0,0,0.03);
+    }
+    .dark-mode .pm-cover {
+      border-color: rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.06);
+    }
+    .pm-cover-empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-color);
+      opacity: 0.75;
+    }
     .pm-file-meta { display:flex; flex-direction:column; gap:2px; min-width:0; }
-    .pm-file-title { font-size: 18px; font-weight: 800; line-height: 1.2; overflow:hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pm-file-title { font-size: 20px; font-weight: 800; line-height: 1.2; overflow:hidden; text-overflow: ellipsis; white-space: nowrap; }
     .pm-file-date { font-size: 12px; opacity: 0.75; line-height: 1.2; }
     .pm-breadcrumb { font-size: 36px; font-weight: 900; opacity: 1; margin: 0 0 14px 0; line-height: 1.12; }
+    .pm-preview-cover {
+      width: 100%;
+      max-height: 360px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: rgba(0,0,0,0.03);
+    }
+    .dark-mode .pm-preview-cover {
+      border-color: rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.06);
+    }
+    .pm-preview-actions { margin-top: 12px; }
     @media (max-width: 980px) {
       .pm-shell { flex-direction: column; }
       .pm-side { width:100%; flex: 0 0 auto; }
@@ -76,7 +109,7 @@
       storageKey: "hexo_auth_session",
       loginPath: "/login/",
       root: "/",
-      manifest: "eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiJmbVlTZmZ6MVd6TXRHaGVHIiwidGFnIjoiMnhnQkxXOXgvN28yUDhMVzZFZmZmdz09IiwiY3QiOiJ1TnBXdTF5eVZtNkxFZzRaM1JXaVZiem55ZGNaa0QwREdQZDl5V1lQNzErNmNVRERKeko1Rzcza05Vdmo0czFxM1BBZ29WVHFVNVI2Tnc4YVhLZVVsZGZTOXZ2YWs5TjI2enB3SjVoVnhXaXU5QnJkM3ljSmRXbmtOVmVvNVRoYjY5c0xtc2xLMVJldU5iSWtPSzgwdW1tNitxS2JiVDkxOXRvd2ZxSkc0cTgyWDg2Y0dQRWVpSzZlTUI5L1dzNTRQcjdpWkFOMHROMjBwYVZYM1RVM0dhSEhHNGxQTXhrWUJHWEtkTEhBUFM0SUgvZGZHSW05eWIrWDJmZjR5enN6dFVieFJ1QTdkY01uN0J6K2g0eWZyUTlGRkIxSnMvZkJuTnBndVRlWVFsWk1ZcllYN0VTaUIzTjNRZ250T3h6SWdFT2ViMHhvTFlXdGpZWHJMdmlVNCtUT21nZUF0UFdiK1gzYW5sTDg5NjBtcEhGT2x1Q0prV0xXd1RGdkVacW5NZ1U4amJFPSIsImtpbmQiOiJwcml2YXRlX21vZHVsZV9saXN0In0"
+      manifest: "eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiJVeGNwSVh5YXRITjJOSFdDIiwidGFnIjoidEhLNk5ScktYMWVEN2J4UEJBN09KZz09IiwiY3QiOiJjN3JmUzlDbFNiSlJnV0xMT3NWeU1rL3grQWdxUjk5MnhoUWFnTXQyZWQxbkhLaVU1MzVRVHFGN0xFTUhOWFpLVE1ZWFE0YWZBQjhkS25CSGdRbUhmLzBaZ0c4dFc5T3R0SzNvaGJBTTVCZGNibklyby9UQmQzMkYwRzArc2s5QXpDOVdiemE3WWZNa0MrQ3QrTmRsM0hmK0xzSlJucFQ5UlZCU1ZzS1lHNVAwV0hGcmRhWFRBVGZMTmNJcXRTK3haQmhGQy8rYUZyVHRjM2kvajR2OW9Ic1VWSWJpMDJDS3lBQVdMRnlmNzR0N0Uzd0tZNUpEUXM0WHZ3NDBhKzFnWHdmcmZCRE1SZGpzVnQ2NW54UWFyUU1tS1F1TGl5M01hYmp2QmRhK3RLcFhUV3ErMjM0R3Z0OWhyZ0hnZW1NVkMwRzYwWHl4MllHaDVBUms4NFdKaGt6LzhLYkl4NUNhdG5DSVZmUHN5ZkhBc0N5VHNOdFA1U1F1QnNieDI0blc4SG11Qk81V0l5SS9FOFdsNXNSQ3RrMFZmM1JFWkE1R0FsYWt1SCtHcmJUbE13dGNLakU5Iiwia2luZCI6InByaXZhdGVfbW9kdWxlX2xpc3QifQ"
     };
   </script>
 </head>
@@ -185,102 +218,142 @@
         }
       }
 
-      function renderList(files) {
-        treeEl.innerHTML = '';
-        (files || []).forEach(function(file) {
-          var li = document.createElement('li');
-          li.className = 'pm-node';
-
-          var fbtn = document.createElement('button');
-          fbtn.type = 'button';
-          fbtn.className = 'pm-file';
-          fbtn.setAttribute('data-file-id', String(file.id || ''));
-          fbtn.innerHTML =
-            '<span class="pm-ico"><i class="far fa-file-alt"></i></span>' +
-            '<span class="pm-file-meta">' +
-              '<span class="pm-file-title">' + String(file.title || '未命名') + '</span>' +
-              '<span class="pm-file-date">' + formatDate(file.date || '') + '</span>' +
-            '</span>';
-          fbtn.addEventListener('click', function() { openFile(file); });
-          li.appendChild(fbtn);
-          treeEl.appendChild(li);
-        });
+      function escapeHtml(input) {
+        return String(input || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
       }
 
-      function openFile(file) {
-        if (!file) return;
-        bcEl.textContent = file.title || '';
-        viewEl.innerHTML = file.html || '';
-        location.hash = '#file=' + encodeURIComponent(file.id || '');
-
-        var btns = treeEl.querySelectorAll('button.pm-file');
-        for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
-        for (var j = 0; j < btns.length; j++) {
-          if (btns[j].getAttribute('data-file-id') === String(file.id || '')) {
-            btns[j].classList.add('active');
-            break;
-          }
-        }
+      function escapeAttr(input) {
+        return escapeHtml(input);
       }
 
-      async function initAuthed(accessKeyBytes) {
-        if (!manifestEncoded) {
-          viewEl.innerHTML = '<div class="pm-hint">private 暂无内容</div>';
-          treeEl.innerHTML = '';
-          bcEl.textContent = '';
-          return;
-        }
-        var manifestText = await decryptPayloadToString(manifestEncoded, accessKeyBytes);
-        var manifest = JSON.parse(manifestText);
-        var files = (manifest && Array.isArray(manifest.files)) ? manifest.files : [];
-        if (!files.length) {
-          viewEl.innerHTML = '<div class="pm-hint">private 暂无内容</div>';
-          treeEl.innerHTML = '';
-          bcEl.textContent = '';
-          return;
-        }
+function setActive(fileId) {
+  var btns = treeEl.querySelectorAll('button.pm-file');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+  for (var j = 0; j < btns.length; j++) {
+    if (btns[j].getAttribute('data-file-id') === String(fileId || '')) {
+      btns[j].classList.add('active');
+      break;
+    }
+  }
+}
 
-        renderList(files);
+function renderList(files) {
+  treeEl.innerHTML = '';
+  (files || []).forEach(function (file) {
+    var li = document.createElement('li');
+    li.className = 'pm-node';
 
-        function openFromHash() {
-          var h = String(location.hash || '');
-          var m = h.match(/#file=([^&]+)/);
-          if (!m) return false;
-          var id = decodeURIComponent(m[1]);
-          var target = files.find(function(f) { return String(f.id || '') === String(id); });
-          if (!target) return false;
-          openFile(target);
-          return true;
-        }
+    var fbtn = document.createElement('button');
+    fbtn.type = 'button';
+    fbtn.className = 'pm-file';
+    fbtn.setAttribute('data-file-id', String(file.id || ''));
+    var cover = file && file.cover ? String(file.cover) : '';
+    var coverHtml = cover
+      ? '<img class="pm-cover" src="' + escapeAttr(cover) + '" alt="">'
+      : '<span class="pm-cover pm-cover-empty"><i class="far fa-image"></i></span>';
+    fbtn.innerHTML =
+      coverHtml +
+      '<span class="pm-file-meta">' +
+      '<span class="pm-file-title">' + escapeHtml(file.title || '未命名') + '</span>' +
+      '<span class="pm-file-date">' + escapeHtml(formatDate(file.date || '')) + '</span>' +
+      '</span>';
+    fbtn.addEventListener('click', function () { showPreview(file); });
+    li.appendChild(fbtn);
+    treeEl.appendChild(li);
+  });
+}
 
-        if (!openFromHash() && files.length) {
-          openFile(files[0]);
-        }
+function showPreview(file) {
+  if (!file) return;
+  setActive(file.id);
+  bcEl.textContent = file.title || '';
+  var cover = file && file.cover ? String(file.cover) : '';
+  var coverHtml = cover ? '<img class="pm-preview-cover" src="' + escapeAttr(cover) + '" alt="">' : '';
+  viewEl.innerHTML =
+    (coverHtml ? coverHtml : '<div class="pm-hint">无封面</div>') +
+    '<div class="pm-preview-actions"><button class="pm-btn" id="pm-open-btn" type="button">打开全文</button></div>';
+  location.hash = '#file=' + encodeURIComponent(file.id || '');
 
-        window.addEventListener('hashchange', function() { openFromHash(); });
-      }
+  var openBtn = document.getElementById('pm-open-btn');
+  if (openBtn) openBtn.addEventListener('click', function () { openFull(file); });
+}
 
-      if (logoutBtn) {
-        logoutBtn.addEventListener('click', function() {
-          clearSession();
-          showUnauthed();
-        });
-      }
+function openFull(file) {
+  if (!file) return;
+  setActive(file.id);
+  bcEl.textContent = file.title || '';
+  viewEl.innerHTML = file.html || '';
+  location.hash = '#file=' + encodeURIComponent(file.id || '') + '&open=1';
+}
 
-      var session = loadSession();
-      if (!session) {
-        showUnauthed();
-        return;
-      }
+async function initAuthed(accessKeyBytes) {
+  if (!manifestEncoded) {
+    viewEl.innerHTML = '<div class="pm-hint">private 暂无内容</div>';
+    treeEl.innerHTML = '';
+    bcEl.textContent = '';
+    return;
+  }
+  var manifestText = await decryptPayloadToString(manifestEncoded, accessKeyBytes);
+  var manifest = JSON.parse(manifestText);
+  var files = (manifest && Array.isArray(manifest.files)) ? manifest.files : [];
+  if (!files.length) {
+    viewEl.innerHTML = '<div class="pm-hint">private 暂无内容</div>';
+    treeEl.innerHTML = '';
+    bcEl.textContent = '';
+    return;
+  }
 
-      try {
-        var accessKeyBytes = base64ToBytes(session.accessKey);
-        initAuthed(accessKeyBytes).catch(function() { showUnauthed(); });
-      } catch (e) {
-        clearSession();
-        showUnauthed();
-      }
-    })();
-  </script>
-</body>
-</html>
+  renderList(files);
+
+  function openFromHash() {
+    var h = String(location.hash || '');
+    if (!h || h === '#') return false;
+    var qs = h.charAt(0) === '#' ? h.slice(1) : h;
+    var params;
+    try { params = new URLSearchParams(qs); } catch (e) { return false; }
+    var id = params.get('file') || '';
+    var open = params.get('open') === '1';
+    if (!id) return false;
+    var target = files.find(function (f) { return String(f.id || '') === String(id); });
+    if (!target) return false;
+    if (open) openFull(target);
+    else showPreview(target);
+    return true;
+  }
+
+  bcEl.textContent = '';
+  viewEl.innerHTML = '<div class="pm-hint">选择一篇记录查看封面，点“打开全文”再展开内容</div>';
+  openFromHash();
+
+  window.addEventListener('hashchange', function () { openFromHash(); });
+}
+
+if (logoutBtn) {
+  logoutBtn.addEventListener('click', function () {
+    clearSession();
+    showUnauthed();
+  });
+}
+
+var session = loadSession();
+if (!session) {
+  showUnauthed();
+  return;
+}
+
+try {
+  var accessKeyBytes = base64ToBytes(session.accessKey);
+  initAuthed(accessKeyBytes).catch(function () { showUnauthed(); });
+} catch (e) {
+  clearSession();
+  showUnauthed();
+}
+    }) ();
+  </script >
+</body >
+</html > 
