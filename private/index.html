@@ -53,6 +53,19 @@
     .pm-main { flex:1; min-width:0; border: 1px solid rgba(0,0,0,0.08); border-radius: 10px; background: var(--card-bg-color); padding: 14px 16px; }
     .pm-main img { max-width: 100%; height: auto; }
     .pm-main video { max-width: 100%; }
+    .pm-comments { margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(0,0,0,0.08); }
+    .dark-mode .pm-comments { border-top-color: rgba(255,255,255,0.12); }
+    .pm-comments-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+    .pm-comments-list { display:flex; flex-direction:column; gap:10px; margin: 0 0 12px 0; padding: 0; list-style:none; }
+    .pm-comment-item { padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.08); background: rgba(0,0,0,0.02); }
+    .dark-mode .pm-comment-item { border-color: rgba(255,255,255,0.12); background: rgba(255,255,255,0.06); }
+    .pm-comment-meta { font-size: 12px; opacity: 0.75; margin-bottom: 6px; }
+    .pm-comment-text { white-space: pre-wrap; word-break: break-word; }
+    .pm-comment-form { display:flex; flex-direction:column; gap:10px; }
+    .pm-comment-form textarea { width: 100%; min-height: 92px; resize: vertical; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.18); background: var(--body-bg-color); color: var(--text-color); }
+    .dark-mode .pm-comment-form textarea { border-color: rgba(255,255,255,0.18); }
+    .pm-comment-actions { display:flex; align-items:center; gap:10px; }
+    .pm-comment-msg { font-size: 12px; opacity: 0.8; }
     .pm-hint { padding: 12px 14px; border-radius: 10px; border: 1px dashed rgba(0,0,0,0.25); background: rgba(0,0,0,0.02); }
     .pm-tree { list-style:none; margin:0; padding: 10px; max-height: 72vh; overflow:auto; }
     .pm-node { margin: 2px 0; }
@@ -97,7 +110,7 @@
       storageKey: "hexo_auth_session",
       loginPath: "/login/",
       root: "/",
-      manifest: "eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiI3L0VHRzNlcUVFekJjZWhiIiwidGFnIjoicFNrQjhwalBIQ05Uay9USWdWbHNWQT09IiwiY3QiOiJmQytIYWhNWStxd0JSWVp1WkNCVW1SY0l0OGQvR0U4U2F6L2UwMEh3V2s4U2xzOGEyUVJEZE5PQW80akNKRlp4OE5HcVpadEJzYjQrN1JkSE42RGxwQWFyR3RKVFoyMHFrVC9MTnpvaWtkVGdWUHpMa3hYb3lWSXppWVNIdndRekVGcWdsTEFNL0tYNXo2bjBkYXZGeDV3bGh5akt0MTRPSU1zaXJTZDdMekRFcjZGbS82eFRpZnQrYXVjdUhTT2FlSjRQclN5YmtEdkFEYTVDSTN6WGVhTGEwak05WnZnUXYyWktqUmpZSTBHcnBlRTY0M2FiUlRXVTJFSDJuUmdjRkxXWlkxOFhFcG9MR0xqZXFVVi9vRDdWV3d0bjZPdEFQT3lyUkdJMHVpbVpkTHl5VC80Zk1TTm9PdmVLR3M2WndLZzhidXZlbGhiLy83L1hGWEc0bEpRRUVVa05GK2ZBdVhyNTEyL1ZOVGlISEJjU1VBbFZRcHRIQjJ2K2dydlRyVnVHTWZ2R0ZpSzJhNmJHTlFtUXRzUDZ2RHliWjNrUzdEOG5mVHhneVZUb0ZMODFjRGdrSnAwS09BPT0iLCJraW5kIjoicHJpdmF0ZV9tb2R1bGVfbGlzdCJ9"
+      manifest: "eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiJNanhOc0s1Qk5OZ2Fpam1pIiwidGFnIjoiMURUa0h3dEtVMCs0emYwa3JUSnlWUT09IiwiY3QiOiIzTWZadk5iTGlTS0JzanRRdkdDcFRTOFlDWVQyYXI1SWptTzF2ajU3eWJjQjFwSnpTbkxSdCtOVS85OTE5K0YyeWtNclU3SVVhVEg3S2xHbmdRMGEzdTlzMG9xQmZPd1Myb2UxdTFhL3F6VmxZK0tQU1dqRC9WbG1KdzFDUjdhRUx6U3hzV3ZBTDdoWVhObGlFZjNNYS9kN21DcmljUTB0UGdWVDNuOURjbXNac2RXQ0U2d2xQbndjSFNLdm50TE5zZjJlOUVvUTRaUWFtbmpLd0Z4dDlFMS9ENm9MQmdJUE5VV2FLeERPUTk0YURVVW1KV0g4czVRV2d1WWF1cGhUZG83cmROMEpqTHh5NWZza1dNenlvWU1HMkV2S2R1OExTbEl3YStzTXQyZWpSMDE3a09Ldk4vNlA1YmJVR2RZUGxFZXJWY3BicWxwUVF5NjlpcFRLTEJ5bHlWb0gyN2tHdEtXcnpNYmxQWk9TZVY1R0s4SVBDQnRkTlhaZmkwWWJuRmRORGxadkF1K1F0Q2FzZmhVc2NmSVI1a1hhY25wd3JBSmFGcml5MmFzMVlkczU3NjhhUlJMRzRhbTBrUzBzNjR5UUt3TVF4MGlneFJxcG5peHlUNkJyZFhnMmdjZFF6OW55NjZlVmE4V05OZTI1OURZM21pVVIzdnJrVU5RaUFHMk81OU1NYXJLUUVNbmZ2R01oMTBzaERNcmJOR0YySFd3cVpURUdCU2pEcVJhMGxsWElJdTVoK2Y5N0JOQ28vT1UxblVUVWdVU2tWYndneHhRRjI0U1kxWk1CbXBHWlV5Z21wTjljbjRqOXlRdTd3VDR3K2RhQmUvYTlHejdOemF1YUJWUUFjSWNFWVdIS3dQUHF6YlgrcmlpS25ocmtPSW81RkFwN1I2aldETWJrR2l5TyIsImtpbmQiOiJwcml2YXRlX21vZHVsZV9saXN0In0"
     };
   </script>
 </head>
@@ -170,6 +183,48 @@
 
       function clearSession() {
         sessionStorage.removeItem(storageKey);
+      }
+
+      function loadUsername() {
+        var s = loadSession();
+        if (!s) return '';
+        return String(s.username || '');
+      }
+
+      var commentsStoreKey = storageKey + ':private_comments';
+
+      function loadAllComments() {
+        try {
+          var raw = localStorage.getItem(commentsStoreKey);
+          if (!raw) return {};
+          var parsed = JSON.parse(raw);
+          if (!parsed || typeof parsed !== 'object') return {};
+          return parsed;
+        } catch (e) {
+          return {};
+        }
+      }
+
+      function saveAllComments(obj) {
+        try {
+          localStorage.setItem(commentsStoreKey, JSON.stringify(obj || {}));
+        } catch (e) {}
+      }
+
+      function readCommentsFor(postKey) {
+        var all = loadAllComments();
+        var arr = all && all[postKey] && Array.isArray(all[postKey]) ? all[postKey] : [];
+        return arr;
+      }
+
+      function addComment(postKey, username, text) {
+        var all = loadAllComments();
+        if (!all || typeof all !== 'object') all = {};
+        var arr = all[postKey];
+        if (!Array.isArray(arr)) arr = [];
+        arr.push({ u: username || 'user', t: Date.now(), c: text });
+        all[postKey] = arr;
+        saveAllComments(all);
       }
 
       async function decryptPayloadToString(encoded, accessKeyBytes) {
@@ -261,6 +316,74 @@ function openFile(file) {
   setActive(file.id);
         bcEl.textContent = '';
   viewEl.innerHTML = file.html || '';
+
+  var postKey = String(file.key || file.id || '');
+  if (postKey) {
+    var wrap = document.createElement('div');
+    wrap.className = 'pm-comments';
+    wrap.innerHTML =
+      '<div class="pm-comments-title">留言</div>' +
+      '<ul class="pm-comments-list"></ul>' +
+      '<div class="pm-comment-form">' +
+        '<textarea class="pm-comment-input" placeholder="写下你的留言..."></textarea>' +
+        '<div class="pm-comment-actions">' +
+          '<button class="pm-btn pm-comment-submit" type="button">提交</button>' +
+          '<span class="pm-comment-msg"></span>' +
+        '</div>' +
+      '</div>';
+    viewEl.appendChild(wrap);
+
+    var listEl = wrap.querySelector('.pm-comments-list');
+    var inputEl = wrap.querySelector('.pm-comment-input');
+    var submitEl = wrap.querySelector('.pm-comment-submit');
+    var msgEl = wrap.querySelector('.pm-comment-msg');
+
+    function renderList() {
+      if (!listEl) return;
+      listEl.innerHTML = '';
+      var items = readCommentsFor(postKey);
+      if (!items.length) {
+        var empty = document.createElement('li');
+        empty.className = 'pm-comment-item';
+        empty.textContent = '暂无留言';
+        listEl.appendChild(empty);
+        return;
+      }
+      items.forEach(function(it) {
+        var li = document.createElement('li');
+        li.className = 'pm-comment-item';
+        var meta = document.createElement('div');
+        meta.className = 'pm-comment-meta';
+        meta.textContent = (it && it.u ? String(it.u) : 'user') + ' · ' + formatDate(it && it.t ? new Date(it.t).toISOString() : '');
+        var text = document.createElement('div');
+        text.className = 'pm-comment-text';
+        text.textContent = it && it.c ? String(it.c) : '';
+        li.appendChild(meta);
+        li.appendChild(text);
+        listEl.appendChild(li);
+      });
+    }
+
+    renderList();
+
+    if (submitEl) {
+      submitEl.addEventListener('click', function() {
+        if (!inputEl) return;
+        var val = String(inputEl.value || '').trim();
+        if (!val) {
+          if (msgEl) msgEl.textContent = '留言不能为空';
+          return;
+        }
+        var username = loadUsername() || 'user';
+        addComment(postKey, username, val);
+        inputEl.value = '';
+        if (msgEl) msgEl.textContent = '已保存';
+        renderList();
+        setTimeout(function() { if (msgEl) msgEl.textContent = ''; }, 1200);
+      });
+    }
+  }
+
   location.hash = '#file=' + encodeURIComponent(file.id || '');
 }
 
