@@ -65,7 +65,7 @@
       width: 40px;
       height: 40px;
       border-radius: 10px;
-      object-fit: cover;
+      object-fit: contain;
       flex: 0 0 40px;
       border: 1px solid rgba(0,0,0,0.08);
       background: rgba(0,0,0,0.03);
@@ -86,9 +86,12 @@
     .pm-file-date { font-size: 12px; opacity: 0.75; line-height: 1.2; }
     .pm-breadcrumb { display: none; }
     .pm-preview-cover {
-      width: 100%;
-      max-height: 360px;
-      object-fit: cover;
+      width: auto;
+      max-width: 100%;
+      max-height: 220px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
       border-radius: 12px;
       border: 1px solid rgba(0,0,0,0.08);
       background: rgba(0,0,0,0.03);
@@ -109,7 +112,7 @@
       storageKey: "hexo_auth_session",
       loginPath: "/login/",
       root: "/",
-      manifest: "eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiJHcHFrdzRLcHozYi9mcitYIiwidGFnIjoiaS9Nb3R3THFVUjVmUVdCeFJoNGc4UT09IiwiY3QiOiJlSjNWd2g0VFEwUlIyVnBIalNBeVZWYVBDNEtGNTY2aWM4TWRseCtpWlNoVTJxNGkvVUZrS0ZpcUNmRWlaa2JhcUVkeGFQRjVSTktqMjhwTDVGc3V0YkdPcEJSZS9xeThsN3Ira2JZcWZubENreTlwcjZxcU1BbWJFT1NzMC8xTkJJRHFYNm0xWTgwUWNPU3dMTlAzeHBnaG96dlh2M05XVk5mdkcxSjJVNnd0VHd0NVFidVFZRjdPWTZVSWZYOFNWNWR5K0RwelcyVjlmbTByNUZ3ZVVZcDRJTVhSMDZ4V3FLTGh1S3Y2WG9Rb3lPQVV4b2lpMnZTY1JIcktRNzdzWGV4dkpNeW83OEdSTzQyM2tuT2RNTFhLRCt4RDNRVDNzb2JFQ0ZWT1p3bzc2b1JJRnVKUEVrQzhkdkY2UllmUkRueDM0U3F4SXpQeDA0ajNSYllwaXo1SGUzQTdLdVZaODcrcm5wQmJTbnFHL2Q0QmZQZUFpL05ac1V2K25xMmRZZEw1Z1lLd015Mm1xQkVYdEdRN25IcDVST0ZobzYydTNlZEJrTHRBV0ZMdENuSEdCM2lLdytZTnJ3PT0iLCJraW5kIjoicHJpdmF0ZV9tb2R1bGVfbGlzdCJ9"
+      manifest: "eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiJKV0lYNTI5SmozTHprUGNOIiwidGFnIjoiYmppQXl4OGV4aE1ueExyeVlLY2FOQT09IiwiY3QiOiJlWENlTHFVU0ZSdXJadzVpVFBKMU5Wb0ZBd1EyN3czVkE5U2p6RHByamNKRzMvRkZ3eXBTNzdUaTlMdGJKcHpLd09QSExlQmpSK1VEK1NkTzEzSDgwd1ZZbkhhTGVPSWI5RGpMeFpSWEhzc0crajkzUXNqYXluZHVCOFdEbHFEWCsyU2c1cUZFWEJ4bytHYkV3RGI3dUtZQVJaUkNBZXhWTFVweUllVWN5Y0NrYlRlWW5xR0J3VDI4TlkvRzZsUlpvN1FXa2grMTF1NnE2Vlg4QTlFMjhMYWV3ZzZKL3dGVm1HQU1USk5yQnBtSWMrZWF6ZUN0Q3pTNzBwQlFYNng3a2hqNnQ0UmlCWDUvY3lPejBnYXptOG9FNHgreEZDaVRTSTVmd0IvOGo5cDF2VnlwRktLalVhdHd0ZE56Vk0xd3hHQWltS3F1clhQWEV1TDVJRTZSVloxelIwWnhFN2R5M1lYWjNrdTM2NndsbHhUU2dMZm5mKzRqOUtLQ25OTXNrSWo1cDROTDd2NHQrZWVOdmJ4KzAzNjFUMmtuMXNvQ1lHRFNhRXhxOHJ4TVlrbjJUalBKQ3hyQWN3PT0iLCJraW5kIjoicHJpdmF0ZV9tb2R1bGVfbGlzdCJ9"
     };
   </script>
 </head>
