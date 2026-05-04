@@ -62,11 +62,11 @@
     .pm-file.active { background: rgba(0,0,0,0.06); color: var(--link-hover-color); }
     .dark-mode .pm-file.active { background: rgba(255,255,255,0.10); }
     .pm-cover {
-      width: 56px;
-      height: 56px;
+      width: 40px;
+      height: 40px;
       border-radius: 10px;
       object-fit: cover;
-      flex: 0 0 56px;
+      flex: 0 0 40px;
       border: 1px solid rgba(0,0,0,0.08);
       background: rgba(0,0,0,0.03);
     }
@@ -84,7 +84,7 @@
     .pm-file-meta { display:flex; flex-direction:column; gap:2px; min-width:0; }
     .pm-file-title { font-size: 20px; font-weight: 800; line-height: 1.2; overflow:hidden; text-overflow: ellipsis; white-space: nowrap; }
     .pm-file-date { font-size: 12px; opacity: 0.75; line-height: 1.2; }
-    .pm-breadcrumb { font-size: 36px; font-weight: 900; opacity: 1; margin: 0 0 14px 0; line-height: 1.12; }
+    .pm-breadcrumb { display: none; }
     .pm-preview-cover {
       width: 100%;
       max-height: 360px;
@@ -109,7 +109,7 @@
       storageKey: "hexo_auth_session",
       loginPath: "/login/",
       root: "/",
-      manifest: "eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiIwWkpSSVlIVVpSdXhkNGdTIiwidGFnIjoicERBMlBGT1U5TDhDSWRKYVhIMGN0Zz09IiwiY3QiOiJXYStqTmpVdkJkRU4vTDVLRXJZZ01OUFcyZGpNWDF1eGhLaTAzMkVudW1HYmRtVER4eFhIN0xvTnVlcUlCRnFnVlhob3RmVzVFZW9VYWJqVkJVVWRHSzJEWjNoREx5dTg4NDllZ1BlZGFsNGNIWHp6TVJVUzRVanVyUEpjaVI1TlQwYlVsNGpUMlNJVjByd1REUHVDVjNuREhLcndFbDBMQ3MxZElRdzlFN3BObjhJcWIzNnJzK05KdS95NEFTZlg2OTZSSFY2MVNiNkpDSDV6SmQwL2UwNjNmbHdlSGhhOWRuZHZpaS8xWWUzK0Z1MEhCb3Q0U3RRcWxtZUtRbXV3bFpoeU5rcEwwWjM4aVc4ZENweVk1LzJRYTBMOTdmTGdLNy96NHI1bDVVWXVleTRDdVdDeEdydk03cjQ2cmhqTUNvZjlmZ09BWTl5RGUxZHpoREpSVGhnSDI2Q0tnWjNKZzZoMTBkYk5zUG9PV09ZY1RXNTNTVUlyY1lBOStueXZKcmhnbC9xVS8xeXlLM3NISjJLVnp4WjE3V3pjNjVISXVPNU9kb2JGWjVhMG1ENlRxWGFNd1lPcVdnPT0iLCJraW5kIjoicHJpdmF0ZV9tb2R1bGVfbGlzdCJ9"
+      manifest: "eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiJHcHFrdzRLcHozYi9mcitYIiwidGFnIjoiaS9Nb3R3THFVUjVmUVdCeFJoNGc4UT09IiwiY3QiOiJlSjNWd2g0VFEwUlIyVnBIalNBeVZWYVBDNEtGNTY2aWM4TWRseCtpWlNoVTJxNGkvVUZrS0ZpcUNmRWlaa2JhcUVkeGFQRjVSTktqMjhwTDVGc3V0YkdPcEJSZS9xeThsN3Ira2JZcWZubENreTlwcjZxcU1BbWJFT1NzMC8xTkJJRHFYNm0xWTgwUWNPU3dMTlAzeHBnaG96dlh2M05XVk5mdkcxSjJVNnd0VHd0NVFidVFZRjdPWTZVSWZYOFNWNWR5K0RwelcyVjlmbTByNUZ3ZVVZcDRJTVhSMDZ4V3FLTGh1S3Y2WG9Rb3lPQVV4b2lpMnZTY1JIcktRNzdzWGV4dkpNeW83OEdSTzQyM2tuT2RNTFhLRCt4RDNRVDNzb2JFQ0ZWT1p3bzc2b1JJRnVKUEVrQzhkdkY2UllmUkRueDM0U3F4SXpQeDA0ajNSYllwaXo1SGUzQTdLdVZaODcrcm5wQmJTbnFHL2Q0QmZQZUFpL05ac1V2K25xMmRZZEw1Z1lLd015Mm1xQkVYdEdRN25IcDVST0ZobzYydTNlZEJrTHRBV0ZMdENuSEdCM2lLdytZTnJ3PT0iLCJraW5kIjoicHJpdmF0ZV9tb2R1bGVfbGlzdCJ9"
     };
   </script>
 </head>
@@ -271,7 +271,7 @@ function renderList(files) {
 function showPreview(file) {
   if (!file) return;
   setActive(file.id);
-  bcEl.textContent = file.title || '';
+        bcEl.textContent = '';
   var cover = file && file.cover ? String(file.cover) : '';
   var coverHtml = cover ? '<img class="pm-preview-cover" src="' + escapeAttr(cover) + '" alt="">' : '';
   viewEl.innerHTML =
@@ -286,7 +286,7 @@ function showPreview(file) {
 function openFull(file) {
   if (!file) return;
   setActive(file.id);
-  bcEl.textContent = file.title || '';
+        bcEl.textContent = '';
   viewEl.innerHTML = file.html || '';
   location.hash = '#file=' + encodeURIComponent(file.id || '') + '&open=1';
 }
