@@ -4,9 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
   <meta name="robots" content="noindex,nofollow">
-  <title>受限模块 | N3x0r's Blog</title>
+  <title>private | N3x0r's Blog</title>
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <script>
+    (function() {
+      var savedTheme = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark-mode');
+      } else {
+        document.documentElement.classList.remove('dark-mode');
+      }
+    })();
+  </script>
   <style>
     .pm-wrap { max-width: 1200px; margin: 24px auto; padding: 0 16px; }
     .pm-top { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom: 14px; }
@@ -16,6 +27,8 @@
     .pm-shell { display:flex; gap: 14px; }
     .pm-side { width: 320px; flex: 0 0 320px; border: 1px solid rgba(0,0,0,0.08); border-radius: 10px; background: var(--card-bg-color); overflow:hidden; }
     .pm-main { flex:1; min-width:0; border: 1px solid rgba(0,0,0,0.08); border-radius: 10px; background: var(--card-bg-color); padding: 14px 16px; }
+    .pm-main img { max-width: 100%; height: auto; }
+    .pm-main video { max-width: 100%; }
     .pm-hint { padding: 12px 14px; border-radius: 10px; border: 1px dashed rgba(0,0,0,0.25); background: rgba(0,0,0,0.02); }
     .pm-tree { list-style:none; margin:0; padding: 10px; max-height: 72vh; overflow:auto; }
     .pm-node { margin: 2px 0; }
@@ -49,7 +62,7 @@
 <body>
   <div class="pm-wrap">
     <div class="pm-top">
-      <h1 class="pm-title">受限模块</h1>
+      <h1 class="pm-title">private</h1>
       <div class="pm-actions">
         <button class="pm-btn" id="pm-logout-btn" type="button">退出登录</button>
       </div>
@@ -130,7 +143,7 @@
       }
 
       function showUnauthed() {
-        viewEl.innerHTML = '<div class="pm-hint">此模块仅对登录用户可见。<a href="' + buildLoginUrl() + '">去登录</a></div>';
+        viewEl.innerHTML = '<div class="pm-hint">private 仅对登录用户可见。<a href="' + buildLoginUrl() + '">去登录</a></div>';
         treeEl.innerHTML = '';
         bcEl.textContent = '';
       }
@@ -199,7 +212,7 @@
 
       async function initAuthed(accessKeyBytes) {
         if (!manifestEncoded) {
-          viewEl.innerHTML = '<div class="pm-hint">模块暂无内容</div>';
+          viewEl.innerHTML = '<div class="pm-hint">private 暂无内容</div>';
           treeEl.innerHTML = '';
           bcEl.textContent = '';
           return;
