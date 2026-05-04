@@ -178,7 +178,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/27/Linux%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/03/10/%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -192,8 +192,8 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a class="post-title-link" href="/2026/02/27/Linux%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C/" itemprop="url">
-              Linux基础指令操作
+            <a class="post-title-link" href="/2026/03/10/%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" itemprop="url">
+              x86_64 汇编基础
             </a>
         </h2>
 
@@ -204,14 +204,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2026-02-27 19:05:51" itemprop="dateCreated datePublished" datetime="2026-02-27T19:05:51+08:00">2026-02-27</time>
+              <time title="Created: 2026-03-10 20:44:40" itemprop="dateCreated datePublished" datetime="2026-03-10T20:44:40+08:00">2026-03-10</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-03-14 14:20:33" itemprop="dateModified" datetime="2026-03-14T14:20:33+08:00">2026-03-14</time>
+                <time title="Modified: 2026-03-14 14:34:36" itemprop="dateModified" datetime="2026-03-14T14:34:36+08:00">2026-03-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,7 +219,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                  <a href="/categories/PWN/" itemprop="url" rel="index"><span itemprop="name">PWN</span></a>
                 </span>
             </span>
 
@@ -234,143 +234,73 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Linux-操作系统介绍"><a href="#Linux-操作系统介绍" class="headerlink" title="Linux 操作系统介绍"></a>Linux 操作系统介绍</h1><p>Linux是一款开源的操作系统，它的内核由Linus Torvalds于1991年创建。Linux系统的设计目标是提供一个稳定、安全、高效的操作系统，同时也提供了一个开放的平台，使开发人员可以自由地开发和修改操作系统的代码。Linux系统常常被用于各种服务器端应用，如Web服务器、数据库服务器等。在我们日后pwn的过程中，会用到很多Linux系统的指令操作，如文件操作、进程管理、网络配置等。因此，掌握Linux系统的指令操作是非常必要的。（ps：MacOS系统与Linux指令高度相似，因为MacOS是Unix内核,而Linux是类Unix系统；我的教学很多是在Mac上模拟的，大家不用在意，基本是一样的）</p>
-<h1 id="Linux-操作系统的特点"><a href="#Linux-操作系统的特点" class="headerlink" title="Linux 操作系统的特点"></a>Linux 操作系统的特点</h1><ul>
-<li>一切皆文件：在Linux系统中，所有的设备、文件、目录、进程等都被视为文件。这使得Linux系统的文件操作非常灵活和方便。</li>
-<li>权限严格：在Linux系统中，每个文件和目录都有自己的权限设置。这些权限可以控制谁可以读取、写入或执行文件。</li>
-<li>命令行就是本体：图形界面都是装饰，命令行才是Linux系统的核心。</li>
-</ul>
-<h1 id="Linux-常用版本（学习pwn必备）"><a href="#Linux-常用版本（学习pwn必备）" class="headerlink" title="Linux 常用版本（学习pwn必备）"></a>Linux 常用版本（学习pwn必备）</h1><ul>
-<li>Ubuntu：新手友好，但不适用于网安学习。</li>
-<li>Kali Linux：专为渗透测试和网络安全而设计，包含了许多常用的渗透测试工具。</li>
-<li>CentOS&#x2F;Rocky：企业级Linux发行版，稳定性和安全性较高。</li>
-<li>Parrot Security OS：基于Debian的操作系统，专注于网络安全和渗透测试。</li>
-<li>Debian：很多服务器用，应该有所了解。</li>
-<li>Arch：Linux终极形态，一切都可以自定义，适合有一定Linux基础的人，让系统变成你喜欢的样子，鼠标将变成摆设，键盘将变成你的一切。</li>
-</ul>
-<h1 id="Linux-文件系统"><a href="#Linux-文件系统" class="headerlink" title="Linux 文件系统"></a>Linux 文件系统</h1><ul>
-<li>目录结构：Linux系统的目录结构是一个树状结构，根目录(root)为“&#x2F;”。其他目录都是根目录的子目录,如“&#x2F;bin”、“&#x2F;etc”、“&#x2F;home”等。</li>
-<li>文件权限：每个文件和目录都有自己的权限设置。这些权限可以控制谁可以读取、写入或执行文件。</li>
-<li>文件操作：在Linux系统中，文件操作非常灵活和方便。可以使用命令行或图形界面来进行文件操作。</li>
-</ul>
-<h1 id="Linux-基础指令操作"><a href="#Linux-基础指令操作" class="headerlink" title="Linux 基础指令操作"></a>Linux 基础指令操作</h1><p>注意：在Linux系统中，指令操作都是区分大小写的。<br>另外：在做指令相关学习时，实践是相当重要的，学习时应当多敲代码，不断巩固自己的指令操作。</p>
-<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p>Linux系统的指令操作都是基于命令行的。在命令行中，每个指令都有自己的参数和选项。指令的一般格式为：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">指令 [选项] [参数]</span><br></pre></td></tr></table></figure>
-
-<p>其中，指令是要执行的操作，选项是用来修改指令行为的参数，参数是指令操作的对象。<br>例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /home</span><br></pre></td></tr></table></figure>
-<p>其中，<code>ls</code>(即list的缩写)是指令，<code>-l</code>(即long的缩写)是选项，<code>/home</code>是参数。这个指令的作用是列出<code>/home</code>目录下的所有文件和目录，并以长格式显示。<br>当你想要使用刚刚使用过的指令时，你可以直接在命令行中输入指令的名称，而不需要重新输入所有的参数和选项。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l</span><br></pre></td></tr></table></figure>
-<p>这将列出当前目录下的所有文件和目录，并以长格式显示。<br>完全相同时也可以按住方向⬆️⬇️键来重复上几条指令。<br>现在你已经了解了Linux命令行的基础概念，接下来我们将学习一些常用的指令操作。</p>
-<h2 id="绝对路径和相对路径"><a href="#绝对路径和相对路径" class="headerlink" title="绝对路径和相对路径"></a>绝对路径和相对路径</h2><p>在Linux系统中，每个文件和目录都有自己的路径。路径可以分为绝对路径和相对路径。</p>
+          <h1 id="程序的设计与最终实现"><a href="#程序的设计与最终实现" class="headerlink" title="程序的设计与最终实现"></a>程序的设计与最终实现</h1><p>要解决pwn的问题，首先要明白程序是如何最终被加载到内存中的。<br>程序的实现可以分为以下几个步骤：</p>
 <ul>
-<li>绝对路径：从根目录开始的完整路径，如“&#x2F;home&#x2F;user”。</li>
-<li>相对路径：相对于当前工作目录的路径，如“..&#x2F;user”。这里的“..&#x2F;”表示上一级目录，而“.&#x2F;”则可以表示当前目录，例如：“.&#x2F;user”表示当前目录下的user目录。</li>
-<li>特殊路径：<ul>
-<li>“~”：表示当前用户的主目录，如“&#x2F;home&#x2F;user”。</li>
+<li>设计程序：此时你构想程序的功能，并将其设计为一定的逻辑结构。</li>
+<li>代码，算法实现：根据设计的逻辑，你开始使用高级编程语言编写程序（如C、C++、Python等）。但此时的代码只是一个逻辑上的实现，还没有被转换为机器码，是无法直接在计算机上执行的。代码并不是程序！</li>
+<li>编译：使用编译器将高级语言的代码转换为汇编语言。汇编语言非常底层，直接对应着计算机的指令集，但是非常难以读懂。但要想理解程序的执行过程，必须要先理解汇编语言。pwn手应该具有汇编语言的阅读能力。</li>
+<li>汇编：汇编器将汇编语言转换为机器码（二进制指令）。</li>
+<li>链接：如果程序依赖于其他库或模块，链接器将这些组件组合在一起，形成一个完整的可执行文件。</li>
+<li>加载：最终，操作系统将可执行文件加载到内存中，并为其分配内存空间。</li>
+<li>执行：CPU开始执行加载到内存中的指令，完成程序的功能。<br>pwn手需要弄清程序的内存操作，包括栈、堆、全局变量等。只有理解了程序的内存布局，才能正确地利用漏洞进行攻击，学习汇编语言是必要的。这里我们使用最常见的x86_64架构作为主要学习内容，事实上，其他架构（如ARM）也有类似的汇编语言，但是语法和指令集不同，我们这里只关注x86_64架构。<br>网上很多教程知识密度很高，让人看着犯困，因此我的教程将会尽量简单，避免复杂的概念。</li>
 </ul>
-</li>
-</ul>
-<h2 id="常用指令操作"><a href="#常用指令操作" class="headerlink" title="常用指令操作"></a>常用指令操作</h2><p>当你不了解某个指令的使用方式时，可以使用“man”指令来查看该指令的手册页。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">man ls</span><br></pre></td></tr></table></figure>
-<p>这将显示<code>ls</code>指令的手册页，其中包含了该指令的详细说明和使用示例。甚至：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">man man</span><br></pre></td></tr></table></figure>
-<p>这将显示<code>man</code>指令的手册页，其中包含了该指令的详细说明和使用示例。<br>而“echo”指令则可以用来在命令行中输出文本。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;hello world&quot;</span><br></pre></td></tr></table></figure>
-<p>这将在命令行中输出“hello world”。<br>“help”指令则可以用来查看指令的帮助信息。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">help ls</span><br></pre></td></tr></table></figure>
-<p>这将显示<code>ls</code>指令的帮助信息，其中包含了该指令的详细说明和使用示例。</p>
-<h3 id="运行文件"><a href="#运行文件" class="headerlink" title="运行文件"></a>运行文件</h3><p>在Linux系统中，我们可以使用<code>./</code>来运行当前目录下的可执行文件。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./hello</span><br></pre></td></tr></table></figure>
-<p>其中，<code>hello</code>是一个可执行文件，它将在当前目录下运行。<br>这实际上是使用了文件的相对路径，你也可以使用绝对路径来运行文件，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/user/hello</span><br></pre></td></tr></table></figure>
-<h3 id="有关目录和文件"><a href="#有关目录和文件" class="headerlink" title="有关目录和文件"></a>有关目录和文件</h3><h4 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h4><p>在Linux系统中，我们可以使用<code>cd</code>指令来切换目录。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /home/user</span><br></pre></td></tr></table></figure>
-<p>其中，<code>/home/user</code>是要切换到的目录。<br>这实际上是使用了绝对路径，你也可以使用相对路径来切换目录，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ../user</span><br></pre></td></tr></table></figure>
-<p>其中，<code>../user</code>表示上一级目录下的user目录。</p>
-<h4 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h4><p>在Linux系统中，我们可以使用<code>ls</code>指令来列出当前目录下的所有文件和目录。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls</span><br></pre></td></tr></table></figure>
-<p>这将列出当前目录下的所有文件和目录。<br>我们也可以使用<code>ls -l</code>来以长格式显示文件和目录的详细信息，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l</span><br></pre></td></tr></table></figure>
-<p>这将列出当前目录下的所有文件和目录，并以长格式显示。<br>而<code>ls -a</code>则可以列出所有文件和目录，包括隐藏文件(以“.”开头的文件)。</p>
-<h4 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h4><p>在Linux系统中，我们可以使用<code>pwd</code>指令来显示当前工作目录的路径。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pwd</span><br></pre></td></tr></table></figure>
-<p>这将显示当前工作目录的路径。</p>
-<h4 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h4><p>在Linux系统中，我们可以使用<code>mkdir</code>指令来创建目录。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /home/user/hello</span><br></pre></td></tr></table></figure>
-<p>这将在<code>/home/user</code>目录下创建一个名为hello的目录。</p>
-<h4 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir"></a>rmdir</h4><p>在Linux系统中，我们可以使用<code>rmdir</code>指令来删除目录。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rmdir /home/user/hello</span><br></pre></td></tr></table></figure>
-<p>这将删除<code>/home/user</code>目录下的hello目录。</p>
-<h4 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h4><p>在Linux系统中，我们可以使用<code>rm</code>指令来删除文件。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm /home/user/hello</span><br></pre></td></tr></table></figure>
-<p>这将删除<code>/home/user</code>目录下的hello文件。<br>注意：使用<code>rm</code>指令删除文件时，是永久删除，不能恢复。因此，在使用该指令时要非常小心。</p>
-<h4 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h4><p>在Linux系统中，我们可以使用<code>cp</code>指令来复制文件或目录。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /home/user/hello /home/user/hello2</span><br></pre></td></tr></table></figure>
-<p>这将复制<code>/home/user</code>目录下的hello文件到hello2文件。<br>我们也可以使用<code>cp -r</code>来递归复制目录，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -r /home/user/hello /home/user/hello2</span><br></pre></td></tr></table></figure>
-<p>这将递归复制<code>/home/user</code>目录下的hello目录到hello2目录。</p>
-<h4 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h4><p>在Linux系统中，我们可以使用<code>mv</code>指令来移动文件或目录。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /home/user/hello /home/user/hello2</span><br></pre></td></tr></table></figure>
-<p>这将移动<code>/home/user</code>目录下的hello文件到hello2文件。<br>我们也可以使用<code>mv -r</code>来递归移动目录，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv -r /home/user/hello /home/user/hello2</span><br></pre></td></tr></table></figure>
-<p>这将递归移动<code>/home/user</code>目录下的hello目录到hello2目录。</p>
-<h4 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h4><p>在Linux系统中，我们可以使用<code>cat</code>指令来查看文件的内容。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /home/user/hello</span><br></pre></td></tr></table></figure>
-<p>这将显示<code>/home/user</code>目录下的hello文件的内容。<br>CTF比赛中，你常常会使用<code>cat</code>指令来查看flag字符串的内容，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /flag</span><br></pre></td></tr></table></figure>
-<h4 id="more"><a href="#more" class="headerlink" title="more"></a>more</h4><p>在Linux系统中，我们可以使用<code>more</code>指令来分页查看文件的内容。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">more /home/user/hello</span><br></pre></td></tr></table></figure>
-<p>这将分页显示<code>/home/user</code>目录下的hello文件的内容。</p>
-<h4 id="head"><a href="#head" class="headerlink" title="head"></a>head</h4><p>在Linux系统中，我们可以使用<code>head</code>指令来查看文件的前几行内容。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">head /home/user/hello</span><br></pre></td></tr></table></figure>
-<p>这将显示<code>/home/user</code>目录下的hello文件的前几行内容。<br>默认情况下，<code>head</code>指令显示文件的前10行。我们也可以使用<code>head -n</code>来指定显示的行数，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">head -n 5 /home/user/hello</span><br></pre></td></tr></table></figure>
-<p>这将显示<code>/home/user</code>目录下的hello文件的前5行内容。</p>
-<h4 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h4><p>在Linux系统中，我们可以使用<code>tail</code>指令来查看文件的后几行内容。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail /home/user/hello</span><br></pre></td></tr></table></figure>
-<p>这将显示<code>/home/user</code>目录下的hello文件的后几行内容。<br>默认情况下，<code>tail</code>指令显示文件的后10行。我们也可以使用<code>tail -n</code>来指定显示的行数，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -n 5 /home/user/hello</span><br></pre></td></tr></table></figure>
-<h4 id="wc"><a href="#wc" class="headerlink" title="wc"></a>wc</h4><p>在Linux系统中，我们可以使用<code>wc</code>指令来统计文件的行数、单词数和字符数。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wc /home/user/hello</span><br></pre></td></tr></table></figure>
-<p>这将统计<code>/home/user</code>目录下的hello文件的行数、单词数和字符数。</p>
-<h4 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h4><p>在Linux系统中，我们可以使用<code>grep</code>指令来搜索文件中包含指定字符串的行。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &quot;hello&quot; /home/user/hello</span><br></pre></td></tr></table></figure>
-<p>这将搜索<code>/home/user</code>目录下的hello文件中包含“hello”字符串的行。<br>而<code>grep -v</code>则可以搜索不包含指定字符串的行，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -v &quot;hello&quot; /home/user/hello</span><br></pre></td></tr></table></figure>
-<p>这将搜索<code>/home/user</code>目录下的hello文件中不包含“hello”字符串的行。</p>
-<h4 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h4><p>在Linux系统中，我们可以使用<code>diff</code>指令来比较两个文件的差异。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">diff /home/user/hello /home/user/hello2</span><br></pre></td></tr></table></figure>
-<p>这将比较<code>/home/user</code>目录下的hello文件和hello2文件的差异。</p>
-<h4 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h4><p>在Linux系统中，我们可以使用<code>touch</code>指令来创建一个空文件或更新文件的访问时间和修改时间。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch /home/user/hello</span><br></pre></td></tr></table></figure>
-<p>这将创建一个空文件hello，或者更新hello文件的访问时间和修改时间。</p>
-<h4 id="file"><a href="#file" class="headerlink" title="file"></a>file</h4><p>在Linux系统中，我们可以使用<code>file</code>指令来查看文件的类型。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file /home/user/hello</span><br></pre></td></tr></table></figure>
-<p>这将查看<code>/home/user</code>目录下的hello文件的类型。</p>
-<h4 id="ln"><a href="#ln" class="headerlink" title="ln"></a>ln</h4><p>在Linux系统中，我们可以使用<code>ln</code>指令来创建链接文件。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /home/user/hello /home/user/hello2</span><br></pre></td></tr></table></figure>
-<p>这将创建一个符号链接hello2，指向<code>/home/user</code>目录下的hello文件。<br>而<code>ln -h</code>则可以创建硬链接，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -h /home/user/hello /home/user/hello2</span><br></pre></td></tr></table></figure>
-<p>这将创建一个硬链接hello2，指向<code>/home/user</code>目录下的hello文件。</p>
-<h3 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h3><h4 id="星号通配符"><a href="#星号通配符" class="headerlink" title="星号通配符"></a>星号通配符</h4><p>我们要学习的第一个通配符是 *。当 shell 在任何参数中遇到 * 字符时，会将其视为 “通配符”，并尝试用所有与该模式匹配的文件来替换该参数。演示给你看比解释更容易：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">macbook@wangnexordeMacBook-Pro% touch file_a</span><br><span class="line">macbook@wangnexordeMacBook-Pro% touch file_b</span><br><span class="line">macbook@wangnexordeMacBook-Pro% touch file_c</span><br><span class="line">macbook@wangnexordeMacBook-Pro% ls</span><br><span class="line">file_a	file_b	file_c</span><br><span class="line">macbook@wangnexordeMacBook-Pro% echo Look: file_*</span><br><span class="line">Look: file_a file_b file_c</span><br></pre></td></tr></table></figure>
-<h4 id="问号通配符"><a href="#问号通配符" class="headerlink" title="问号通配符"></a>问号通配符</h4><p>我们要学习的第二个通配符是 ?。当 shell 在任何参数中遇到 ? 字符时，会将其视为 “通配符”，并尝试用所有与该模式匹配的文件来替换该参数。演示给你看比解释更容易：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">macbook@wangnexordeMacBook-Pro% touch file_a</span><br><span class="line">macbook@wangnexordeMacBook-Pro% touch file_b</span><br><span class="line">macbook@wangnexordeMacBook-Pro% touch file_c</span><br><span class="line">macbook@wangnexordeMacBook-Pro% ls</span><br><span class="line">file_a	file_b	file_c</span><br><span class="line">macbook@wangnexordeMacBook-Pro% echo Look: file_?</span><br><span class="line">Look: file_a file_b file_c</span><br></pre></td></tr></table></figure>
-<h4 id="方括号通配符"><a href="#方括号通配符" class="headerlink" title="方括号通配符"></a>方括号通配符</h4><p>接下来，我们将介绍[]。本质上，方括号是一种受限形式的?，因为与匹配任意字符不同，[]是某些潜在字符子集的通配符，这些字符在括号内指定。例如，[pwn]会匹配字符p、w或n。比如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">macbook@wangnexordeMacBook-Pro% touch file_pwn</span><br><span class="line">macbook@wangnexordeMacBook-Pro% touch file_123</span><br><span class="line">macbook@wangnexordeMacBook-Pro% ls</span><br><span class="line">file_123	file_pwn</span><br><span class="line">macbook@wangnexordeMacBook-Pro% echo Look: file_[pwn]</span><br><span class="line">Look: file_pwn</span><br></pre></td></tr></table></figure>
-<p>通配符匹配是基于路径进行的，因此你可以使用通配符参数来展开整个路径。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">macbook@wangnexordeMacBook-Pro% echo /home/user/file_*</span><br><span class="line">/home/user/file_a /home/user/file_b /home/user/file_c</span><br></pre></td></tr></table></figure>
-<p>到目前为止，你一次只指定了一个通配符，但你可以做得更多！Bash支持在一个单词中展开多个通配符。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">macbook@wangnexordeMacBook-Pro% echo /home/user/file_[a-c]</span><br><span class="line">/home/user/file_a /home/user/file_b /home/user/file_c</span><br></pre></td></tr></table></figure>
-<p>有时候，你希望过滤掉通配符中的某些文件！[]可以帮你实现这一点。如果方括号中的第一个字符是!，或者（在较新版本的bash中）是^，那么通配符就会反转，该方括号实例会匹配未列出的字符。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">macbook@wangnexordeMacBook-Pro% echo /home/user/file_[!a-c]</span><br><span class="line">/home/user/file_123 /home/user/file_pwn</span><br></pre></td></tr></table></figure>
-<h4 id="tab"><a href="#tab" class="headerlink" title="tab"></a>tab</h4><p>尽管用星号（*）来缩短命令行输入可能很方便，但这可能会导致错误。你的通配符可能会扩展到非预期的文件，而且你可能要等到rm命令已经运行时才会发现！没有人能避免这种类型的错误。当你试图指定一个特定目标时，一个更安全的替代方法是制表符补全。如果你在shell中按一下制表键，它会尝试弄清楚你要输入的内容并自动补全。</p>
-<h3 id="管道符类"><a href="#管道符类" class="headerlink" title="管道符类"></a>管道符类</h3><h4 id="管道符（-）"><a href="#管道符（-）" class="headerlink" title="管道符（|）"></a>管道符（|）</h4><p>管道符（|）用于将一个命令的输出作为另一个命令的输入。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">macbook@wangnexordeMacBook-Pro% ls | grep &quot;hello&quot;</span><br></pre></td></tr></table></figure>
-<p>这将列出当前目录下所有包含“hello”字符串的文件。</p>
-
+<h1 id="内存概念"><a href="#内存概念" class="headerlink" title="内存概念"></a>内存概念</h1><p>现在，我们还要给你介绍一个重要的概念：内存。<br>你（想必）作为人类，拥有短期记忆和长期记忆。在进行特定计算时，你的大脑会把之前学到的信息加载到短期记忆中，然后对这些信息进行处理，最后将新的结果信息存入长期记忆。在社会层面，我们还发明了其他更长期的存储形式：口述历史、日记、书籍。如果你的长期记忆中没有足够的空间来存储某些信息，或者这些信息不值得存入长期记忆，你随时可以去书籍上查阅，让大脑将其存入长期记忆，之后需要的时候再提取到短期记忆中。<br>这种从“容量小但易获取”（你的短期记忆，需要时随时可用，但只能存储5到9条信息）到“容量大但速度慢”（从庞大的长期记忆中回忆东西）再到“容量极大但速度极慢”（查阅书籍）的多级信息访问层级，实际上是现代计算机存储层次结构的基础(冯诺伊曼结构)。寄存器容量有限但速度极快。</p>
+<p>比所有寄存器加起来还要大，但访问速度却慢得多得多的是计算机内存，这也是我们将在本模块中深入探讨的内容，让你得以一窥存储层次结构的另一个层级。</p>
+<h1 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h1><h2 id="rax"><a href="#rax" class="headerlink" title="rax"></a>rax</h2><p>CPU的思维方式非常简单。它对数据进行移动、修改，基于数据做出决策，并根据数据采取行动。大多数情况下，这些数据存储在寄存器中。简单来说，寄存器就是数据的容器。CPU可以将数据放入寄存器，在寄存器之间移动数据等等。从硬件层面来看，这些寄存器由非常昂贵的芯片构成，被压缩在极小的空间内，其访问频率非常高，以至于光速等物理量都会影响它们的性能（三体中谈到黑域打击影响计算机性能就是这个原因）。因此，CPU所能拥有的寄存器数量极为有限。不同的CPU架构拥有的寄存器数量不同，这些寄存器的名称也各异，但通常来说，有10到20个“通用”寄存器可供程序代码随意使用，还有多达几十个其他寄存器用于特殊用途。</p>
+<p>在x86的现代版本x86_64中，程序可以访问16个通用寄存器。我们将了解第一个寄存器：rax。</p>
+<p>rax是x86 CPU中一个单独的寄存器，是其极其复杂设计中的一小部分，但我们将从这里开始学习。和其他寄存器一样，rax是用于存储少量数据的容器。你可以使用mov指令将数据移入rax。指令由一个操作符（这里是mov）和操作数组成，操作数代表附加数据（在这里，操作数会指定rax作为目标位置，以及我们想要存储在那里的值）。<br>例如，如果你想将值1337存储到rax中，对应的x86汇编代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov rax, 1337</span><br></pre></td></tr></table></figure>
+<h2 id="syscall"><a href="#syscall" class="headerlink" title="syscall"></a>syscall</h2><p>然而只写上述代码，程序可能很快就会崩溃。这是因为我们只是将一个值存储到了寄存器中，而没有告诉CPU我们要做什么。为了使程序有实际的行为，我们需要使用系统调用（syscall）。系统调用是一种特殊的函数调用，用于请求操作系统执行某些操作。在x86_64架构中，系统调用的参数存储在寄存器中，而返回值通常存储在rax寄存器中。<br>本部分中，你将学习如何让程序正常地退出，而不触发崩溃。启动程序以及正常地停止程序，这些操作都是由计算机的操作系统来处理的。操作系统负责管理程序的存在，以及程序之间、程序与硬件、程序与网络环境等之间的交互。你的程序通过汇编指令（比如你之前写过的mov指令）与中央处理器（CPU）交互。同样，你的程序（当然也是通过CPU）通过系统调用（syscall）指令与操作系统进行交互。就像你可能会打电话给当地餐馆点餐一样，程序通过系统调用来请求操作系统代表自己执行某些操作。大致来说，你的程序所做的任何不涉及对数据进行计算的操作，都是通过系统调用来完成的。程序可以调用的系统调用有很多种。例如，Linux系统大约有330种不同的系统调用，不过这个数字会随着时间变化，因为会有新的系统调用被添加，也会有旧的被弃用。每个系统调用都由一个系统调用号来标识，从0开始依次递增。程序要调用某个特定的系统调用时，需要将该系统调用号移入rax寄存器，然后执行syscall指令。例如，如果我们想调用42号系统调用（你之后会学到这个系统调用的相关知识！），我们需要编写两条指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov rax, 42</span><br><span class="line">syscall</span><br></pre></td></tr></table></figure>
+<p>现在，我将教你最简单的exit系统调用。exit系统调用用于终止当前正在运行的程序。它的系统调用号是60。要调用exit系统调用，我们需要将60移入rax寄存器，然后执行syscall指令。例如，以下代码将使程序正常退出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov rax, 60</span><br><span class="line">syscall</span><br></pre></td></tr></table></figure>
+<h2 id="rdi"><a href="#rdi" class="headerlink" title="rdi"></a>rdi</h2><p>exit系统调用只接受一个参数：退出代码。这个参数通过寄存器rdi传递。因此，要使程序以42作为退出代码退出，我们需要将42移入rdi寄存器，然后调用exit系统调用。以下代码将实现这一功能：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov rax, 60</span><br><span class="line">mov rdi, 42</span><br><span class="line">syscall</span><br></pre></td></tr></table></figure>
+<p>或者交换顺序也行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov rdi, 42</span><br><span class="line">mov rax, 60</span><br><span class="line">syscall</span><br></pre></td></tr></table></figure>
+<h2 id="编译和链接的Linux指令"><a href="#编译和链接的Linux指令" class="headerlink" title="编译和链接的Linux指令"></a>编译和链接的Linux指令</h2><p>这些只需要记住就好：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">as -o program.o program.s</span><br><span class="line">ld -o program program.o</span><br></pre></td></tr></table></figure>
+<h2 id="在寄存器之间传递数据"><a href="#在寄存器之间传递数据" class="headerlink" title="在寄存器之间传递数据"></a>在寄存器之间传递数据</h2><p>实际上，我们不止可以把特定数据写入寄存器，我们还可以把寄存器中的数据移动到其他寄存器中。例如，以下代码将把rdi寄存器中的值移动到rax寄存器中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov rax, rdi</span><br></pre></td></tr></table></figure>
+<p>我们也将学习一个新的寄存器：rsi。rsi寄存器用于存储第二个系统调用参数(你先别管这句话什么意思，以后自然会知道)。rsi也可以存储一些数据。</p>
+<h1 id="内存-memory"><a href="#内存-memory" class="headerlink" title="内存(memory)"></a>内存(memory)</h1><h2 id="从内存中加载"><a href="#从内存中加载" class="headerlink" title="从内存中加载"></a>从内存中加载</h2><p>在你的程序看来，计算机内存是一个存储数据的巨大空间。就像街道上的房屋一样，内存的每个部分都有一个数字地址，而且和街道上的房屋类似，这些地址（大多）是连续的。现代计算机拥有海量的内存，而典型的现代程序所看到的内存实际上存在很大的间隙（可以想象：街道上有一部分区域还没有建造房屋，因此那些地址就被跳过了）。但这些都是细节：关键在于，计算机主要是按顺序将数据存储在内存中的。在这一部分中，我们将练习访问存储在内存中的数据。我们该如何做呢？回想一下，要将一个值移入寄存器，我们会做类似这样的操作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov rdi, 31337</span><br></pre></td></tr></table></figure>
+<p>在这之后，rdi的值是31337。我们可以使用相同的指令来访问内存！该命令还有另一种格式，它会将第二个参数用作访问内存的地址！假设我们的内存如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  Address │ Contents</span><br><span class="line">+────────────────────+</span><br><span class="line">│ 31337   │ 42       │</span><br><span class="line">+────────────────────+</span><br></pre></td></tr></table></figure>
+<p>要访问内存地址31337处的内存内容，你可以这样做：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov rdi, [31337]</span><br></pre></td></tr></table></figure>
+<p>当CPU执行这条指令时，它会明白31337是一个地址，而不是原始值。如果你把这条指令想象成一个人在告诉CPU该做什么，并且我们沿用“街道上的房子”这个类比，那么这条指令&#x2F;这个人不是直接把数据交给CPU，而是指向街道上的一所房子。然后，CPU会前往那个地址，按门铃，打开前门，把里面的数据拖出来，放进rdi寄存器。因此，在这种情况下，31337是内存地址，用于指向存储在该内存地址的数据。这条指令执行后，rdi中存储的值将会是42！</p>
+<h2 id="解引用指针"><a href="#解引用指针" class="headerlink" title="解引用指针"></a>解引用指针</h2><p>你更倾向于访问133700处的内存还是123400处的内存？从技术角度来看，这并不是特别重要。事实上，在大多数情况下，你在编写程序时根本不会处理实际的内存地址！通常情况下，内存地址是存储在寄存器中的，而我们会使用寄存器中的值来指向内存中的数据！让我们从这个内存配置开始：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  Address │ Contents</span><br><span class="line">+────────────────────+</span><br><span class="line">│ 133700  │ 42       │</span><br><span class="line">+────────────────────+</span><br></pre></td></tr></table></figure>
+<p>再看看这段汇编代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov rax, 133700</span><br></pre></td></tr></table></figure>
+<p>现在，你的情况如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">    Address │ Contents</span><br><span class="line">  +────────────────────+</span><br><span class="line">┌▸│ 133700  │ 42       │</span><br><span class="line">│ +────────────────────+</span><br><span class="line">│</span><br><span class="line">└────────────────────────┐</span><br><span class="line">                         │</span><br><span class="line">   Register │ Contents   │</span><br><span class="line">  +────────────────────+ │</span><br><span class="line">  │ rax     │ 133700   │─┘</span><br><span class="line">  +────────────────────+</span><br></pre></td></tr></table></figure>
+<p>  rax现在保存着一个与我们想要加载的数据的地址相对应的值！让我们加载它：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov rdi, [rax]</span><br></pre></td></tr></table></figure>
+<p>在这里，我们正在访问内存，但我们没有像读取内存时那样指定一个固定地址（比如133700），而是使用rax中存储的值作为内存地址。由于包含了内存地址，rax就成了一个指针，指向我们想要访问的数据！当我们使用rax来代替直接指定它所存储的地址，以访问它所引用的内存地址时，我们称之为解引用指针。在上面的例子中，我们对rax进行解引用，将它所指向的数据（地址133700处的值42）加载到rdi中。<br>这也凸显了另一点：这些寄存器是通用的！到目前为止我们在学习中一直将rax用作系统调用索引，但这并不意味着它不能有其他用途。在这里，它被用作指向我们内存中数据的指针。<br>同样地，寄存器中的数据没有固有的用途。如果rax中包含值133700，而我们编写指令mov rdi, [rax]，CPU会将该值用作内存地址来解引用。但在相同情况下，如果我们编写指令mov rdi, rax，CPU会直接将133700存入rdi中。对CPU而言，数据就是数据，只有在以不同方式使用时，它们才会产生区别。</p>
+<h2 id="解引用自身"><a href="#解引用自身" class="headerlink" title="解引用自身"></a>解引用自身</h2><p>在上一部分中，你通过解引用rax将数据读入rdi。我们对rax的选择其实相当随意。我们本可以使用任何其他指针，甚至是rdi自己！<br>例如，下面是我们用rax解引用的示例。我已经在每一行都添加了注释：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov [133700], 42</span><br><span class="line">mov rax, 133700  # 在这之后，rax 存储 133700</span><br><span class="line">mov rax, [rax]   # 在这之后，rax 存储 42</span><br></pre></td></tr></table></figure>
+<h2 id="有偏移量的解引用"><a href="#有偏移量的解引用" class="headerlink" title="有偏移量的解引用"></a>有偏移量的解引用</h2><p>指针并不总是直接指向你需要的数据。例如，有时一个指针可能指向一个数据集合，而你需要引用这个集合的中间部分来获取你所需的特定数据。在这种情况下，你可以使用偏移量来调整指针的位置。<br>例如，如果你的指针（比如说，rdi）指向内存中的一串数字，如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">    Address │ Contents</span><br><span class="line">  +────────────────────+</span><br><span class="line">┌▸│ 133700  │ 50       │</span><br><span class="line">│ │ 133701  │ 42       │</span><br><span class="line">│ │ 133702  │ 99       │</span><br><span class="line">│ │ 133703  │ 14       │</span><br><span class="line">│ +────────────────────+</span><br><span class="line">│</span><br><span class="line">└────────────────────────┐</span><br><span class="line">                         │</span><br><span class="line">   Register │ Contents   │</span><br><span class="line">  +────────────────────+ │</span><br><span class="line">  │ rdi     │ 133700   │─┘</span><br><span class="line">  +────────────────────+</span><br></pre></td></tr></table></figure>
+<p>如果你想要该序列的第二个数字，你可以这样做：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov rdi, [rdi + 1]</span><br></pre></td></tr></table></figure>
+<p>在内存术语中，我们把这些数字位置称为字节：每个内存地址都代表一个特定的内存字节。上面的例子是访问rdi所指向的内存地址之后的1个字节的内存。在内存术语中，我们把这种1字节的差异称为偏移量，所以在这个例子中，与rdi所指向的地址相比，存在1偏移量。</p>
+<h1 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h1><p>程序已经有一个分配好的内存区域：栈。栈由rsp寄存器(stack pointer,栈指针)指向，它包含有关程序如何启动的有用数据，并会在程序执行过程中积累其他数据。让我们来探索一下它吧！</p>
+<p>到目前为止，我们一直在从我们给你的地址的内存中加载数据：要么是硬编码的（比如133700），要么是存储在寄存器中的（比如rax）。但有一个内存区域，你的程序无需我们进行任何设置就已经可以访问，那就是栈。栈是一块已分配的内存区域，用作程序的临时存储空间，而寄存器rsp（栈指针）指向栈的顶部。我们稍后会进一步探讨栈，但就目前而言，相关的细节是：当程序启动时，rsp指向的数据代表传递给程序的命令行参数的数量（包括程序名称本身）。所以，如果你运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(base) macbook@wangaodeMacBook-Pro% /tmp/your-program hello world</span><br></pre></td></tr></table></figure>
+<p>那么情况如下（实际地址仅为示例,实际地址每次程序运行时都会变）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">    Address    │ Contents</span><br><span class="line">  +───────────────────────+</span><br><span class="line">  │ ...        │ ...      │</span><br><span class="line">  +───────────────────────+</span><br><span class="line">┌▸│ 1337000    │ 3        │  ◀── the argument count</span><br><span class="line">| +───────────────────────+</span><br><span class="line">| | 1337008    | ???      |</span><br><span class="line">| +───────────────────────+</span><br><span class="line">| | 1337016    | ???      |</span><br><span class="line">│ +───────────────────────+</span><br><span class="line">│</span><br><span class="line">└────────────────────────────┐</span><br><span class="line">                             │</span><br><span class="line">   Register │ Contents       │</span><br><span class="line">  +────────────────────────+ │</span><br><span class="line">  │ rsp     │ 1337000      │─┘</span><br><span class="line">  +────────────────────────+</span><br></pre></td></tr></table></figure>
+<p>rsp指向栈，那里的值是3：一个用于程序名，一个用于“hello”，一个用于“world”。如图所示，栈中还有其他数据，但目前我们不必担心这些！</p>
+<h2 id="栈偏移"><a href="#栈偏移" class="headerlink" title="栈偏移"></a>栈偏移</h2><p>在上一部分内容中，你读取了[rsp]处的值：也就是栈的最顶端。但栈上有很多数据，你可以通过给rsp加上一个偏移量来访问其中的任何数据。例如，[rsp+8]会读取紧跟在[rsp]后面的8字节值，[rsp+16]会读取再后面的那个值，依此类推。一般来说，[rsp+N]会读取地址为rsp+N处的内存：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">  Address    | Contents</span><br><span class="line">+---------------------------+</span><br><span class="line">| rsp        | value 0      |  &lt;-- [rsp]</span><br><span class="line">+---------------------------+</span><br><span class="line">| rsp+8      | value 1      |  &lt;-- [rsp+8]</span><br><span class="line">+---------------------------+</span><br><span class="line">| rsp+16     | value 2      |  &lt;-- [rsp+16]</span><br><span class="line">+---------------------------+</span><br><span class="line">| ...        | ...          |</span><br><span class="line">+---------------------------+</span><br></pre></td></tr></table></figure>
+<p>你会注意到这些偏移量是以8的倍数递增的。这是因为栈上的许多值，比如数字或内存地址，通常是8字节（64位）宽，所以连续的值之间相隔8字节。但这主要是一种约定：实际上，栈和内存的其他任何区域一样，都是由单个字节组成的连续区域，不过目前我们会把栈当作一堆8字节&#x2F;64位的值来处理。</p>
+<h2 id="栈上的程序参数"><a href="#栈上的程序参数" class="headerlink" title="栈上的程序参数"></a>栈上的程序参数</h2><p>你现在已经读取了[rsp]来获取参数数量，并读取了[rsp+128]来获取偏移处的数据。让我们看看栈上还有其他什么东西！在参数数量之后，栈存储着每个程序参数的指针。这些是存储在内存中的地址：[rsp+16]并不直接包含参数文本——它包含该文本所在的地址。例如，如果你的程序以&#x2F;tmp&#x2F;your-program Hi的方式运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">   Register │ Contents</span><br><span class="line"> +───────────────────────────+</span><br><span class="line"> │ rsp      │ 1337000        │─┐</span><br><span class="line"> +───────────────────────────+ │</span><br><span class="line">                               │</span><br><span class="line">┌──────────────────────────────┘</span><br><span class="line">│</span><br><span class="line">│    Address    │ Contents</span><br><span class="line">│  +────────────────────────+</span><br><span class="line">│  │ ...        │ ...       │</span><br><span class="line">│  +────────────────────────+</span><br><span class="line">└▸ │ 1337000    │ 2         │  ◀── the ARGument Count (termed &quot;argc&quot;)</span><br><span class="line">   +────────────────────────+</span><br><span class="line">   │ 1337008    │ 1234000   │──────┐</span><br><span class="line">   +────────────────────────+      │</span><br><span class="line">   │ 1337016    │ 1234560   │────┐ │</span><br><span class="line">   +────────────────────────+    │ │</span><br><span class="line">   │ 1337024    │ 0         │    │ │</span><br><span class="line">   +────────────────────────+    │ │</span><br><span class="line">                                 │ │</span><br><span class="line"> ┌───────────────────────────────┘ │</span><br><span class="line"> │                                 │</span><br><span class="line"> │   Address   │ Contents          │</span><br><span class="line"> │ +──────────────────────────+    │</span><br><span class="line"> │ │ 1234000   │ &quot;/tmp/...&quot;   │◀───┘ the program name</span><br><span class="line"> │ +──────────────────────────+</span><br><span class="line"> │ │ ...       │ ...          │</span><br><span class="line"> │ +──────────────────────────+</span><br><span class="line"> └▸│ 1234560   │ &quot;Hi&quot;         │ the first argument!</span><br><span class="line">   +──────────────────────────+</span><br></pre></td></tr></table></figure>
+<p>要获取实际的参数数据，你需要进行两次解引用：一次是从栈中获取指针，另一次是通过该指针找到数据。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov rdi, [rsp+16]   # 从栈中加载第一个参数指针（例如，1234000）</span><br><span class="line">mov rdi, [rdi]      # 沿着指针读取实际数据（例如，“Hi”）</span><br></pre></td></tr></table></figure>
+<p>在这个例子中，[rsp+16]包含了指向参数“Hi”的指针。通过将该指针加载到rdi寄存器中，我们可以访问参数的实际数据。</p>
+<h2 id="栈弹出"><a href="#栈弹出" class="headerlink" title="栈弹出"></a>栈弹出</h2>
       
     </div>
 
@@ -380,10 +310,13 @@
       <footer class="post-footer">
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2026/02/27/Hello%20World/" rel="next" title="Hello World!">
-      Hello World! <i class="fa fa-chevron-right"></i>
+    <a href="/2026/02/27/Linux%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C/" rel="prev" title="Linux基础指令操作">
+      <i class="fa fa-chevron-left"></i> Linux基础指令操作
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2026/05/04/%E8%B7%91%E8%B7%AF%E4%BA%86%E5%85%84%E5%BC%9F/" rel="next" title="跑路了兄弟">
+      跑路了兄弟 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
         <div class="post-eof"></div>
@@ -396,7 +329,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
   </nav>
 
 
@@ -457,20 +390,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

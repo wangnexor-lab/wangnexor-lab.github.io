@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+  <meta name="robots" content="noindex,nofollow">
+  <title>受限模块 | N3x0r's Blog</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <style>
+    .pm-wrap { max-width: 1200px; margin: 24px auto; padding: 0 16px; }
+    .pm-top { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom: 14px; }
+    .pm-title { font-size: 18px; font-weight: 600; margin:0; }
+    .pm-actions { display:flex; gap:10px; align-items:center; }
+    .pm-btn { padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.18); background: var(--body-bg-color); color: var(--text-color); cursor:pointer; }
+    .pm-shell { display:flex; gap: 14px; }
+    .pm-side { width: 320px; flex: 0 0 320px; border: 1px solid rgba(0,0,0,0.08); border-radius: 10px; background: var(--card-bg-color); overflow:hidden; }
+    .pm-main { flex:1; min-width:0; border: 1px solid rgba(0,0,0,0.08); border-radius: 10px; background: var(--card-bg-color); padding: 14px 16px; }
+    .pm-hint { padding: 12px 14px; border-radius: 10px; border: 1px dashed rgba(0,0,0,0.25); background: rgba(0,0,0,0.02); }
+    .pm-tree { list-style:none; margin:0; padding: 10px; max-height: 72vh; overflow:auto; }
+    .pm-node { margin: 2px 0; }
+    .pm-folder { display:flex; align-items:center; gap:8px; width:100%; border:0; background: transparent; color: var(--text-color); padding: 8px 8px; border-radius: 8px; cursor:pointer; text-align:left; }
+    .pm-folder:hover { background: rgba(0,0,0,0.05); }
+    .dark-mode .pm-folder:hover { background: rgba(255,255,255,0.08); }
+    .pm-folder .pm-ico { width: 16px; text-align:center; opacity: 0.85; }
+    .pm-file { display:flex; align-items:center; gap:8px; width:100%; border:0; background: transparent; color: var(--text-color); padding: 8px 8px; border-radius: 8px; cursor:pointer; text-align:left; }
+    .pm-file:hover { background: rgba(0,0,0,0.05); }
+    .dark-mode .pm-file:hover { background: rgba(255,255,255,0.08); }
+    .pm-file.active { background: rgba(0,0,0,0.06); color: var(--link-hover-color); }
+    .dark-mode .pm-file.active { background: rgba(255,255,255,0.10); }
+    .pm-children { list-style:none; margin: 0 0 0 18px; padding: 0; display:none; }
+    .pm-node.open > .pm-children { display:block; }
+    .pm-breadcrumb { font-size: 13px; opacity: 0.85; margin: 0 0 10px 0; }
+    @media (max-width: 980px) {
+      .pm-shell { flex-direction: column; }
+      .pm-side { width:100%; flex: 0 0 auto; }
+      .pm-tree { max-height: 40vh; }
+    }
+  </style>
+  <script>
+    window.__PRIVATE_MODULE = {
+      storageKey: "hexo_auth_session",
+      loginPath: "/login/",
+      root: "/",
+      manifest: ""
+    };
+  </script>
+</head>
+<body>
+  <div class="pm-wrap">
+    <div class="pm-top">
+      <h1 class="pm-title">受限模块</h1>
+      <div class="pm-actions">
+        <button class="pm-btn" id="pm-logout-btn" type="button">退出登录</button>
+      </div>
+    </div>
+    <div class="pm-shell">
+      <div class="pm-side">
+        <ul class="pm-tree" id="pm-tree"></ul>
+      </div>
+      <div class="pm-main">
+        <div class="pm-breadcrumb" id="pm-breadcrumb"></div>
+        <div id="pm-view"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function() {
+      var cfg = window.__PRIVATE_MODULE || {};
+      var storageKey = cfg.storageKey || 'hexo_auth_session';
+      var loginPath = cfg.loginPath || '/login/';
+      var manifestEncoded = cfg.manifest || '';
+      var treeEl = document.getElementById('pm-tree');
+      var viewEl = document.getElementById('pm-view');
+      var bcEl = document.getElementById('pm-breadcrumb');
+      var logoutBtn = document.getElementById('pm-logout-btn');
+
+      function buildLoginUrl() {
+        var target = location.pathname + location.search + location.hash;
+        var joiner = loginPath.indexOf('?') >= 0 ? '&' : '?';
+        return loginPath + joiner + 'redirect=' + encodeURIComponent(target);
+      }
+
+      function base64ToBytes(b64) {
+        var binary = atob(b64);
+        var bytes = new Uint8Array(binary.length);
+        for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+        return bytes;
+      }
+
+      function base64UrlToString(input) {
+        var b64 = String(input || '').replace(/-/g, '+').replace(/_/g, '/');
+        while (b64.length % 4) b64 += '=';
+        return atob(b64);
+      }
+
+      function concatBytes(a, b) {
+        var out = new Uint8Array(a.length + b.length);
+        out.set(a, 0);
+        out.set(b, a.length);
+        return out;
+      }
+
+      function loadSession() {
+        try {
+          var raw = sessionStorage.getItem(storageKey);
+          if (!raw) return null;
+          var parsed = JSON.parse(raw);
+          if (!parsed || !parsed.accessKey) return null;
+          return parsed;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function clearSession() {
+        sessionStorage.removeItem(storageKey);
+      }
+
+      async function decryptPayloadToString(encoded, accessKeyBytes) {
+        var key = await crypto.subtle.importKey('raw', accessKeyBytes, { name: 'AES-GCM' }, false, ['decrypt']);
+        var jsonText = base64UrlToString(encoded);
+        var payload = JSON.parse(jsonText);
+        var iv = base64ToBytes(payload.iv);
+        var ct = base64ToBytes(payload.ct);
+        var tag = base64ToBytes(payload.tag);
+        var combined = concatBytes(ct, tag);
+        var plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv }, key, combined);
+        return new TextDecoder().decode(plain);
+      }
+
+      function showUnauthed() {
+        viewEl.innerHTML = '<div class="pm-hint">此模块仅对登录用户可见。<a href="' + buildLoginUrl() + '">去登录</a></div>';
+        treeEl.innerHTML = '';
+        bcEl.textContent = '';
+      }
+
+      function renderTree(node, parentUl, pathParts, onOpenFile) {
+        if (!node || !Array.isArray(node.children)) return;
+        node.children.forEach(function(child) {
+          var li = document.createElement('li');
+          li.className = 'pm-node';
+          if (child.type === 'dir') {
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'pm-folder';
+            btn.innerHTML = '<span class="pm-ico"><i class="fas fa-folder"></i></span><span>' + String(child.name || '') + '</span>';
+            btn.addEventListener('click', function() {
+              li.classList.toggle('open');
+              var ico = btn.querySelector('i');
+              if (ico) ico.className = li.classList.contains('open') ? 'fas fa-folder-open' : 'fas fa-folder';
+            });
+            li.appendChild(btn);
+            var ul = document.createElement('ul');
+            ul.className = 'pm-children';
+            li.appendChild(ul);
+            parentUl.appendChild(li);
+            renderTree(child, ul, pathParts.concat([child.name]), onOpenFile);
+            return;
+          }
+
+          var fbtn = document.createElement('button');
+          fbtn.type = 'button';
+          fbtn.className = 'pm-file';
+          fbtn.setAttribute('data-file-id', String(child.id || ''));
+          fbtn.innerHTML = '<span class="pm-ico"><i class="far fa-file-alt"></i></span><span>' + String(child.title || '未命名') + '</span>';
+          fbtn.addEventListener('click', function() {
+            onOpenFile(child, pathParts);
+          });
+          li.appendChild(fbtn);
+          parentUl.appendChild(li);
+        });
+      }
+
+      function flattenFiles(node, out, pathParts) {
+        if (!node || !Array.isArray(node.children)) return;
+        node.children.forEach(function(child) {
+          if (child.type === 'dir') return flattenFiles(child, out, (pathParts || []).concat([child.name]));
+          child.__path = (pathParts || []).slice();
+          out.push(child);
+        });
+      }
+
+      function openFile(file, pathParts) {
+        if (!file) return;
+        bcEl.textContent = (pathParts && pathParts.length ? pathParts.join(' / ') + ' / ' : '') + (file.title || '');
+        viewEl.innerHTML = file.html || '';
+        location.hash = '#file=' + encodeURIComponent(file.id || '');
+
+        var btns = treeEl.querySelectorAll('button.pm-file');
+        for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+        for (var j = 0; j < btns.length; j++) {
+          if (btns[j].getAttribute('data-file-id') === String(file.id || '')) {
+            btns[j].classList.add('active');
+            break;
+          }
+        }
+      }
+
+      async function initAuthed(accessKeyBytes) {
+        if (!manifestEncoded) {
+          viewEl.innerHTML = '<div class="pm-hint">模块暂无内容</div>';
+          treeEl.innerHTML = '';
+          bcEl.textContent = '';
+          return;
+        }
+        var manifestText = await decryptPayloadToString(manifestEncoded, accessKeyBytes);
+        var manifest = JSON.parse(manifestText);
+        var tree = manifest && manifest.tree ? manifest.tree : null;
+        if (!tree) {
+          viewEl.innerHTML = '<div class="pm-hint">模块数据异常</div>';
+          treeEl.innerHTML = '';
+          return;
+        }
+
+        var files = [];
+        flattenFiles(tree, files, []);
+
+        treeEl.innerHTML = '';
+        renderTree(tree, treeEl, [], function(file, pathParts) {
+          openFile(file, pathParts);
+        });
+
+        function openFromHash() {
+          var h = String(location.hash || '');
+          var m = h.match(/#file=([^&]+)/);
+          if (!m) return false;
+          var id = decodeURIComponent(m[1]);
+          var target = files.find(function(f) { return String(f.id || '') === String(id); });
+          if (!target) return false;
+          openFile(target, target.__path || []);
+          return true;
+        }
+
+        if (!openFromHash() && files.length) {
+          openFile(files[0], files[0].__path || []);
+        }
+
+        window.addEventListener('hashchange', function() { openFromHash(); });
+      }
+
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          clearSession();
+          showUnauthed();
+        });
+      }
+
+      var session = loadSession();
+      if (!session) {
+        showUnauthed();
+        return;
+      }
+
+      try {
+        var accessKeyBytes = base64ToBytes(session.accessKey);
+        initAuthed(accessKeyBytes).catch(function() { showUnauthed(); });
+      } catch (e) {
+        clearSession();
+        showUnauthed();
+      }
+    })();
+  </script>
+</body>
+</html>
