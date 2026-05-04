@@ -19,7 +19,31 @@
     })();
   </script>
   <style>
-    .pm-wrap { max-width: 1200px; margin: 24px auto; padding: 0 16px; }
+    body {
+      background-color: var(--body-bg-color);
+      background-image: url("/images/private-bg.jpeg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: rgba(0,0,0,0.15);
+    }
+    .dark-mode body::before {
+      background: rgba(0,0,0,0.35);
+    }
+    .pm-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
     .pm-top { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom: 14px; }
     .pm-title { font-size: 18px; font-weight: 600; margin:0; }
     .pm-actions { display:flex; gap:10px; align-items:center; }
