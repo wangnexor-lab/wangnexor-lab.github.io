@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":false,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="个人简介我是N3x0r，一个立志成为PWN大手子的WHU大一学生。我将在我的主页中做一些学习过程中的分享，如有错误请联系指出。 联系方式 Email: wangnexor@gmail.com GitHub: N3x0r QQ: 1295980011">
+  <meta name="description" content="个人简介我是N3x0r，一个立志成为PWN大手子的WHU大一学生。我将在我的主页中做一些学习过程中的分享，如有错误请联系指出。 已放弃网安。 联系方式 Email: wangnexor@gmail.com GitHub: N3x0r QQ: 1295980011">
 <meta property="og:type" content="website">
 <meta property="og:title" content="关于我">
 <meta property="og:url" content="http://example.com/about/index.html">
 <meta property="og:site_name" content="N3x0r&#39;s Blog">
-<meta property="og:description" content="个人简介我是N3x0r，一个立志成为PWN大手子的WHU大一学生。我将在我的主页中做一些学习过程中的分享，如有错误请联系指出。 联系方式 Email: wangnexor@gmail.com GitHub: N3x0r QQ: 1295980011">
+<meta property="og:description" content="个人简介我是N3x0r，一个立志成为PWN大手子的WHU大一学生。我将在我的主页中做一些学习过程中的分享，如有错误请联系指出。 已放弃网安。 联系方式 Email: wangnexor@gmail.com GitHub: N3x0r QQ: 1295980011">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-03-01T06:30:00.000Z">
-<meta property="article:modified_time" content="2026-03-10T04:49:21.269Z">
+<meta property="article:modified_time" content="2026-05-04T02:50:33.028Z">
 <meta property="article:author" content="N3x0r">
 <meta name="twitter:card" content="summary">
 
@@ -203,11 +203,13 @@
       
       <div class="post-body">
           <h2 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h2><p>我是N3x0r，一个立志成为PWN大手子的WHU大一学生。我将在我的主页中做一些学习过程中的分享，如有错误请联系指出。</p>
+<p>已放弃网安。</p>
 <h3 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h3><ul>
-<li>Email: <a href="mailto:&#119;&#97;&#110;&#103;&#x6e;&#x65;&#x78;&#x6f;&#114;&#x40;&#103;&#109;&#97;&#105;&#x6c;&#x2e;&#x63;&#111;&#x6d;">wangnexor@gmail.com</a></li>
+<li>Email: <a href="mailto:&#119;&#97;&#x6e;&#103;&#110;&#101;&#120;&#111;&#x72;&#x40;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#x6f;&#x6d;">wangnexor@gmail.com</a></li>
 <li>GitHub: <a target="_blank" rel="noopener" href="https://github.com/wangnexor-lab">N3x0r</a></li>
 <li>QQ: 1295980011</li>
 </ul>
+<div class="protected-block" data-protected="eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiJuYWxwRC9uemgxUEtPYjQwIiwidGFnIjoicUJqUTJUZEx1U0V0bEg5UmFaQjFpUT09IiwiY3QiOiIifQ"></div>
 
       </div>
       
@@ -681,6 +683,59 @@
     opacity: 0;
   }
 }
+
+.auth-login {
+  max-width: 420px;
+  margin: 20px auto;
+  padding: 16px;
+  background: var(--card-bg-color);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 8px;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.auth-field input {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.2);
+  background: var(--body-bg-color);
+  color: var(--text-color);
+}
+
+.auth-submit,
+.auth-logout {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.2);
+  background: var(--body-bg-color);
+  color: var(--text-color);
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.auth-message {
+  margin-top: 12px;
+  min-height: 18px;
+  color: var(--text-color);
+  opacity: 0.9;
+}
+
+.protected-placeholder {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px dashed rgba(0,0,0,0.25);
+  background: rgba(0,0,0,0.02);
+}
+
+.protected-placeholder a {
+  text-decoration: underline;
+}
 </style>
 
 <!-- Dark Mode Toggle -->
@@ -1045,6 +1100,239 @@
     });
   })();
 </script>
+
+
+<script>
+  window.__SITE_AUTH = {"enable":true,"login_path":"/login/","storage_key":"hexo_auth_session","users":[{"username":"xiaomu","salt":"9f5XpOvRk+zIied1BBXgtw==","iterations":150000,"verifier":"z9iR8bgbKXMAGwnBwR++CoDa04sJCSO+JstJk6kKoiw=","wrapped_key":{"iv":"/QiGc2xtq3q5Gr0j","tag":"ZV2Sd4+Eeeobv70zP7kbrA==","ciphertext":"BImLoLSzaV6T0VL656hNaWbrXIxmcvoPgjYAnFO/5wc="}}]};
+</script>
+<script>
+  (function() {
+    var cfg = window.__SITE_AUTH || {};
+    if (!cfg.enable) return;
+
+    var storageKey = cfg.storage_key || 'hexo_auth_session';
+    var loginPath = cfg.login_path || '/login/';
+    var users = Array.isArray(cfg.users) ? cfg.users : [];
+
+    function base64ToBytes(b64) {
+      var binary = atob(b64);
+      var bytes = new Uint8Array(binary.length);
+      for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+      return bytes;
+    }
+
+    function bytesToBase64(bytes) {
+      var binary = '';
+      for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+      return btoa(binary);
+    }
+
+    function base64UrlToString(input) {
+      var b64 = input.replace(/-/g, '+').replace(/_/g, '/');
+      while (b64.length % 4) b64 += '=';
+      return atob(b64);
+    }
+
+    function concatBytes(a, b) {
+      var out = new Uint8Array(a.length + b.length);
+      out.set(a, 0);
+      out.set(b, a.length);
+      return out;
+    }
+
+    async function sha256(bytes) {
+      var digest = await crypto.subtle.digest('SHA-256', bytes);
+      return new Uint8Array(digest);
+    }
+
+    async function deriveKeyBytes(password, saltB64, iterations) {
+      var enc = new TextEncoder();
+      var baseKey = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveBits']);
+      var salt = base64ToBytes(saltB64);
+      var bits = await crypto.subtle.deriveBits(
+        { name: 'PBKDF2', salt: salt, iterations: iterations, hash: 'SHA-256' },
+        baseKey,
+        256
+      );
+      return new Uint8Array(bits);
+    }
+
+    async function decryptAesGcm(keyBytes, ivB64, ctB64, tagB64) {
+      var key = await crypto.subtle.importKey('raw', keyBytes, { name: 'AES-GCM' }, false, ['decrypt']);
+      var iv = base64ToBytes(ivB64);
+      var ct = base64ToBytes(ctB64);
+      var tag = base64ToBytes(tagB64);
+      var combined = concatBytes(ct, tag);
+      var plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv }, key, combined);
+      return new Uint8Array(plain);
+    }
+
+    function getRedirectUrl() {
+      try {
+        var p = new URLSearchParams(location.search);
+        return p.get('redirect') || '';
+      } catch (e) {
+        return '';
+      }
+    }
+
+    function buildLoginUrl(redirectTo) {
+      var url = loginPath;
+      var joiner = url.indexOf('?') >= 0 ? '&' : '?';
+      return url + joiner + 'redirect=' + encodeURIComponent(redirectTo || (location.pathname + location.search + location.hash));
+    }
+
+    function loadSession() {
+      try {
+        var raw = sessionStorage.getItem(storageKey);
+        if (!raw) return null;
+        var parsed = JSON.parse(raw);
+        if (!parsed || !parsed.accessKey || !parsed.username) return null;
+        return parsed;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function saveSession(username, accessKeyBytes) {
+      var value = {
+        username: username,
+        accessKey: bytesToBase64(accessKeyBytes),
+        t: Date.now()
+      };
+      sessionStorage.setItem(storageKey, JSON.stringify(value));
+    }
+
+    function clearSession() {
+      sessionStorage.removeItem(storageKey);
+    }
+
+    function findUser(username) {
+      for (var i = 0; i < users.length; i++) {
+        if (users[i] && users[i].username === username) return users[i];
+      }
+      return null;
+    }
+
+    async function login(username, password) {
+      var u = findUser(username);
+      if (!u) throw new Error('用户名或密码错误');
+
+      var iterations = Number(u.iterations || 150000);
+      var keyBytes = await deriveKeyBytes(password, u.salt, iterations);
+      var verifier = await sha256(keyBytes);
+      if (bytesToBase64(verifier) !== u.verifier) throw new Error('用户名或密码错误');
+
+      if (!u.wrapped_key || !u.wrapped_key.iv || !u.wrapped_key.ciphertext || !u.wrapped_key.tag) {
+        throw new Error('账号配置不完整');
+      }
+      var accessKeyBytes = await decryptAesGcm(keyBytes, u.wrapped_key.iv, u.wrapped_key.ciphertext, u.wrapped_key.tag);
+      saveSession(username, accessKeyBytes);
+      return accessKeyBytes;
+    }
+
+    async function decryptProtectedBlocks(accessKeyBytes) {
+      var nodes = document.querySelectorAll('.protected-block[data-protected]');
+      if (!nodes.length) return;
+
+      var key = await crypto.subtle.importKey('raw', accessKeyBytes, { name: 'AES-GCM' }, false, ['decrypt']);
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i];
+        try {
+          var encoded = el.getAttribute('data-protected');
+          var jsonText = base64UrlToString(encoded);
+          var payload = JSON.parse(jsonText);
+          var iv = base64ToBytes(payload.iv);
+          var ct = base64ToBytes(payload.ct);
+          var tag = base64ToBytes(payload.tag);
+          var combined = concatBytes(ct, tag);
+          var plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv }, key, combined);
+          el.innerHTML = new TextDecoder().decode(plain);
+        } catch (e) {
+          el.innerHTML = '<div class=\"protected-placeholder\">受限内容解密失败</div>';
+        }
+      }
+    }
+
+    function renderPlaceholders() {
+      var nodes = document.querySelectorAll('.protected-block[data-protected]');
+      if (!nodes.length) return;
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i];
+        var url = buildLoginUrl();
+        el.innerHTML = '<div class=\"protected-placeholder\">此内容仅对登录用户可见。<a href=\"' + url + '\">去登录</a></div>';
+      }
+    }
+
+    function bindLoginForm() {
+      var form = document.getElementById('auth-login-form');
+      if (!form) return;
+      var msg = document.getElementById('auth-message');
+      var logoutBtn = document.getElementById('auth-logout-btn');
+
+      function setMessage(text) {
+        if (!msg) return;
+        msg.textContent = text || '';
+      }
+
+      var existing = loadSession();
+      if (existing) {
+        setMessage('已登录：' + existing.username);
+      }
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var username = (document.getElementById('auth-username') || {}).value || '';
+        var password = (document.getElementById('auth-password') || {}).value || '';
+        setMessage('登录中...');
+        login(username.trim(), password)
+          .then(function(accessKeyBytes) {
+            setMessage('登录成功：' + username.trim());
+            return decryptProtectedBlocks(accessKeyBytes);
+          })
+          .then(function() {
+            var redirectTo = getRedirectUrl();
+            location.href = redirectTo || '/';
+          })
+          .catch(function(err) {
+            setMessage(err && err.message ? err.message : '登录失败');
+          });
+      });
+
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          clearSession();
+          setMessage('已退出登录');
+        });
+      }
+    }
+
+    window.SiteAuth = {
+      isLoggedIn: function() {
+        return !!loadSession();
+      },
+      logout: function() {
+        clearSession();
+      }
+    };
+
+    (function init() {
+      bindLoginForm();
+      var session = loadSession();
+      if (!session) {
+        renderPlaceholders();
+        return;
+      }
+      try {
+        decryptProtectedBlocks(base64ToBytes(session.accessKey));
+      } catch (e) {
+        clearSession();
+        renderPlaceholders();
+      }
+    })();
+  })();
+</script>
+
 
 </body>
 </html>
