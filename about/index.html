@@ -205,11 +205,11 @@
           <h2 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h2><p>我是N3x0r，一个立志成为PWN大手子的WHU大一学生。我将在我的主页中做一些学习过程中的分享，如有错误请联系指出。</p>
 <p>已放弃网安。</p>
 <h3 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h3><ul>
-<li>Email: <a href="mailto:&#x77;&#97;&#x6e;&#103;&#110;&#x65;&#x78;&#x6f;&#114;&#x40;&#x67;&#x6d;&#97;&#x69;&#108;&#x2e;&#99;&#111;&#x6d;">wangnexor@gmail.com</a></li>
+<li>Email: <a href="mailto:&#119;&#97;&#110;&#x67;&#110;&#x65;&#120;&#x6f;&#114;&#x40;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#x6d;">wangnexor@gmail.com</a></li>
 <li>GitHub: <a target="_blank" rel="noopener" href="https://github.com/wangnexor-lab">N3x0r</a></li>
 <li>QQ: 1295980011</li>
 </ul>
-<div class="protected-block" data-protected="eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiJ3K1RmU2pxb1FxaEZpTVlaIiwidGFnIjoiQTlEUytBbUM2cWVIVncveUNCRTlYQT09IiwiY3QiOiJWTlhGUFZ6a1NJeE1xemlGSU1LSXcyWlBRU2pjN09vNEN0SzFKVk1ST1BLTDNHSjQycWNRM2dkcUhXNjVtQkIwVGNkQlU0MWhCTUFPWUdGL09wVndDOTB6ZmxwOGVvUjVZYkEvbW5sRlBIQW9EMDRsN3F1RWJabmZyS0plc2JzPSIsImtpbmQiOiJibG9jayJ9" data-protected-kind="block"></div>
+<div class="protected-block" data-protected="eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiJzbE5JMy9IRXkrV1Fvenp5IiwidGFnIjoib3Z0UzZyVFRvVkNGc0VmdVhlaTZGZz09IiwiY3QiOiJLQ2d1cjlaUkpnaXRWeEI2QkFUNkVGcGV2V1NtRERReENtWk0wRzRmNGtEVUJvZFBydmpKd0YyVHFSK25oS2VnRldnSS9vR3NMN0JVSGlPTUpvWE1zVENNeXJKN1lSbGZrMUVxQlJlKy95WjhCTzUyNWo0Sm9pbzJudTREdDA4PSIsImtpbmQiOiJibG9jayJ9" data-protected-kind="block"></div>
 
       </div>
       
@@ -261,17 +261,12 @@
     <div class="sidebar-inner">
 
       <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
         <li class="sidebar-nav-overview">
           Overview
         </li>
       </ul>
 
       <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
@@ -291,13 +286,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -1288,6 +1283,37 @@
       }
     }
 
+    async function decryptProtectedTitles(accessKeyBytes) {
+      var nodes = document.querySelectorAll('[data-protected-title]');
+      if (!nodes.length) return;
+
+      var key = await crypto.subtle.importKey('raw', accessKeyBytes, { name: 'AES-GCM' }, false, ['decrypt']);
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i];
+        try {
+          var encoded = el.getAttribute('data-protected-title') || '';
+          if (!encoded) continue;
+          var jsonText = base64UrlToString(encoded);
+          var payload = JSON.parse(jsonText);
+          var iv = base64ToBytes(payload.iv);
+          var ct = base64ToBytes(payload.ct);
+          var tag = base64ToBytes(payload.tag);
+          var combined = concatBytes(ct, tag);
+          var plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv }, key, combined);
+          var text = new TextDecoder().decode(plain);
+          el.textContent = text;
+
+          if (el.getAttribute('data-protected-title-main') === '1') {
+            try {
+              var siteTitleMeta = document.querySelector('meta[itemprop=\"name\"]');
+              var siteTitle = siteTitleMeta ? siteTitleMeta.getAttribute('content') : '';
+              document.title = siteTitle ? (text + ' | ' + siteTitle) : text;
+            } catch (e) {}
+          }
+        } catch (e) {}
+      }
+    }
+
     function renderPlaceholders() {
       var nodes = document.querySelectorAll('.protected-block[data-protected]');
       if (!nodes.length) return;
@@ -1322,7 +1348,9 @@
         login(username.trim(), password)
           .then(function(accessKeyBytes) {
             setMessage('登录成功：' + username.trim());
-            return decryptProtectedBlocks(accessKeyBytes);
+            return Promise.resolve()
+              .then(function() { return decryptProtectedBlocks(accessKeyBytes); })
+              .then(function() { return decryptProtectedTitles(accessKeyBytes); });
           })
           .then(function() {
             try { window.dispatchEvent(new Event('auth:decrypted')); } catch (e) {}
@@ -1359,9 +1387,11 @@
         return;
       }
       try {
-        decryptProtectedBlocks(base64ToBytes(session.accessKey)).then(function() {
-          try { window.dispatchEvent(new Event('auth:decrypted')); } catch (e) {}
-        });
+        var accessKeyBytes = base64ToBytes(session.accessKey);
+        Promise.resolve()
+          .then(function() { return decryptProtectedBlocks(accessKeyBytes); })
+          .then(function() { return decryptProtectedTitles(accessKeyBytes); })
+          .then(function() { try { window.dispatchEvent(new Event('auth:decrypted')); } catch (e) {} });
       } catch (e) {
         clearSession();
         renderPlaceholders();

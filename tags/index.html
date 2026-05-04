@@ -202,10 +202,10 @@
       <div class="post-body">
           <div class="tag-cloud">
             <div class="tag-cloud-title">
-              6 tags in total
+              7 tags in total
             </div>
             <div class="tag-cloud-tags">
-              <a href="/tags/Linux/" style="font-size: 12px; color: #ccc">Linux</a> <a href="/tags/PWN/" style="font-size: 30px; color: #111">PWN</a> <a href="/tags/x86-64/" style="font-size: 12px; color: #ccc">x86_64</a> <a href="/tags/%E5%85%A5%E9%97%A8/" style="font-size: 12px; color: #ccc">入门</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 12px; color: #ccc">基础</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 12px; color: #ccc">汇编</a>
+              <a href="/tags/Linux/" style="font-size: 12px; color: #ccc">Linux</a> <a href="/tags/PWN/" style="font-size: 30px; color: #111">PWN</a> <a href="/tags/x86-64/" style="font-size: 12px; color: #ccc">x86_64</a> <a href="/tags/%E5%85%A5%E9%97%A8/" style="font-size: 12px; color: #ccc">入门</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 12px; color: #ccc">基础</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 12px; color: #ccc">汇编</a> <a href="/tags/%E8%AE%B0%E5%BD%95/" style="font-size: 12px; color: #ccc">记录</a>
             </div>
           </div>
         
@@ -259,17 +259,12 @@
     <div class="sidebar-inner">
 
       <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
         <li class="sidebar-nav-overview">
           Overview
         </li>
       </ul>
 
       <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
@@ -289,13 +284,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -1286,6 +1281,37 @@
       }
     }
 
+    async function decryptProtectedTitles(accessKeyBytes) {
+      var nodes = document.querySelectorAll('[data-protected-title]');
+      if (!nodes.length) return;
+
+      var key = await crypto.subtle.importKey('raw', accessKeyBytes, { name: 'AES-GCM' }, false, ['decrypt']);
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i];
+        try {
+          var encoded = el.getAttribute('data-protected-title') || '';
+          if (!encoded) continue;
+          var jsonText = base64UrlToString(encoded);
+          var payload = JSON.parse(jsonText);
+          var iv = base64ToBytes(payload.iv);
+          var ct = base64ToBytes(payload.ct);
+          var tag = base64ToBytes(payload.tag);
+          var combined = concatBytes(ct, tag);
+          var plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv }, key, combined);
+          var text = new TextDecoder().decode(plain);
+          el.textContent = text;
+
+          if (el.getAttribute('data-protected-title-main') === '1') {
+            try {
+              var siteTitleMeta = document.querySelector('meta[itemprop=\"name\"]');
+              var siteTitle = siteTitleMeta ? siteTitleMeta.getAttribute('content') : '';
+              document.title = siteTitle ? (text + ' | ' + siteTitle) : text;
+            } catch (e) {}
+          }
+        } catch (e) {}
+      }
+    }
+
     function renderPlaceholders() {
       var nodes = document.querySelectorAll('.protected-block[data-protected]');
       if (!nodes.length) return;
@@ -1320,7 +1346,9 @@
         login(username.trim(), password)
           .then(function(accessKeyBytes) {
             setMessage('登录成功：' + username.trim());
-            return decryptProtectedBlocks(accessKeyBytes);
+            return Promise.resolve()
+              .then(function() { return decryptProtectedBlocks(accessKeyBytes); })
+              .then(function() { return decryptProtectedTitles(accessKeyBytes); });
           })
           .then(function() {
             try { window.dispatchEvent(new Event('auth:decrypted')); } catch (e) {}
@@ -1357,9 +1385,11 @@
         return;
       }
       try {
-        decryptProtectedBlocks(base64ToBytes(session.accessKey)).then(function() {
-          try { window.dispatchEvent(new Event('auth:decrypted')); } catch (e) {}
-        });
+        var accessKeyBytes = base64ToBytes(session.accessKey);
+        Promise.resolve()
+          .then(function() { return decryptProtectedBlocks(accessKeyBytes); })
+          .then(function() { return decryptProtectedTitles(accessKeyBytes); })
+          .then(function() { try { window.dispatchEvent(new Event('auth:decrypted')); } catch (e) {} });
       } catch (e) {
         clearSession();
         renderPlaceholders();

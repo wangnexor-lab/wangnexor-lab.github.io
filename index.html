@@ -195,7 +195,9 @@
               <span class="post-sticky-flag" title="Sticky">
                 <i class="fa fa-thumbtack"></i>
               </span>
-            <a href="/2026/05/04/%E8%B7%91%E8%B7%AF%E4%BA%86%E5%85%84%E5%BC%9F/" class="post-title-link" itemprop="url">跑路了兄弟</a>
+            <a class="post-title-link" href="/2026/05/04/%E8%B7%91%E8%B7%AF%E4%BA%86%E5%85%84%E5%BC%9F/" itemprop="url">
+              跑路了兄弟
+            </a>
         </h2>
 
         <div class="post-meta">
@@ -258,8 +260,8 @@
       <i class="fa fa-chevron-left"></i> x86_64 汇编基础
     </a></div>
       <div class="post-nav-item">
-    <a href="/2026/05/04/%E6%B5%8B%E8%AF%95/" rel="next" title="测试">
-      测试 <i class="fa fa-chevron-right"></i>
+    <a href="/2026/05/04/%E6%B5%8B%E8%AF%95/" rel="next" title="受限文章">
+      受限文章 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
         <div class="post-eof"></div>
@@ -315,17 +317,12 @@
     <div class="sidebar-inner">
 
       <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
         <li class="sidebar-nav-overview">
           Overview
         </li>
       </ul>
 
       <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
@@ -345,13 +342,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -1342,6 +1339,37 @@
       }
     }
 
+    async function decryptProtectedTitles(accessKeyBytes) {
+      var nodes = document.querySelectorAll('[data-protected-title]');
+      if (!nodes.length) return;
+
+      var key = await crypto.subtle.importKey('raw', accessKeyBytes, { name: 'AES-GCM' }, false, ['decrypt']);
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i];
+        try {
+          var encoded = el.getAttribute('data-protected-title') || '';
+          if (!encoded) continue;
+          var jsonText = base64UrlToString(encoded);
+          var payload = JSON.parse(jsonText);
+          var iv = base64ToBytes(payload.iv);
+          var ct = base64ToBytes(payload.ct);
+          var tag = base64ToBytes(payload.tag);
+          var combined = concatBytes(ct, tag);
+          var plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv }, key, combined);
+          var text = new TextDecoder().decode(plain);
+          el.textContent = text;
+
+          if (el.getAttribute('data-protected-title-main') === '1') {
+            try {
+              var siteTitleMeta = document.querySelector('meta[itemprop=\"name\"]');
+              var siteTitle = siteTitleMeta ? siteTitleMeta.getAttribute('content') : '';
+              document.title = siteTitle ? (text + ' | ' + siteTitle) : text;
+            } catch (e) {}
+          }
+        } catch (e) {}
+      }
+    }
+
     function renderPlaceholders() {
       var nodes = document.querySelectorAll('.protected-block[data-protected]');
       if (!nodes.length) return;
@@ -1376,7 +1404,9 @@
         login(username.trim(), password)
           .then(function(accessKeyBytes) {
             setMessage('登录成功：' + username.trim());
-            return decryptProtectedBlocks(accessKeyBytes);
+            return Promise.resolve()
+              .then(function() { return decryptProtectedBlocks(accessKeyBytes); })
+              .then(function() { return decryptProtectedTitles(accessKeyBytes); });
           })
           .then(function() {
             try { window.dispatchEvent(new Event('auth:decrypted')); } catch (e) {}
@@ -1413,9 +1443,11 @@
         return;
       }
       try {
-        decryptProtectedBlocks(base64ToBytes(session.accessKey)).then(function() {
-          try { window.dispatchEvent(new Event('auth:decrypted')); } catch (e) {}
-        });
+        var accessKeyBytes = base64ToBytes(session.accessKey);
+        Promise.resolve()
+          .then(function() { return decryptProtectedBlocks(accessKeyBytes); })
+          .then(function() { return decryptProtectedTitles(accessKeyBytes); })
+          .then(function() { try { window.dispatchEvent(new Event('auth:decrypted')); } catch (e) {} });
       } catch (e) {
         clearSession();
         renderPlaceholders();

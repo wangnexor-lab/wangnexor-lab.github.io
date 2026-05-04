@@ -21,13 +21,14 @@
   </script>
 
   <meta property="og:type" content="article">
-<meta property="og:title" content="测试">
+<meta property="og:title" content="受限文章">
 <meta property="og:url" content="http://example.com/2026/05/04/%E6%B5%8B%E8%AF%95/index.html">
 <meta property="og:site_name" content="N3x0r&#39;s Blog">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-05-04T03:21:23.986Z">
-<meta property="article:modified_time" content="2026-05-04T03:22:59.027Z">
+<meta property="article:modified_time" content="2026-05-04T03:33:58.417Z">
 <meta property="article:author" content="N3x0r">
+<meta property="article:tag" content="记录">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://example.com/2026/05/04/%E6%B5%8B%E8%AF%95/">
@@ -60,7 +61,7 @@
   }
 </style>
 
-  <title>测试 | N3x0r's Blog</title>
+  <title>受限文章 | N3x0r's Blog</title>
   
 
 
@@ -194,7 +195,8 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          测试
+          
+            <span class="protected-title" data-protected-title="eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiJkQWZqdWQvZEdZV1BCZlNrIiwidGFnIjoia3cyL1dxYmlGVUVRaGpoQzd3TnBoZz09IiwiY3QiOiIxZTNVUXY2ZCIsImtpbmQiOiJ0aXRsZSJ9" data-protected-title-main="1">受限文章</span>
         </h1>
 
         <div class="post-meta">
@@ -205,7 +207,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2026-05-04 11:21:23 / Modified: 11:22:59" itemprop="dateCreated datePublished" datetime="2026-05-04T11:21:23+08:00">2026-05-04</time>
+              <time title="Created: 2026-05-04 11:21:23 / Modified: 11:33:58" itemprop="dateCreated datePublished" datetime="2026-05-04T11:21:23+08:00">2026-05-04</time>
             </span>
 
           
@@ -226,7 +228,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <div class="protected-block" data-protected="eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiJEWVk0NWpoSm9kT3ptdkxlIiwidGFnIjoiSHNpemJILzhpMzZjR1lwdVUvbERWUT09IiwiY3QiOiIiLCJraW5kIjoicG9zdCJ9" data-protected-kind="post"></div>
     </div>
 
     
@@ -234,6 +236,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%B0%E5%BD%95/" rel="tag"># 记录</a>
+          </div>
 
         
 
@@ -293,17 +298,12 @@
     <div class="sidebar-inner">
 
       <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
         <li class="sidebar-nav-overview">
           Overview
         </li>
       </ul>
 
       <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
@@ -323,13 +323,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -1320,6 +1320,37 @@
       }
     }
 
+    async function decryptProtectedTitles(accessKeyBytes) {
+      var nodes = document.querySelectorAll('[data-protected-title]');
+      if (!nodes.length) return;
+
+      var key = await crypto.subtle.importKey('raw', accessKeyBytes, { name: 'AES-GCM' }, false, ['decrypt']);
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i];
+        try {
+          var encoded = el.getAttribute('data-protected-title') || '';
+          if (!encoded) continue;
+          var jsonText = base64UrlToString(encoded);
+          var payload = JSON.parse(jsonText);
+          var iv = base64ToBytes(payload.iv);
+          var ct = base64ToBytes(payload.ct);
+          var tag = base64ToBytes(payload.tag);
+          var combined = concatBytes(ct, tag);
+          var plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv }, key, combined);
+          var text = new TextDecoder().decode(plain);
+          el.textContent = text;
+
+          if (el.getAttribute('data-protected-title-main') === '1') {
+            try {
+              var siteTitleMeta = document.querySelector('meta[itemprop=\"name\"]');
+              var siteTitle = siteTitleMeta ? siteTitleMeta.getAttribute('content') : '';
+              document.title = siteTitle ? (text + ' | ' + siteTitle) : text;
+            } catch (e) {}
+          }
+        } catch (e) {}
+      }
+    }
+
     function renderPlaceholders() {
       var nodes = document.querySelectorAll('.protected-block[data-protected]');
       if (!nodes.length) return;
@@ -1354,7 +1385,9 @@
         login(username.trim(), password)
           .then(function(accessKeyBytes) {
             setMessage('登录成功：' + username.trim());
-            return decryptProtectedBlocks(accessKeyBytes);
+            return Promise.resolve()
+              .then(function() { return decryptProtectedBlocks(accessKeyBytes); })
+              .then(function() { return decryptProtectedTitles(accessKeyBytes); });
           })
           .then(function() {
             try { window.dispatchEvent(new Event('auth:decrypted')); } catch (e) {}
@@ -1391,9 +1424,11 @@
         return;
       }
       try {
-        decryptProtectedBlocks(base64ToBytes(session.accessKey)).then(function() {
-          try { window.dispatchEvent(new Event('auth:decrypted')); } catch (e) {}
-        });
+        var accessKeyBytes = base64ToBytes(session.accessKey);
+        Promise.resolve()
+          .then(function() { return decryptProtectedBlocks(accessKeyBytes); })
+          .then(function() { return decryptProtectedTitles(accessKeyBytes); })
+          .then(function() { try { window.dispatchEvent(new Event('auth:decrypted')); } catch (e) {} });
       } catch (e) {
         clearSession();
         renderPlaceholders();

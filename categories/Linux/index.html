@@ -177,7 +177,10 @@
 
   <div class="finder-view finder-category-page">
     <div class="finder-toolbar">
-      <div class="finder-toolbar-title">Category: Linux</div>
+      <div class="finder-toolbar-title">
+        Category:
+          Linux
+      </div>
     </div>
     <div class="finder-columns">
       <div class="finder-col finder-col-folders">
@@ -186,22 +189,37 @@
               <li class="finder-item">
                 <a class="finder-link" href="/categories/PWN/">
                   <span class="finder-icon finder-icon-folder"></span>
-                  <span class="finder-name">PWN</span>
+                  <span class="finder-name">
+                      PWN
+                  </span>
                   <span class="finder-meta">3</span>
                 </a>
               </li>
               <li class="finder-item is-active">
                 <a class="finder-link" href="/categories/Linux/">
                   <span class="finder-icon finder-icon-folder"></span>
-                  <span class="finder-name">Linux</span>
+                  <span class="finder-name">
+                      Linux
+                  </span>
                   <span class="finder-meta">1</span>
+                </a>
+              </li>
+              <li class="finder-item">
+                <a class="finder-link" href="/categories/%E5%AE%9D%E5%AE%9D%E5%AE%9D%E5%AE%9D%EF%BC%8C%E6%88%91%E7%88%B1%E4%BD%A0%E5%91%80%EF%BC%81/">
+                  <span class="finder-icon finder-icon-folder"></span>
+                  <span class="finder-name">
+                      <span class="protected-title" data-protected-title="eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiJHUEIrTTl1dDJ1NndQZXgrIiwidGFnIjoiNks5b0g1NWtXenJrWTJjdHlFYVdndz09IiwiY3QiOiJORncwS0F5WmRxUmJxdm1QL1hENUUwTXZHVWx0a0ZjNitaYU5YbWVTIiwia2luZCI6ImNhdCJ9">受限分类</span>
+                  </span>
+                  <span class="finder-meta"></span>
                 </a>
               </li>
         </ul>
       </div>
 
       <div class="finder-col finder-col-content">
-        <div class="finder-col-title">Linux</div>
+        <div class="finder-col-title">
+              Linux
+        </div>
             <div class="finder-section-title">文章</div>
             <ul class="finder-list finder-list-compact">
                 <li class="finder-item">
@@ -257,17 +275,12 @@
     <div class="sidebar-inner">
 
       <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
         <li class="sidebar-nav-overview">
           Overview
         </li>
       </ul>
 
       <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
@@ -287,13 +300,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -1284,6 +1297,37 @@
       }
     }
 
+    async function decryptProtectedTitles(accessKeyBytes) {
+      var nodes = document.querySelectorAll('[data-protected-title]');
+      if (!nodes.length) return;
+
+      var key = await crypto.subtle.importKey('raw', accessKeyBytes, { name: 'AES-GCM' }, false, ['decrypt']);
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i];
+        try {
+          var encoded = el.getAttribute('data-protected-title') || '';
+          if (!encoded) continue;
+          var jsonText = base64UrlToString(encoded);
+          var payload = JSON.parse(jsonText);
+          var iv = base64ToBytes(payload.iv);
+          var ct = base64ToBytes(payload.ct);
+          var tag = base64ToBytes(payload.tag);
+          var combined = concatBytes(ct, tag);
+          var plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv }, key, combined);
+          var text = new TextDecoder().decode(plain);
+          el.textContent = text;
+
+          if (el.getAttribute('data-protected-title-main') === '1') {
+            try {
+              var siteTitleMeta = document.querySelector('meta[itemprop=\"name\"]');
+              var siteTitle = siteTitleMeta ? siteTitleMeta.getAttribute('content') : '';
+              document.title = siteTitle ? (text + ' | ' + siteTitle) : text;
+            } catch (e) {}
+          }
+        } catch (e) {}
+      }
+    }
+
     function renderPlaceholders() {
       var nodes = document.querySelectorAll('.protected-block[data-protected]');
       if (!nodes.length) return;
@@ -1318,7 +1362,9 @@
         login(username.trim(), password)
           .then(function(accessKeyBytes) {
             setMessage('登录成功：' + username.trim());
-            return decryptProtectedBlocks(accessKeyBytes);
+            return Promise.resolve()
+              .then(function() { return decryptProtectedBlocks(accessKeyBytes); })
+              .then(function() { return decryptProtectedTitles(accessKeyBytes); });
           })
           .then(function() {
             try { window.dispatchEvent(new Event('auth:decrypted')); } catch (e) {}
@@ -1355,9 +1401,11 @@
         return;
       }
       try {
-        decryptProtectedBlocks(base64ToBytes(session.accessKey)).then(function() {
-          try { window.dispatchEvent(new Event('auth:decrypted')); } catch (e) {}
-        });
+        var accessKeyBytes = base64ToBytes(session.accessKey);
+        Promise.resolve()
+          .then(function() { return decryptProtectedBlocks(accessKeyBytes); })
+          .then(function() { return decryptProtectedTitles(accessKeyBytes); })
+          .then(function() { try { window.dispatchEvent(new Event('auth:decrypted')); } catch (e) {} });
       } catch (e) {
         clearSession();
         renderPlaceholders();
