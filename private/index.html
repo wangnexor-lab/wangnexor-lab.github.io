@@ -56,17 +56,11 @@
     .pm-hint { padding: 12px 14px; border-radius: 10px; border: 1px dashed rgba(0,0,0,0.25); background: rgba(0,0,0,0.02); }
     .pm-tree { list-style:none; margin:0; padding: 10px; max-height: 72vh; overflow:auto; }
     .pm-node { margin: 2px 0; }
-    .pm-folder { display:flex; align-items:center; gap:8px; width:100%; border:0; background: transparent; color: var(--text-color); padding: 8px 8px; border-radius: 8px; cursor:pointer; text-align:left; }
-    .pm-folder:hover { background: rgba(0,0,0,0.05); }
-    .dark-mode .pm-folder:hover { background: rgba(255,255,255,0.08); }
-    .pm-folder .pm-ico { width: 16px; text-align:center; opacity: 0.85; }
     .pm-file { display:flex; align-items:center; gap:8px; width:100%; border:0; background: transparent; color: var(--text-color); padding: 8px 8px; border-radius: 8px; cursor:pointer; text-align:left; }
     .pm-file:hover { background: rgba(0,0,0,0.05); }
     .dark-mode .pm-file:hover { background: rgba(255,255,255,0.08); }
     .pm-file.active { background: rgba(0,0,0,0.06); color: var(--link-hover-color); }
     .dark-mode .pm-file.active { background: rgba(255,255,255,0.10); }
-    .pm-children { list-style:none; margin: 0 0 0 18px; padding: 0; display:none; }
-    .pm-node.open > .pm-children { display:block; }
     .pm-breadcrumb { font-size: 13px; opacity: 0.85; margin: 0 0 10px 0; }
     @media (max-width: 980px) {
       .pm-shell { flex-direction: column; }
@@ -79,7 +73,7 @@
       storageKey: "hexo_auth_session",
       loginPath: "/login/",
       root: "/",
-      manifest: "eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiJPZmMvdnljUHFKNVlWeHpuIiwidGFnIjoiWk9LWTcvUW10L05jM2tXclEyMG1wQT09IiwiY3QiOiJOMW1LTjc1aWRvRHQ3cGd1aldWZWZ1OXQ2bEUyU2hDc2IwRyttUUMxMTJ2TkZzdWhsN1YvaGM2UUdScUo2WEtldWw1SmQ3WnRmSHFEQlZLYUVyRkJkZmQ5ZGZYZWI5Unc1ZktjT1VJdURTTzRlZWNkQVFwRThaNFZPUlNYUWtFOTJyNGxCR2VOMytSUzBJMFlBZEkzYTBHNmlRZWZUcFUwOFJzN3V3NXJCRTJNdXdBcEtrRHhXT3lIY1ZKWS9YMWR0eEZLMzdMOTFFOWwvY3g4ckp0Y0U3bmVKS1F3bHM4Y01hN1dSdnJDa0tNcWY5SzUrTWUwOEw0Yk1tR20velFyMDV4M2xlTDFTcnFVWS9PREFiR05NdUNFZHYrWWRnRlU4Z3AzNi9sU3hnVDN6eXp2MVRKTFNISFA1NmNNZDJVR0hTRk9iV1U0K0swdkxOZVREenE1TXk5dkdOSnNzRU44Vk40ckxVRFRCeWpXSnN4OUNBTy9NQ1ZpQjhOQjJVV0Y2T21MNXozMWpKTWhHNWptYTRXQzlRaTllRXZmVHBjTW8zYWQ2WTF0Y1NiSlJPbW91Zz09Iiwia2luZCI6InByaXZhdGVfbW9kdWxlX3RyZWUifQ"
+      manifest: "eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiJjSk5FK2lGUzBYZStDanFFIiwidGFnIjoidW1KdXNZMlVVVzQwbWJoMEF1Z1BRUT09IiwiY3QiOiJWYS9zcEVDUkdwMGNSY0NVTkhOWXk1dStMSnhUbWh4STRyMk5hUHN0WkYvLzIxd2ZlNjBHb0FXK3k5dXA1WlpXaHM2WmJPYkVyV1NkUmo5UGtDKzF0bmVKbGJmQXB6M2JSc2xXdjN2MFJnQTNOR3hmTHJBT2FKT3VtT0lIQmRBTVFDbERBdURBbG9QL3pZZitnR2srT0h3K0laeGl2V1FVWHc4TlYyTWh5WG4rT1pjcS9yQisveVRvaFFGWGZjQVpvelNYazNqc1Rvc2VXZz09Iiwia2luZCI6InByaXZhdGVfbW9kdWxlX2xpc3QifQ"
     };
   </script>
 </head>
@@ -172,55 +166,26 @@
         bcEl.textContent = '';
       }
 
-      function renderTree(node, parentUl, pathParts, onOpenFile) {
-        if (!node || !Array.isArray(node.children)) return;
-        node.children.forEach(function(child) {
+      function renderList(files) {
+        treeEl.innerHTML = '';
+        (files || []).forEach(function(file) {
           var li = document.createElement('li');
           li.className = 'pm-node';
-          if (child.type === 'dir') {
-            var btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'pm-folder';
-            btn.innerHTML = '<span class="pm-ico"><i class="fas fa-folder"></i></span><span>' + String(child.name || '') + '</span>';
-            btn.addEventListener('click', function() {
-              li.classList.toggle('open');
-              var ico = btn.querySelector('i');
-              if (ico) ico.className = li.classList.contains('open') ? 'fas fa-folder-open' : 'fas fa-folder';
-            });
-            li.appendChild(btn);
-            var ul = document.createElement('ul');
-            ul.className = 'pm-children';
-            li.appendChild(ul);
-            parentUl.appendChild(li);
-            renderTree(child, ul, pathParts.concat([child.name]), onOpenFile);
-            return;
-          }
 
           var fbtn = document.createElement('button');
           fbtn.type = 'button';
           fbtn.className = 'pm-file';
-          fbtn.setAttribute('data-file-id', String(child.id || ''));
-          fbtn.innerHTML = '<span class="pm-ico"><i class="far fa-file-alt"></i></span><span>' + String(child.title || '未命名') + '</span>';
-          fbtn.addEventListener('click', function() {
-            onOpenFile(child, pathParts);
-          });
+          fbtn.setAttribute('data-file-id', String(file.id || ''));
+          fbtn.innerHTML = '<span class="pm-ico"><i class="far fa-file-alt"></i></span><span>' + String(file.title || '未命名') + '</span>';
+          fbtn.addEventListener('click', function() { openFile(file); });
           li.appendChild(fbtn);
-          parentUl.appendChild(li);
+          treeEl.appendChild(li);
         });
       }
 
-      function flattenFiles(node, out, pathParts) {
-        if (!node || !Array.isArray(node.children)) return;
-        node.children.forEach(function(child) {
-          if (child.type === 'dir') return flattenFiles(child, out, (pathParts || []).concat([child.name]));
-          child.__path = (pathParts || []).slice();
-          out.push(child);
-        });
-      }
-
-      function openFile(file, pathParts) {
+      function openFile(file) {
         if (!file) return;
-        bcEl.textContent = (pathParts && pathParts.length ? pathParts.join(' / ') + ' / ' : '') + (file.title || '');
+        bcEl.textContent = file.title || '';
         viewEl.innerHTML = file.html || '';
         location.hash = '#file=' + encodeURIComponent(file.id || '');
 
@@ -243,20 +208,15 @@
         }
         var manifestText = await decryptPayloadToString(manifestEncoded, accessKeyBytes);
         var manifest = JSON.parse(manifestText);
-        var tree = manifest && manifest.tree ? manifest.tree : null;
-        if (!tree) {
-          viewEl.innerHTML = '<div class="pm-hint">模块数据异常</div>';
+        var files = (manifest && Array.isArray(manifest.files)) ? manifest.files : [];
+        if (!files.length) {
+          viewEl.innerHTML = '<div class="pm-hint">private 暂无内容</div>';
           treeEl.innerHTML = '';
+          bcEl.textContent = '';
           return;
         }
 
-        var files = [];
-        flattenFiles(tree, files, []);
-
-        treeEl.innerHTML = '';
-        renderTree(tree, treeEl, [], function(file, pathParts) {
-          openFile(file, pathParts);
-        });
+        renderList(files);
 
         function openFromHash() {
           var h = String(location.hash || '');
@@ -265,12 +225,12 @@
           var id = decodeURIComponent(m[1]);
           var target = files.find(function(f) { return String(f.id || '') === String(id); });
           if (!target) return false;
-          openFile(target, target.__path || []);
+          openFile(target);
           return true;
         }
 
         if (!openFromHash() && files.length) {
-          openFile(files[0], files[0].__path || []);
+          openFile(files[0]);
         }
 
         window.addEventListener('hashchange', function() { openFromHash(); });
