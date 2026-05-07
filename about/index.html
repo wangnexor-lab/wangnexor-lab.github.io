@@ -210,11 +210,11 @@
           <h2 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h2><p>我是N3x0r，一个立志成为PWN大手子的WHU大一学生。我将在我的主页中做一些学习过程中的分享，如有错误请联系指出。</p>
 <p>已放弃网安。</p>
 <h3 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h3><ul>
-<li>Email: <a href="mailto:&#119;&#x61;&#x6e;&#103;&#x6e;&#x65;&#120;&#x6f;&#114;&#64;&#103;&#x6d;&#x61;&#105;&#108;&#46;&#99;&#111;&#x6d;">wangnexor@gmail.com</a></li>
+<li>Email: <a href="mailto:&#119;&#x61;&#x6e;&#x67;&#x6e;&#101;&#120;&#x6f;&#114;&#64;&#103;&#109;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;">wangnexor@gmail.com</a></li>
 <li>GitHub: <a target="_blank" rel="noopener" href="https://github.com/wangnexor-lab">N3x0r</a></li>
 <li>QQ: 1295980011</li>
 </ul>
-<div class="protected-block" data-protected="eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiJFMVVORm5HUW54bUs2RkQvIiwidGFnIjoicDFablhPSS9OSVRYK3NQc0EycWorZz09IiwiY3QiOiJzelpyRmtkL2JzWStOL0ZHYjQvNUFjRFkzdkxqbWlCcll1bVFqb1hzVjZUZTlkZU1Ra3dub1dza29OdmVFZFRFSHJ5SzUxQ3FWaVZKd2xOdDhIbDJtRUhiMEV5cCs1dW9yRUFhSG9KT0pZVWRpR1hObURtUG92Zy93ejViWWJzPSIsImtpbmQiOiJibG9jayJ9" data-protected-kind="block"></div>
+<div class="protected-block" data-protected="eyJ2IjoxLCJhbGciOiJBMjU2R0NNIiwiaXYiOiJoaExsb3I5MkxOclZMbTJlIiwidGFnIjoiN1NhRGxJVHVIWW1xLzMramxSeWludz09IiwiY3QiOiJkaXpXYW5uWEd4OTQrc3hpd1Q1Y0ZsZjRwQ2sycjY1b1k0cW5pdnI0YS90d3B3Q3NBWXRsWTJld1JCRkZVMjhMaCsxMVBUVmVpSzB3MS9oWjR2UW5jTW52WXJQeTBUT1Y1REZxSUNCdFNpZEI3RTZJTnJEc1BjSmxuekcyWEtVPSIsImtpbmQiOiJibG9jayJ9" data-protected-kind="block"></div>
 
       </div>
       
@@ -404,6 +404,32 @@
 
   
 <style>
+html, body {
+  background: transparent !important;
+}
+
+#site-bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  pointer-events: none;
+}
+
+#site-bg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.dark-mode #site-bg-overlay {
+  background: rgba(0, 0, 0, 0.32);
+}
+
 /* Dark Mode Toggle */
 .dark-mode-toggle {
   position: fixed;
@@ -737,6 +763,11 @@
   text-decoration: underline;
 }
 </style>
+
+<video id="site-bg-video" autoplay muted loop playsinline preload="auto">
+  <source src="/images/main_bg.mp4" type="video/mp4">
+</video>
+<div id="site-bg-overlay"></div>
 
 <!-- Dark Mode Toggle -->
 <div class="dark-mode-toggle" title="Toggle Dark Mode">
@@ -1137,7 +1168,7 @@
 
 
 <script>
-  window.__SITE_AUTH = {"enable":true,"login_path":"/login/","storage_key":"hexo_auth_session","private_background":"/images/private-bg.jpeg","users":[{"username":"xiaomu","salt":"9f5XpOvRk+zIied1BBXgtw==","iterations":150000,"verifier":"z9iR8bgbKXMAGwnBwR++CoDa04sJCSO+JstJk6kKoiw=","wrapped_key":{"iv":"/QiGc2xtq3q5Gr0j","tag":"ZV2Sd4+Eeeobv70zP7kbrA==","ciphertext":"BImLoLSzaV6T0VL656hNaWbrXIxmcvoPgjYAnFO/5wc="}}]};
+  window.__SITE_AUTH = {"enable":true,"login_path":"/login/","storage_key":"hexo_auth_session","private_background":"/images/private-bg.jpeg","users":[{"username":"xiaomu","salt":"C0Sfo0QAPupU/on0Et8FEw==","iterations":150000,"verifier":"1rarKVIu9gXRx/fVD50ipFbF8+EcICvgBYC91pMAOFY=","wrapped_key":{"iv":"hUg5uxLGKEASQ/UJ","tag":"+Iafkx0w2sJJsNHX2kxhjA==","ciphertext":"T3fc0hTeFkwRLu/JGjUlo0PtjT6a7UsElWd+6MSARrs="}}]};
 </script>
 <script>
   (function() {

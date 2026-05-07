@@ -484,6 +484,32 @@
 
   
 <style>
+html, body {
+  background: transparent !important;
+}
+
+#site-bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  pointer-events: none;
+}
+
+#site-bg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.dark-mode #site-bg-overlay {
+  background: rgba(0, 0, 0, 0.32);
+}
+
 /* Dark Mode Toggle */
 .dark-mode-toggle {
   position: fixed;
@@ -817,6 +843,11 @@
   text-decoration: underline;
 }
 </style>
+
+<video id="site-bg-video" autoplay muted loop playsinline preload="auto">
+  <source src="/images/main_bg.mp4" type="video/mp4">
+</video>
+<div id="site-bg-overlay"></div>
 
 <!-- Dark Mode Toggle -->
 <div class="dark-mode-toggle" title="Toggle Dark Mode">
@@ -1217,7 +1248,7 @@
 
 
 <script>
-  window.__SITE_AUTH = {"enable":true,"login_path":"/login/","storage_key":"hexo_auth_session","private_background":"/images/private-bg.jpeg","users":[{"username":"xiaomu","salt":"9f5XpOvRk+zIied1BBXgtw==","iterations":150000,"verifier":"z9iR8bgbKXMAGwnBwR++CoDa04sJCSO+JstJk6kKoiw=","wrapped_key":{"iv":"/QiGc2xtq3q5Gr0j","tag":"ZV2Sd4+Eeeobv70zP7kbrA==","ciphertext":"BImLoLSzaV6T0VL656hNaWbrXIxmcvoPgjYAnFO/5wc="}}]};
+  window.__SITE_AUTH = {"enable":true,"login_path":"/login/","storage_key":"hexo_auth_session","private_background":"/images/private-bg.jpeg","users":[{"username":"xiaomu","salt":"C0Sfo0QAPupU/on0Et8FEw==","iterations":150000,"verifier":"1rarKVIu9gXRx/fVD50ipFbF8+EcICvgBYC91pMAOFY=","wrapped_key":{"iv":"hUg5uxLGKEASQ/UJ","tag":"+Iafkx0w2sJJsNHX2kxhjA==","ciphertext":"T3fc0hTeFkwRLu/JGjUlo0PtjT6a7UsElWd+6MSARrs="}}]};
 </script>
 <script>
   (function() {
